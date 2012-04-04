@@ -14,7 +14,7 @@
   var viewer = null;
   function init() {
     viewer = new Seadragon.Viewer('map');
-    viewer.openDzi('/wp-content/themes/toommorel-lite-BAK/images/map/GeneratedImages/dzc_output.xml');
+    viewer.openDzi('/images/map/GeneratedImages/dzc_output.xml');
   }
 
   Seadragon.Utils.addEvent(window, 'load', init);
