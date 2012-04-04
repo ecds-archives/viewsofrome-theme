@@ -1,0 +1,34 @@
+/*
+Theme Name responsive-child
+Description: Child theme of responsive customized for Views of Rome
+Author: Kyle Bock
+Template: responsive
+*/
+
+@import url("../responsive/style.css");
+
+/*
+ * Resets, made important to override in page style declarations
+ * as well as !important declarations in external files
+ */
+.clear-width {
+    width: 100% !important;
+}
+
+.clear-margin {
+    margin: 0px !important; 
+}
+
+/*
+ * Map specific styles for the front-page.php script
+ */
+#mapContainer {
+    width: 98%;
+    height:98%;
+    background-color: #c3bda7;
+}
+
+#map {
+    width: 940px;
+    height: 800px;
+}
