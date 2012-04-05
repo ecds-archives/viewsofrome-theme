@@ -19,6 +19,14 @@ Template: responsive
     margin: 0px !important; 
 }
 
+.home #wrapper {
+    -webkit-border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #d6d6d6;
+    margin: 20px auto;
+    padding: 0 20px 20px 20px;
+}
+
 /*
  * Map specific styles for the front-page.php script
  */
@@ -29,6 +37,7 @@ Template: responsive
 }
 
 #map {
-    width: 940px;
+    width: 920px;
     height: 800px;
+    margin: 20px auto;
 }
