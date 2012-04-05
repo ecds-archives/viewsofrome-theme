@@ -27,7 +27,7 @@
             <div class="post-entry">
                 <?php if ( has_post_thumbnail()) : ?>
                     <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" >
-                <?php the_post_thumbnail(); ?>
+                    <?php the_post_thumbnail(); ?>
                     </a>
                 <?php endif; ?>
                 <?php the_excerpt(); ?>
@@ -35,6 +35,12 @@
             </div><!-- end of .post-entry -->
         </div>
     <?php endwhile; ?>
+    <?php if (  $wp_query->max_num_pages > 1 ) : ?>
+        <div class="navigation">
+            <div class="previous"><?php next_posts_link( __( '&#8249; Older posts', 'responsive' ) ); ?></div>
+            <div class="next"><?php previous_posts_link( __( 'Newer posts &#8250;', 'responsive' ) ); ?></div>
+        </div><!-- end of .navigation -->
+    <?php endif; ?>
 <?php endif; ?>
     </div>
     <!-- /content-blog -->

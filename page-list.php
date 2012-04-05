@@ -6,7 +6,7 @@
  * @package WordPress
  * @subpackage ViewsofRome-Theme
  */
- $DEBUG = false;
+ $DEBUG = true;
  $args = array(
     'sort_order' => 'asc',
     'exclude' => array(9, 25)
