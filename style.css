@@ -31,13 +31,49 @@ Template: responsive
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
-    width: 98%;
+    /*width: 98%;
     height:98%;
     background-color: #c3bda7;
+    */
+    position:relative;
 }
 
 #map {
     width: 920px;
-    height: 800px;
+    height: 500px;
     margin: 20px auto;
+}
+
+#mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:300px;
+    height: 100%; /* size to full height of parent container */
+    background-color: #000;
+    opacity: .85;
+    color: #fff;
+    padding-left:15px;
+}
+
+
+/*
+ *  List page styles
+ */
+.widget-simpletags .st-tag-cloud {
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: #f9f9f9;
+    margin: 0 0 20px;
+    padding: 20px;
+}
+
+.widget-simpletags .st-tag-cloud a {
+    color: #06C !important;
 }
