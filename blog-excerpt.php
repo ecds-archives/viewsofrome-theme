@@ -15,8 +15,12 @@
     $limit = get_option('posts_per_page');
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     query_posts(array(
+        'order'     => 'ASC',               // sort order, through admin?
+        'orderby'  => 'title',              // sort field, through admin?
         'showposts' => $limit,
-        'paged'     => $paged
+        'paged'     => $paged,
+        'post_type' => 'page',              // limit to page types
+        'post__not_in'   => array(9, 25)    // look to do this through admin?
     ));
 ?>
     <div id="content-blog" class="grid col-620">
