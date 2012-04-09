@@ -22,6 +22,11 @@
   $(document).ready(function() {
     $('#hide').live('click', function() {
         $('#mapOverlay').hide();
+        $('#overlayDrawer').show();
+    });
+    $('#showOverlay').live('click', function() {
+        $('#overlayDrawer').hide();
+        $('#mapOverlay').show();
     });
     $('#load').live('click', function() {
         $.ajax({
@@ -38,21 +43,26 @@
 
 <div id="mapContainer">
     <div id='map'></div>
-    <div id='mapOverlay'>
-        <div id="overlay-title">
-            <h2>The Colosseum</h2>
-            <?php
-                $arr = array(
-                    'category'  => "Arena",
-                    'pageId'    => '/colosseum/'
-                );
-
-                echo json_encode($arr);
-            ?>
+    <div id='mapOverlayWrapper'>
+        <div id="mapOverlay">
+            <div id="overlay-title">
+                <h2>The Colosseum</h2>
+                <?php
+                    $arr = array(
+                        'category'  => "Arena",
+                        'pageId'    => '/colosseum/'
+                    );
+    
+                    echo json_encode($arr);
+                ?>
+            </div>
+            <div>
+                <a id="hide" href="#">Hide</a><br />
+                <a id="load" href="#">Load</a>
+            </div>
         </div>
-        <div>
-            <a id="hide" href="#">Hide</a><br />
-            <a id="load" href="#">Load</a>
+        <div id="overlayDrawer">
+            <a id="showOverlay" href="#">>></a>
         </div>
     </div>
 </div>

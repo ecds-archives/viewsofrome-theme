@@ -44,16 +44,25 @@ Template: responsive
     margin: 20px auto;
 }
 
-#mapOverlay {
+#mapOverlay,
+#overlayDrawer {
     position: absolute;
     top: 0;
     left: 0;
-    width:300px;
-    height: 100%; /* size to full height of parent container */
     background-color: #000;
     opacity: .85;
     color: #fff;
-    padding-left:15px;
+    padding-left: 15px;
+    height: 100%;
+}
+
+#mapOverlay {
+    width:300px;
+    display:none;
+}
+
+#overlayDrawer {
+    width: 50px;
 }
 
 
