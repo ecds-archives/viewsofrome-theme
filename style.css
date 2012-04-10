@@ -28,6 +28,20 @@ Template: responsive
 }
 
 /*
+ * Header styles
+ */
+#header {
+    margin-top: 5px;
+}
+
+#header #logoWrapper {
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border: 1px solid #000;
+    clear:left;
+}
+
+/*
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
