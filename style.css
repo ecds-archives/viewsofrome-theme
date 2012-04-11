@@ -39,6 +39,22 @@ Template: responsive
     -webkit-border-top-right-radius: 6px;
     border: 1px solid #000;
     clear:left;
+    background: url(images/header-image.png) #30498f;
+    height: 108px; /*make height = to height of header-image.png */
+
+}
+
+#header #logo .site-name {
+    margin: 10px 0 0 20px;
+}
+
+#header #logo .site-name a {
+    color: #fff;
+}
+
+#header #logo .site-description {
+    color: #d2b000;
+    margin: 10px 0 0 35px;
 }
 
 /*
