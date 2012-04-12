@@ -111,7 +111,9 @@
             <?php endwhile; ?> 
         <?php endif; ?>
         </select>
-        <div id="serialized"></div>
+        <div id="serialized">
+            <?php get_overlay_data(); ?>
+        </div>
     </div>
     <div id='map'></div>
 </div>

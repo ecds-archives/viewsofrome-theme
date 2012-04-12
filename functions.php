@@ -5,28 +5,39 @@ wp_register_script('raphael', get_stylesheet_directory_uri() . '/js/raphael-min.
 wp_register_script('seajax', get_stylesheet_directory_uri() . '/js/seajax-utils.js', array('seadragon', 'raphael'));
 
 function get_overlay_data() {
-    if (isset($_GET['data'])) {
-        $output = "";
+    global $wpdb;
+    
+    $query = "select title, id, coords from wp_ligorio_data;";
 
-        //validate somehow?
-        $output .= json_encode($_GET['data']);
-            
-        echo $output;
-    }
-    die(0);
-//    return $output;
+    $results = $wpdb->get_results($query, ARRAY_A);
+    
+    echo json_encode($results);
+    
+    return 0;
 }
 
 function post_overlay_data() {
+    global $wpdb;
     echo $_POST['data'];
     if(isset($_POST['data'])) {
         $data = $_POST['data'];
-        $output = "";
-        
-        $output .= "Title: " . $data['title'] . "<br>";
-        $output .= "ID: " . $data['id'] . "<br>";
 
-        echo $output;
+        //set up varables to be used for insert
+        $tableName = 'wp_ligorio_data';
+        $inputData = array(
+            'title' => $data['title'],
+            'id'    => $data['id'],
+            'coords'=> json_encode($data['data']) //serialize, could possibly json_encoded
+        );
+        $inputFormat = array(
+            '%s',
+            '%d',
+            '%s'
+        );
+
+        $wpdb->insert($tableName, $inputData, $coords);
+
+        echo 'Inserted Data';
     }
 
     return 0;
