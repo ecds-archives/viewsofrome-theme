@@ -37,6 +37,7 @@
                 <?php the_excerpt(); ?>
                 <?php wp_link_pages(array('before' => '<div class="pagination">' . __('Pages:', 'responsive'), 'after' => '</div>')); ?>
             </div><!-- end of .post-entry -->
+            <div class="clearfix"></div>
         </div>
     <?php endwhile; ?>
     <?php if (  $wp_query->max_num_pages > 1 ) : ?>

@@ -72,6 +72,7 @@ Template: responsive
     width: 920px;
     height: 500px;
     margin: 20px auto;
+    border: 1px solid #ccc;
 }
 
 #mapOverlay {
@@ -90,6 +91,25 @@ Template: responsive
 /*
  *  List page styles
  */
+.page {
+    clear:left;
+    margin: 0 0 15px 0;
+}
+
+.page img.wp-post-image {
+    width: auto;
+    max-width: 125px;
+    margin: 5px 15px;
+    display: inline;
+    float: left;
+}
+
+.page p {
+    width: 70%;
+    display: inline-block;
+    float:left;
+}
+
 .widget-simpletags .st-tag-cloud {
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px;
