@@ -104,12 +104,17 @@ Template: responsive
     float: left;
 }
 
-.page p {
+.page .list-col {
+    width: 96%;
+}
+.page .list-right-col {
     width: 70%;
     display: inline-block;
     float:left;
 }
-
+.page .read-more {
+    float: right;
+}
 .widget-simpletags .st-tag-cloud {
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px;

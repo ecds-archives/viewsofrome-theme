@@ -34,7 +34,9 @@
                     <?php the_post_thumbnail(); ?>
                     </a>
                 <?php endif; ?>
+                <div class="page-excerpt <?php echo (has_post_thumbnail()) ? 'list-right-col' : '';?>">
                 <?php the_excerpt(); ?>
+                </div>
                 <?php wp_link_pages(array('before' => '<div class="pagination">' . __('Pages:', 'responsive'), 'after' => '</div>')); ?>
             </div><!-- end of .post-entry -->
             <div class="clearfix"></div>
