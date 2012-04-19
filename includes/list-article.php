@@ -1,3 +1,10 @@
+<?php
+ /*
+  * Article List include
+  * Utilized by blog-excerpt and tag.php
+  * 
+  */
+?>
     <div id="content-blog" class="grid col-620">
 <?php if (have_posts()) : ?>
     <?php while(have_posts()) : the_post(); ?>
