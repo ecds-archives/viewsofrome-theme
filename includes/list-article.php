@@ -4,9 +4,9 @@
   * Utilized by blog-excerpt and tag.php
   * 
   */
+
+  query_posts($args);
 ?>
-    <div id="content-blog" class="grid col-620">
-        <h2><?php echo $page_title; ?></h2>
 <?php if (have_posts()) : ?>
     <?php while(have_posts()) : the_post(); ?>
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -32,6 +32,3 @@
         </div><!-- end of .navigation -->
     <?php endif; ?>
 <?php endif; ?>
-    </div>
-    <!-- /content-blog -->
-<?php get_sidebar('right'); ?>

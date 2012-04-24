@@ -14,17 +14,23 @@
 <?php
     $limit = get_option('posts_per_page');
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    query_posts(array(
+    $args = array(
         'order'     => 'ASC',               // sort order, through admin?
         'orderby'  => 'title',              // sort field, through admin?
         'showposts' => $limit,
         'paged'     => $paged,
         'post_type' => 'page',              // limit to page types
         'post__not_in'   => array(9, 25)    // look to do this through admin?
-    ));
+        );
 ?>
 
 <?php $page_title = "Articles"; ?>
-<?php include 'includes/list-article.php'; ?>
+<div id="content-blog" class="grid col-620">
+    <?php include 'includes/breadcrumbs.php'; ?>
+    <h1><?php the_title(); ?></h1>
 
+    <?php include 'includes/list-article.php'; ?>
+</div>
+
+<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>
