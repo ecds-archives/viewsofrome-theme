@@ -20,7 +20,7 @@
         'showposts'     => $limit,
         'paged'         => $paged,
         'post_type'     => 'page',
-        'post__not_in'  => array(9, 25)
+        'post__not_in'  => array(9, 25, get_the_ID())
     ));
 ?>
 
