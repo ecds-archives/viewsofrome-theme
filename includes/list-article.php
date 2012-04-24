@@ -6,10 +6,11 @@
   */
 ?>
     <div id="content-blog" class="grid col-620">
+        <h2><?php echo $page_title; ?></h2>
 <?php if (have_posts()) : ?>
     <?php while(have_posts()) : the_post(); ?>
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-            <h1><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf(__('Permanent Link to %s', 'responsive'), the_title_attribute('echo=0')); ?>"><?php the_title(); ?></a></h1>
+            <h4><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf(__('Permanent Link to %s', 'responsive'), the_title_attribute('echo=0')); ?>"><?php the_title(); ?></a></h4>
             <div class="post-entry">
                 <?php if ( has_post_thumbnail()) : ?>
                     <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute(); ?>" >

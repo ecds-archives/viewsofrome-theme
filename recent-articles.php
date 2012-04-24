@@ -24,6 +24,7 @@
     ));
 ?>
 
+<?php $page_title = "Recent Articles"; ?>
 <? include 'includes/list-article.php'; ?>
 
 <?php get_footer(); ?>
