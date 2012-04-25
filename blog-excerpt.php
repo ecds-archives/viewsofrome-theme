@@ -25,12 +25,7 @@
 ?>
 
 <?php $page_title = "Articles"; ?>
-<div id="content-blog" class="grid col-620">
-    <?php include 'includes/breadcrumbs.php'; ?>
-    <h1><?php the_title(); ?></h1>
 
-    <?php include 'includes/list-article.php'; ?>
-</div>
+<?php include 'includes/list-article.php'; ?>
 
-<?php get_sidebar('right'); ?>
 <?php get_footer(); ?>

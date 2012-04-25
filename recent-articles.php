@@ -24,11 +24,8 @@
     );
 ?>
 
-<?php $page_title = "Recent Articles"; ?>
-<div id="content-blog" class="grid col-620">
-    <?php include 'includes/breadcrumbs.php'; ?>
-    <h1><?php the_title(); ?></h1>
-    <?php include 'includes/list-article.php'; ?>
-</div>
-<?php get_sidebar('right'); ?>
+<?php $page_title = get_the_title(); ?>
+
+<?php include 'includes/list-article.php'; ?>
+
 <?php get_footer(); ?>

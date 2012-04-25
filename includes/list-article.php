@@ -4,9 +4,14 @@
   * Utilized by blog-excerpt and tag.php
   * 
   */
-
-  query_posts($args);
 ?>
+<div id="content-blog" class="grid col-620">
+    <?php $options = get_option('responsive_theme_options'); ?>
+    <?php if ($options['breadcrumb'] ==0): ?>
+        <?php echo responsive_breadcrumb_lists(); ?>
+    <?php endif; ?>
+    <h1><?php echo $page_title; ?></h1>
+    <?php query_posts($args); ?>
 <?php if (have_posts()) : ?>
     <?php while(have_posts()) : the_post(); ?>
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -32,3 +37,5 @@
         </div><!-- end of .navigation -->
     <?php endif; ?>
 <?php endif; ?>
+</div>
+<?php get_sidebar('right'); ?>
