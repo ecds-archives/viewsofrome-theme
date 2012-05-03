@@ -35,7 +35,7 @@
                 <div id="widgets">
                     <div class="grid col-300">
                           <div class="widget-title"><?php _e('Articles', 'responsive'); ?></div>
-                            <ul><?php wp_list_pages("title_li=" ); ?></ul>               
+                            <ul><?php wp_list_pages("title_li=&exclude=".get_excluded_pages(true) ); ?></ul>               
                     </div><!-- end of .col-300 fit -->
 					
 					<div class="grid col-300 fit">

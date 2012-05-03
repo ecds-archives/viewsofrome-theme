@@ -9,7 +9,7 @@
  $DEBUG = true;
  $args = array(
     'sort_order' => 'asc',
-    'exclude' => array(9, 25)
+    'exclude' => get_excluded_pages()
  );
 
  get_header();
