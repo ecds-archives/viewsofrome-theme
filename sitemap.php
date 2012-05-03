@@ -33,7 +33,6 @@
                 
                 <div class="post-entry">
                 <div id="widgets">
-                	
                     <div class="grid col-300">
                           <div class="widget-title"><?php _e('Articles', 'responsive'); ?></div>
                             <ul><?php wp_list_pages("title_li=" ); ?></ul>               
@@ -49,9 +48,7 @@
 									}
 								?>
 							</ul>
-						</div>
-                    </div><!-- end of .col-300 -->
-               
+					</div><!-- end of .col-300 -->
                 </div><!-- end of #widgets --> 
                 <?php wp_link_pages(array('before' => '<div class="pagination">' . __('Pages:', 'responsive'), 'after' => '</div>')); ?>     
                 </div><!-- end of .post-entry -->             
