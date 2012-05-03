@@ -9,8 +9,8 @@ function get_excluded_pages($as_string = false) {
 	$excluded_ids = Array(
 		9,		// Article List
 		25, 	// About Us
-		98,		// Recent Articles
-		101		// Sitemap
+		123,		// Recent Articles
+		127		// Sitemap
 	);
 	
 	if ($as_string)
