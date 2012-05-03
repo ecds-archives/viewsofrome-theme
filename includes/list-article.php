@@ -11,7 +11,10 @@
         <?php echo responsive_breadcrumb_lists(); ?>
     <?php endif; ?>
     <h1><?php echo $page_title; ?></h1>
-    <?php query_posts($args); ?>
+    <?php 
+	if (!isset($execute_query) || $execute_query) // needed to prevent execution of query in tag.php
+		query_posts($args); 
+	?>
 <?php if (have_posts()) : ?>
     <?php while(have_posts()) : the_post(); ?>
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
