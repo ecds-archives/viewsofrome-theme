@@ -33,28 +33,25 @@
                 
                 <div class="post-entry">
                 <div id="widgets">
-                
+                	
                     <div class="grid col-300">
-                        <div class="widget-title"><?php _e('Categories', 'responsive'); ?></div>
-                            <ul><?php wp_list_categories('sort_column=name&optioncount=1&hierarchical=0&title_li='); ?></ul>
-                    </div><!-- end of .col-300 -->
-                    
-                    <div class="grid col-300">
-                        <div class="widget-title"><?php _e('Latest Posts', 'responsive'); ?></div>
-                            <ul><?php /*$archive_query = new WP_Query('posts_per_page=-1');
-                                    while ($archive_query->have_posts()) : $archive_query->the_post(); ?>
-                                        <li>
-                                            <a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf(__('Permanent Link to %s', 'responsive'), the_title_attribute('echo=0')); ?>"><?php the_title(); ?></a>
-                                        </li>
-                                    <?php endwhile*/; ?>
-                            </ul>  
-                    </div><!-- end of .col-300 -->
-                     
-                    <div class="grid col-300 fit">
-                          <div class="widget-title"><?php _e('Pages', 'responsive'); ?></div>
+                          <div class="widget-title"><?php _e('Articles', 'responsive'); ?></div>
                             <ul><?php wp_list_pages("title_li=" ); ?></ul>               
                     </div><!-- end of .col-300 fit -->
-                
+					
+					<div class="grid col-300 fit">
+                        <div class="widget-title"><?php _e('Tags', 'responsive'); ?></div>
+							<ul>
+								<?php
+									$tags = get_tags( array('orderby' => 'count', 'order' => 'DESC') );
+									foreach ( (array) $tags as $tag ) {
+										echo '<li><a href="' . get_tag_link ($tag->term_id) . '" rel="tag">' . ucwords($tag->name) . ' (' . $tag->count . ') </a></li>';
+									}
+								?>
+							</ul>
+						</div>
+                    </div><!-- end of .col-300 -->
+               
                 </div><!-- end of #widgets --> 
                 <?php wp_link_pages(array('before' => '<div class="pagination">' . __('Pages:', 'responsive'), 'after' => '</div>')); ?>     
                 </div><!-- end of .post-entry -->             
