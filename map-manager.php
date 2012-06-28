@@ -8,6 +8,8 @@
  * @filesource  wp-content/themes/viewsofrome-theme/map-manager.php
  */
 
+ wp_enqueue_script('eul-overlay-manager');
+
  wp_enqueue_script('seajax');
 ?>
 <?php get_header(); ?>
@@ -23,99 +25,163 @@
         'post__not_in'   => array(9, 25, 83)    // look to do this through admin?
     ));
 ?>
-
 <script type="text/javascript">
-    var viewer = null;
-    var points = null;
-    function init() {
-        viewer = new Seadragon.Viewer('map');
-        viewer.openDzi('/images/map/GeneratedImages/dzc_output.xml');
-        // listener to add click points to img
-        viewer.tracker.clickHandler = function(tracker, position) {
-            var pixel = Seadragon.Utils.getMousePosition(event).minus(Seadragon.Utils.getElementPosition(viewer.elmt));
-            var point = viewer.viewport.pointFromPixel(pixel);
-            if (!points) 
-                points = new Array();
-            points.push(new No5.Seajax.toImageCoordinates(viewer, point.x, point.y));
-        };
-    }
-    Seadragon.Utils.addEvent(window, 'load', init);
-    
-    var polygon = null;
-    function addOverlay(points) {
-        polygon = new No5.Seajax.Shapes.Polygon(points);
+        /*var PRECISION = 5; // number of decimal places
+        var viewer = null;
+        var points = null;
         
-        polygon.getElement().attr({"fill":"#000000", "fill-opacity":0.5});
-        polygon.getElement().node.onmouseover = function() {
-            polygon.getElement().attr({'fill': '#fff'});
-        }
-        polygon.getElement().node.onmouseout = function() {
-            polygon.getElement().attr({'fill': '#000'});
-        }
-        polygon.attachTo(viewer);
-        
-        setTimeout(function() {
-            polygon.redraw(viewer);
-        }, 100);
-    }
-    
-    var $ = jQuery.noConflict();
-    $(document).ready(function() {
-        $('#add_overlay').live('click', function() {
-            addOverlay(points);
-        });
-        
-        $('#cancel').live('click', function() {
-            points = null;
-            viewer.drawer.removeOverlay(polygon.div);
-            polygon = null;
-        });
-        
-        $('#serialize').live('click', function() {
-            var result = {
-                id: $("#post").val(),
-                title: $("#post :selected").text(),
-                data: []
+        function init() {
+            viewer = new Seadragon.Viewer("mapcontainer");
+            viewer.openDzi("/images/map/GeneratedImages/dzc_output.xml");
+            
+            // listeners to print data to screen
+            viewer.addEventListener("open", showViewport);
+            viewer.addEventListener("animation", showViewport);
+            
+            // listener to add click points to img
+            viewer.tracker.clickHandler = function(tracker, position) {
+                var pixel = Seadragon.Utils.getMousePosition(event).minus(Seadragon.Utils.getElementPosition(viewer.elmt));
+                var point = viewer.viewport.pointFromPixel(pixel);
+                if (!points) points = new Array();
+                points.push(new No5.Seajax.toImageCoordinates(viewer, point.x, point.y));
             };
             
-            for (i in points) {
-                result.data.push({x: points[i].x, y: points[i].y});
+            //callback to update mouse position for screen printing
+            Seadragon.Utils.addEvent(viewer.elmt, "mousemove", showMouse);
+        }
+        
+        function addOverlayToDZI() {
+            // add overlay, then clear temp points array
+            addOverlay(points);
+            console.log(points);
+            points = new Array();
+        }
+        
+        function addOverlay(points) {
+            var polygon = new No5.Seajax.Shapes.Polygon(points);
+            
+            polygon.getElement().attr({"fill":"#000000", "fill-opacity":0.5});
+            polygon.getElement().node.onmouseover = function() {
+                polygon.getElement().attr({'fill': '#fff'});
+                //$(polygon.div).attr({'z-index' : '20001'});
             }
-            console.log(result);
-            // post point to the db
-            $.ajax({
-                url: '/wp-admin/admin-ajax.php',
-                type: 'POST',
-                data: {
-                    action: 'post_overlay_data', 
-                    data: result
-                },
-                success: function(results) {
-                    console.log(results);
-                    $('#serialized').html(results);
-                }
-            });
-        });
-    });
-</script>
+            polygon.getElement().node.onmouseout = function() {
+                polygon.getElement().attr({'fill': '#000'});
+                //$(polygon.div).attr({'z-index' : '10000'});
+                console.log(polygon.getElement());
+            }
+            polygon.attachTo(viewer);
+            
+            setTimeout(function() {
+                polygon.redraw(viewer);
+            }, 500);
+        }
+        
+        function addOverlays() {
+            points = [
+                new No5.Seajax.toImageCoordinates(viewer, .25, .28),
+                new No5.Seajax.toImageCoordinates(viewer, .50, .28),
+                new No5.Seajax.toImageCoordinates(viewer, .50, .62),
+                new No5.Seajax.toImageCoordinates(viewer, .25, .62)             
+            ];
+            console.log(points);
+            
+            var polygon = new No5.Seajax.Shapes.Polygon(points);
+            
+            polygon.getElement().attr({"fill":"#000000", "fill-opacity":0.5});
+            polygon.attachTo(viewer);
+            
+            setTimeout(function() {
+                polygon.redraw(viewer);
+            }, 500);
+        }
 
-<div id="mapContainer">
-    <div id="controller">
-        <input type="button" value="Add Overlay" id="add_overlay" />
-        <input type="button" value="Cancel" id="cancel" />
-        <input type="button" value="Serialize" id="serialize"/>
-        <?php if (have_posts()) : the_post; ?>
-        <select id="post">
-            <?php while(have_posts()) : the_post(); ?>
-                <option value="<?php the_ID(); ?>"><?php the_title(); ?></option>
-            <?php endwhile; ?> 
-        <?php endif; ?>
-        </select>
-        <div id="serialized">
-            <?php get_overlay_data(); ?>
+        function showMouse(event) {
+            var pixel = Seadragon.Utils.getMousePosition(event).minus(Seadragon.Utils.getElementPosition(viewer.elmt));
+
+            //$("#mousePixels").html(toString(pixel, true));    
+
+            if (!viewer.isOpen()) {
+                return;
+            }
+        
+            var point = viewer.viewport.pointFromPixel(pixel);
+            // $("#mousePoints").html(toString(point, true) + ":mp");
+        }
+
+        function showViewport(viewer) {
+            if (!viewer.isOpen())
+                return;
+            
+            var sizePoints = viewer.viewport.getBounds().getSize();
+            var sizePixels = viewer.viewport.getContainerSize();
+
+            // $("#viewportSizePoints").html(toString(sizePoints, false));
+            // $("#viewportSizePixels").html(toString(sizePixels, false));
+        }
+
+        function toString(point, useParens) {
+            var x = point.x;
+            var y = point.y;
+
+            if (x % 1 || y % 1) {
+                x = x.toFixed(PRECISION);
+                y = y.toFixed(PRECISION);
+            }
+
+            if (useParens) {
+                return "(" + x + ", " + y + ")";
+            }
+
+            return x + " x " + y;
+        }*/
+        var overlayManager;
+        function init() {
+            $(document).ready(function() {
+                overlayManager = new EUL.OverlayManager();
+            })
+        }
+        Seadragon.Utils.addEvent(window, "load", init);
+    </script>
+    <style>
+        #mapcontainer {
+            width: 600px;
+            height: 500px;
+            background-color: black;
+            border: 1px solid black;
+            color: white;
+            float: left;
+        }
+
+        #map-manager-controls {
+            width: 300px;
+            float: right;
+        }
+        .remove-link {
+            margin: 10px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        #mousePixels, #mousePoints,
+        #viewportSizePixels, #viewportSizePoints {
+            
+        }
+    </style>
+
+<div id="mapManager">
+    <div id="mapcontainer"></div>
+    <div id="map-manager-controls">
+        <div id="overlays-container">
+            <h2>Overlays</h2>
+            <!-- staging area for non saved overlays-->
+            <div id="overlay-staging">
+            </div>
         </div>
+        <input type="button" onclick="javascript:overlayManager._addOverlayToDZI();" value="Add Shape" />
+        <div class="clearfix"></div>
     </div>
-    <div id='map'></div>
 </div>
+
 
 <?php get_footer(); ?>

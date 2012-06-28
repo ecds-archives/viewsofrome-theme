@@ -11,6 +11,10 @@ Template: responsive
  * Resets, made important to override in page style declarations
  * as well as !important declarations in external files
  */
+.clearfix {
+    clear: both;
+}
+
 .clear-width {
     width: 100% !important;
 }
@@ -39,9 +43,9 @@ Template: responsive
 }
 
 #map {
-    width: 920px;
+    width: 600px;
     height: 500px;
-    margin: 20px auto;
+    margin: 0px auto;
 }
 
 #mapOverlay,
