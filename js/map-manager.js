@@ -88,16 +88,24 @@ EUL.OverlayManager = function(map_container) {
     self.viewer.tracker.clickHandler = function(tracker, position) {
         var pixel = Seadragon.Utils.getMousePosition(self.event).minus(Seadragon.Utils.getElementPosition(self.viewer.elmt));
         var point = self.viewer.viewport.pointFromPixel(pixel);
+        console.log(point);
         if (!self.points) {self.points = new Array();}
 
         var newPoint = new No5.Seajax.toImageCoordinates(self.viewer, point.x, point.y);
 
         self.points.push(newPoint);
 
-        self.newOverlayPoints.push(
-            new EUL.Utils.Marker("/wp-content/themes/viewsofrome-theme/images/point_marker.gif"));
-        $(self.newOverlayPoints.peek().img).addClass('temp-point');
-        self.newOverlayPoints.peek().attachTo(self.viewer, self.points.peek().x, self.points.peek().y);
+        console.log("attempting overlay");
+        var img = document.createElement("img");
+        img.src = "/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
+        img.className = 'temp-point';
+        console.log(img);
+        // $(point.img).addClass('temp-point');
+        var anchor = new Seadragon.Point(point.x, point.y);
+        var placement = Seadragon.OverlayPlacement.BOTTOM;
+        self.viewer.drawer.addOverlay(img, anchor, placement);
+
+        console.log(point);
     }
 }
 
@@ -211,7 +219,7 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
 
 EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     var self = this;
-    console.log("points: " + self.points);
+
     var overlay = self.getNewOverlayFromPoints(self.points);
 
     // attach overlay to the map
@@ -221,17 +229,15 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     self.newOverlays.push(overlay);
 
     self.addOMDiv(overlay);
-    
-    
 
     setTimeout(function() {
         overlay.polygon.redraw(self.viewer);
     }, 500);
 
-    self.points = [];
-
-    console.log("point removal");
-    self.newOverlayPoints = [];
+    //clear temp points
+    $('img.temp-point').each(function(index, item) {
+        self.viewer.drawer.removeOverlay(item);
+    });
 }
 
 EUL.OverlayManager.prototype.addOverlayFromJSON = function() {
@@ -241,11 +247,8 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function() {
 // TODO: consider moving to Overlay class
 EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     var self = this;
-    self.newOverlays.splice(self.newOverlays.indexOf(overlay), 1);
-    overlay.polygon.div.parentNode.removeChild(overlay.polygon.div);
-    $(overlay.polygon.getElement().node).remove();
-    delete overlay.polygon;
-    delete overlay;
+    // remove overlay
+    self.viewer.drawer.removeOverlay(overlay.polygon.div);
 }
 EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     var self = this;
