@@ -29,12 +29,17 @@
 <script type="text/javascript">
         
     var overlayManager;
-    function init() {
+    //function init() {
         $(document).ready(function() {
             overlayManager = new EUL.OverlayManager();
-        })
+            //console.log(overlayManager.getViewer());
+            Seadragon.Utils.addEvent(overlayManager.getViewer().elmt, "mousemove", showMouse);
+        });
+   // }
+    function showMouse(event ) {
+        overlayManager.event = event;
     }
-    Seadragon.Utils.addEvent(window, "load", init);
+    //Seadragon.Utils.addEvent(window, "load", init);
 </script>
 <style>
     #mapcontainer {

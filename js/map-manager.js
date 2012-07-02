@@ -4,7 +4,11 @@
 //  refactor _addOverlayToDZI
 
 // TODO: check if dependencies are loaded
-
+Array.prototype.peek = function() {
+    if (this.length <= 0)
+        return undefined;
+    return this[this.length - 1];
+}
 
 var $ = jQuery.noConflict();
 
@@ -30,7 +34,22 @@ EUL.Utils.Colors = {
 
 
 EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
+EUL.Utils.Marker  = No5.Seajax.Shapes.Marker;
 
+EUL.Utils.ClearTemps = function () {
+    console.log('attempting to remove point');
+    var temp = $('.temp-point');
+    $(temp).remove();
+}
+
+EUL.Utils.clone = function(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
 /**
  *  EUL.OverlayManager constructor
  *
@@ -51,6 +70,7 @@ EUL.OverlayManager = function(map_container) {
     self.viewer = null;
     self.overlays = [];
     self.newOverlays = [];
+    self.newOverlayPoints = [];
     self.data = null;
     self.isDirty = false;
 
@@ -62,15 +82,28 @@ EUL.OverlayManager = function(map_container) {
     // listeners to print data to screen
     self.viewer.addEventListener("open", self._showViewport);
     self.viewer.addEventListener("animation", self._showViewport);
-    
+    //Seadragon.Utils.addEvent(self.viewer.elmt, "mousemove", self.showMouse);
     // listener to add click points to img
+    var tempMarker = null;
     self.viewer.tracker.clickHandler = function(tracker, position) {
-        console.log("clickHandler")
-        var pixel = Seadragon.Utils.getMousePosition(event).minus(Seadragon.Utils.getElementPosition(self.viewer.elmt));
+        var pixel = Seadragon.Utils.getMousePosition(self.event).minus(Seadragon.Utils.getElementPosition(self.viewer.elmt));
         var point = self.viewer.viewport.pointFromPixel(pixel);
-        if (!self.points) self.points = new Array();
-        self.points.push(new No5.Seajax.toImageCoordinates(self.viewer, point.x, point.y));
-    };
+        if (!self.points) {self.points = new Array();}
+
+        var newPoint = new No5.Seajax.toImageCoordinates(self.viewer, point.x, point.y);
+
+        self.points.push(newPoint);
+
+        self.newOverlayPoints.push(
+            new EUL.Utils.Marker("/wp-content/themes/viewsofrome-theme/images/point_marker.gif"));
+        $(self.newOverlayPoints.peek().img).addClass('temp-point');
+        self.newOverlayPoints.peek().attachTo(self.viewer, self.points.peek().x, self.points.peek().y);
+    }
+}
+
+EUL.OverlayManager.prototype.showMouse = function(event) {
+    var self = this;
+    self.event = event;
 }
 
 EUL.OverlayManager.prototype.getViewer = function() {
@@ -99,12 +132,13 @@ EUL.OverlayManager.prototype.reloadData = function() {
 }
 
 EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
+    console.log(this);
     var self = this;
 
-    viewer = self.viewer; // hack because Seajax uses global viewer for this
+    var viewer = self.viewer; // hack because Seajax uses global viewer for this
 
     // get the polygon and overlay obects for manipulation
-    var polygon = new EUL.Utils.Polygon(points);
+    var polygon = new EUL.Utils.Polygon(points, self.viewer);
     var overlay = new EUL.OverlayManager.Overlay();
 
     overlay.polygon = polygon;
@@ -177,7 +211,7 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
 
 EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     var self = this;
-
+    console.log("points: " + self.points);
     var overlay = self.getNewOverlayFromPoints(self.points);
 
     // attach overlay to the map
@@ -188,11 +222,16 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
 
     self.addOMDiv(overlay);
     
+    
+
     setTimeout(function() {
         overlay.polygon.redraw(self.viewer);
     }, 500);
 
     self.points = [];
+
+    console.log("point removal");
+    self.newOverlayPoints = [];
 }
 
 EUL.OverlayManager.prototype.addOverlayFromJSON = function() {
