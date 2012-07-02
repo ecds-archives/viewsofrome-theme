@@ -1,7 +1,10 @@
 //TODO:
 //  option to specify xml file loc for dzi
 //  actually be able to override options hash
-//  
+//  refactor _addOverlayToDZI
+
+// TODO: check if dependencies are loaded
+
 
 var $ = jQuery.noConflict();
 
@@ -25,6 +28,14 @@ EUL.Utils.Colors = {
     ]
 }
 
+
+EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
+
+/**
+ *  EUL.OverlayManager constructor
+ *
+ *
+ */
 EUL.OverlayManager = function(map_container) {
     var self = this;
     if (typeof jQuery == 'undefined') {
@@ -87,38 +98,52 @@ EUL.OverlayManager.prototype.reloadData = function() {
     */
 }
 
-EUL.OverlayManager.prototype._addOverlayToDZI = function() {
+EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     var self = this;
 
-    viewer = self.viewer; // hackk because Seajax uses global viewer which is dumb
-    var polygon = new No5.Seajax.Shapes.Polygon(self.points);
-            
+    viewer = self.viewer; // hack because Seajax uses global viewer for this
+
+    // get the polygon and overlay obects for manipulation
+    var polygon = new EUL.Utils.Polygon(points);
     var overlay = new EUL.OverlayManager.Overlay();
+
     overlay.polygon = polygon;
 
+    // TODO: look into default classes and adding htem to the dom?
+    // set polygon's fill color
     var fillColor = EUL.Utils.Colors.getColor();
-    overlay.polygon.getElement().attr({"fill":fillColor, "fill-opacity":0.5});
+    overlay.polygon.getElement().attr({
+        "fill" : fillColor, 
+        "fill-opacity" : 0.5
+    });
+    $(overlay.polygon.div).addClass("overlay-div");
 
-    // event handlers for overlay
-    overlay.polygon.getElement().node.onmouseover = function() {
-        overlay.polygon.getElement().attr({'fill': '#fff'});
+    // event handlers for the overlay
+    polyElement = overlay.polygon.getElement();
+    polyElement.node.onmouseover = function() {
+        polyElement.attr({
+            'fill': '#fff'
+        });
     }
-    overlay.polygon.getElement().node.onmouseout = function() {
-        overlay.polygon.getElement().attr({'fill': fillColor});
-        console.log(overlay.polygon.getElement());
+
+    polyElement.node.onmouseout = function() {
+        polyElement.attr({
+            'fill': fillColor
+        })
     }
-    overlay.polygon.getElement().node.onclick = function() {
-        console.log(overlay.polygon);
-    }
 
-    // attach overlay to the map
-    overlay.polygon.attachTo(self.viewer);
+    polyElement.node.onclick = function() {}
 
-    self.newOverlays.push(overlay);
+    return overlay;
+}
 
-    // add div to overlays group
+EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
+    var self = this;
+    // container corresponding to current overlay
     var div = $("<div>");
     div.addClass("remove-link");
+
+    // legend to visually associate with an overlay
     var legend = $("<div>");
     legend.css({
         "width" : "20px",
@@ -129,11 +154,8 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
         "margin-right": "10px;"
     });
     div.append(legend);
-    div.css({
-        "border": "1px solid",
-        "border-color": overlay.polygon.getElement().attr('fill'),
-        "color": "#000"
-    });
+
+    // actual remove link
     var removeLink = $("<a>");
     removeLink.css({
         "float": "left"
@@ -141,18 +163,31 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     removeLink.html("Remove this Overlay");
     removeLink.click(function() {
         console.log("Destroying Overlay");
-        //$(this).parents('.remove-link').remove();
         self.destroyOverlay(overlay);
         $(div).remove();
-
     });
+
     removeLink.hover(overlay.polygon.getElement().node.onmouseover);
     removeLink.mouseout(overlay.polygon.getElement().node.onmouseout);
 
     div.append(removeLink);
     div.append("<div style='clear:both;'></div>");
     $("#overlay-staging").append(div);
+}
 
+EUL.OverlayManager.prototype._addOverlayToDZI = function() {
+    var self = this;
+
+    var overlay = self.getNewOverlayFromPoints(self.points);
+
+    // attach overlay to the map
+    overlay.polygon.attachTo(self.viewer);
+
+    // push to overlays for serialization
+    self.newOverlays.push(overlay);
+
+    self.addOMDiv(overlay);
+    
     setTimeout(function() {
         overlay.polygon.redraw(self.viewer);
     }, 500);
@@ -164,6 +199,7 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function() {
 
 }
 
+// TODO: consider moving to Overlay class
 EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     var self = this;
     self.newOverlays.splice(self.newOverlays.indexOf(overlay), 1);
