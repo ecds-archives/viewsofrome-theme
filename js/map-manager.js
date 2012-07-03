@@ -37,7 +37,6 @@ EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
 EUL.Utils.Marker  = No5.Seajax.Shapes.Marker;
 
 EUL.Utils.ClearTemps = function () {
-    console.log('attempting to remove point');
     var temp = $('.temp-point');
     $(temp).remove();
 }
@@ -55,7 +54,7 @@ EUL.Utils.clone = function(obj) {
  *
  *
  */
-EUL.OverlayManager = function(map_container) {
+EUL.OverlayManager = function(options) {
     var self = this;
     if (typeof jQuery == 'undefined') {
         alert("MapManager requires jQuery to function.");
@@ -64,8 +63,12 @@ EUL.OverlayManager = function(map_container) {
     // options
     self.options = {
         precision : 5,
-
+        map_container : "mapcontainer",
+        dzi_path: "/images/map/GeneratedImages/dzc_output.xml",
+        edit_mode: false
     }
+    jQuery.extend(self.options, options);
+
     // member vars
     self.viewer = null;
     self.overlays = [];
@@ -74,8 +77,8 @@ EUL.OverlayManager = function(map_container) {
     self.data = null;
     self.isDirty = false;
 
-    self.viewer = new Seadragon.Viewer("mapcontainer");
-    self.viewer.openDzi("/images/map/GeneratedImages/dzc_output.xml");
+    self.viewer = new Seadragon.Viewer(self.options.map_container);
+    self.viewer.openDzi(self.options.dzi_path);
 
     self.points = [];
 
@@ -86,26 +89,25 @@ EUL.OverlayManager = function(map_container) {
     // listener to add click points to img
     var tempMarker = null;
     self.viewer.tracker.clickHandler = function(tracker, position) {
+        if (!self.options.edit_mode)
+            return;
         var pixel = Seadragon.Utils.getMousePosition(self.event).minus(Seadragon.Utils.getElementPosition(self.viewer.elmt));
         var point = self.viewer.viewport.pointFromPixel(pixel);
-        console.log(point);
+        
         if (!self.points) {self.points = new Array();}
 
         var newPoint = new No5.Seajax.toImageCoordinates(self.viewer, point.x, point.y);
 
         self.points.push(newPoint);
 
-        console.log("attempting overlay");
         var img = document.createElement("img");
         img.src = "/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
         img.className = 'temp-point';
-        console.log(img);
+        
         // $(point.img).addClass('temp-point');
         var anchor = new Seadragon.Point(point.x, point.y);
-        var placement = Seadragon.OverlayPlacement.BOTTOM;
+        var placement = Seadragon.OverlayPlacement.CENTER;
         self.viewer.drawer.addOverlay(img, anchor, placement);
-
-        console.log(point);
     }
 }
 
@@ -125,6 +127,17 @@ EUL.OverlayManager.prototype.getData = function() {
     return self.data;
 }
 
+EUL.OverlayManager.prototype.serializeOverlays = function() {
+    var self = this;
+
+    var tempData = [];
+    for (var i = 0; i < self.newOverlays.length; i++) {
+        tempData.push(self.newOverlays[i].getPointsJSON());
+    }
+
+    return tempData;
+}
+
 EUL.OverlayManager.prototype.reloadData = function() {
     var self = this;
     // TODO: peform ajax to reload data and init new overlays
@@ -140,7 +153,6 @@ EUL.OverlayManager.prototype.reloadData = function() {
 }
 
 EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
-    console.log(this);
     var self = this;
 
     var viewer = self.viewer; // hack because Seajax uses global viewer for this
@@ -150,6 +162,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     var overlay = new EUL.OverlayManager.Overlay();
 
     overlay.polygon = polygon;
+    overlay.points = points.slice();
 
     // TODO: look into default classes and adding htem to the dom?
     // set polygon's fill color
@@ -161,7 +174,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     $(overlay.polygon.div).addClass("overlay-div");
 
     // event handlers for the overlay
-    polyElement = overlay.polygon.getElement();
+    var polyElement = overlay.polygon.getElement();
     polyElement.node.onmouseover = function() {
         polyElement.attr({
             'fill': '#fff'
@@ -200,17 +213,23 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     // actual remove link
     var removeLink = $("<a>");
     removeLink.css({
+        "margin": "0 0 0 15px",
         "float": "left"
     });
     removeLink.html("Remove this Overlay");
     removeLink.click(function() {
-        console.log("Destroying Overlay");
         self.destroyOverlay(overlay);
         $(div).remove();
     });
 
     removeLink.hover(overlay.polygon.getElement().node.onmouseover);
     removeLink.mouseout(overlay.polygon.getElement().node.onmouseout);
+
+    div.hover(overlay.polygon.getElement().node.onmouseover);
+    div.mouseout(overlay.polygon.getElement().node.onmouseout);
+
+    legend.hover(overlay.polygon.getElement().node.onmouseover);
+    legend.mouseout(overlay.polygon.getElement().node.onmouseout);
 
     div.append(removeLink);
     div.append("<div style='clear:both;'></div>");
@@ -235,6 +254,7 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     }, 500);
 
     //clear temp points
+    self.points = [];
     $('img.temp-point').each(function(index, item) {
         self.viewer.drawer.removeOverlay(item);
     });
@@ -250,6 +270,7 @@ EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     // remove overlay
     self.viewer.drawer.removeOverlay(overlay.polygon.div);
 }
+
 EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     var self = this;
 
@@ -257,6 +278,20 @@ EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     self.category = (category != 'undefined') ? category : null;
     self.points = (points != 'undefined') ? points : null;
     self.polygon = (polygon != 'undefined') ? polygon : null;
+}
+
+EUL.OverlayManager.Overlay.prototype.getPointsJSON = function() {
+    var self = this;
+
+    var pointsArray = [];
+    for (i = 0; i < self.points.length; i++) {
+        var temp = {};
+        temp.x = self.points[i].x;
+        temp.y = self.points[i].y;
+
+        pointsArray.push(temp);
+    }
+    return pointsArray;
 }
 
 EUL.OverlayManager.Overlay.prototype.getPolygon = function() {

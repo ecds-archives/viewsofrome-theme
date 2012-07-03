@@ -12,36 +12,49 @@ function get_overlay_data() {
 
     $results = $wpdb->get_results($query, ARRAY_A);
     
-    echo json_encode($results);
-    
-    return 0;
+    // decode json field as assoc. array fore easy json manipulation
+    foreach ($results as &$row) {
+        $row["coords"] = json_decode($row["coords"], true);
+    }
+
+    //echo "<pre>" . print_r($results, true) . "</pre>";
+    header("Content-type: application/json");
+    //echo $results['coords'];
+    echo json_encode(Array("overlays" => $results));
+    exit;
 }
+
+//echo "<pre>".print_r(, true). "</pre>";
 
 function post_overlay_data() {
     global $wpdb;
-    echo $_POST['data'];
-    if(isset($_POST['data'])) {
-        $data = $_POST['data'];
+    //set up varables to be used for insert
+    $tableName = 'wp_ligorio_data';
 
-        //set up varables to be used for insert
-        $tableName = 'wp_ligorio_data';
+    $inputFormat = array(
+        '%s',
+        '%d',
+        '%s'
+    );
+    foreach($_POST['data']['points'] as $overlay) {
         $inputData = array(
-            'title' => $data['title'],
-            'id'    => $data['id'],
-            'coords'=> json_encode($data['data']) //serialize, could possibly json_encoded
+            'title' => 'Collisseum',
+            'id' => 28,
+            'coords' => json_encode(array("points" => $overlay))
         );
-        $inputFormat = array(
-            '%s',
-            '%d',
-            '%s'
-        );
-
-        $wpdb->insert($tableName, $inputData, $coords);
-
-        echo 'Inserted Data';
+        $wpdb->insert($tableName, $inputData, $inputFormat);
     }
 
-    return 0;
+    exit;
+}
+
+if (!function_exists('disableAdminBar')) {
+    function disableAdminBar() {
+        remove_action('wp_head', '_admin_bar_bump_cb');
+        wp_deregister_script('admin-bar');
+        wp_deregister_style('admin-bar');
+        remove_action('wp_footer','wp_admin_bar_render',1000);    
+    }
 }
 
 add_action('wp_ajax_post_overlay_data', 'post_overlay_data');
