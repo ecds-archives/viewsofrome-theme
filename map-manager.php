@@ -24,7 +24,7 @@
         'showposts' => $limit,
         'paged'     => $paged,
         'post_type' => 'page',              // limit to page types
-        'post__not_in'   => array(9, 25, 83)    // look to do this through admin?
+        'post__not_in'   => get_excluded_pages()    // look to do this through admin?
     ));
 ?>
 <script type="text/javascript">
@@ -49,7 +49,7 @@
             data: {
                 action: 'post_overlay_data',
                 data: {
-                    id: 28,
+                    id: $('#post').val(),
                     points: overlayManager.serializeOverlays()
                 }
             },
@@ -112,8 +112,17 @@
     }
 
     #overlay-staging {
-        min-height: 50px;
+        /*min-height: 50px;*/
         border-top: 1px solid #ccc;
+    }
+
+    #post-select {
+        /*border-top: 1px solid #ccc;*/
+    }
+
+    #post {
+        width: 90%;
+        margin: 15px 5%;
     }
 </style>
 
@@ -125,9 +134,19 @@
             <!-- staging area for non saved overlays-->
             <div id="overlay-staging">
             </div>
+            <?php if (have_posts()) : the_post(); ?>
+            <div id="post-select">
+                <select id="post">
+                    <?php while (have_posts()) : the_post(); ?>
+                    <option value="<?php the_ID(); ?>"><?php the_title(); ?></option>
+                    <?php endwhile; ?>
+                </select>
+                <div class="clearfix"></div>
+            </div>
+            <?php endif; ?>
         </div>
         <input type="button" onclick="javascript:overlayManager._addOverlayToDZI();" value="Add Shape" />
-        <input type="button" onclick="javascript:void(0);" value="Save Overlays" />
+        <input type="button" onclick="javascript:saveOverlays();" value="Save Overlays" />
         <div class="clearfix"></div>
     </div>
 </div>

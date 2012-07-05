@@ -30,7 +30,7 @@ function post_overlay_data() {
     global $wpdb;
     //set up varables to be used for insert
     $tableName = 'wp_ligorio_data';
-
+    
     $inputFormat = array(
         '%s',
         '%d',
@@ -39,9 +39,10 @@ function post_overlay_data() {
     foreach($_POST['data']['points'] as $overlay) {
         $inputData = array(
             'title' => 'Collisseum',
-            'id' => 28,
+            'id' => $_POST['data']['id'],
             'coords' => json_encode(array("points" => $overlay))
         );
+        //echo json_encode($inputData);
         $wpdb->insert($tableName, $inputData, $inputFormat);
     }
 
