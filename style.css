@@ -119,7 +119,7 @@ Template: responsive
 /*
  *  List page styles
  */
-
+.page {
     clear:left;
     margin: 0 0 15px 0;
 }
@@ -143,6 +143,7 @@ Template: responsive
 .page .read-more {
     float: right;
 }
+
 
 .widget-simpletags .st-tag-cloud {
     -webkit-border-bottom-left-radius: 6px;
