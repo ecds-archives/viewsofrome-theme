@@ -60,4 +60,18 @@ if (!function_exists('disableAdminBar')) {
 add_action('wp_ajax_post_overlay_data', 'post_overlay_data');
 add_action('wp_ajax_get_overlay_data', 'get_overlay_data');
 add_action('wp_ajax_nopriv_get_overlay_data', 'get_overlay_data');
+
+function get_excluded_pages($as_string = false) {
+	$excluded_ids = Array(
+		9,		// Article List
+		25, 	// About Us
+		123,		// Recent Articles
+		127		// Sitemap
+	);
+	
+	if ($as_string)
+		return implode(",", $excluded_ids);
+	return $excluded_ids;
+}
+
 ?>

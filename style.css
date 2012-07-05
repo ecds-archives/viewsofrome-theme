@@ -32,6 +32,36 @@ Template: responsive
 }
 
 /*
+ * Header styles
+ */
+#header {
+    margin-top: 5px;
+}
+
+#header #logoWrapper {
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border: 1px solid #000;
+    clear:left;
+    background: url(images/header-image.png) #30498f;
+    height: 108px; /*make height = to height of header-image.png */
+
+}
+
+#header #logo .site-name {
+    margin: 10px 0 0 20px;
+}
+
+#header #logo .site-name a {
+    color: #fff;
+}
+
+#header #logo .site-description {
+    color: #d2b000;
+    margin: 10px 0 0 35px;
+}
+
+/*
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
@@ -67,12 +97,53 @@ Template: responsive
 
 #overlayDrawer {
     width: 50px;
+    width: 920px;
+    height: 500px;
+    margin: 20px auto;
+    border: 1px solid #ccc;
+}
+
+#mapOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width:300px;
+    height: 100%; /* size to full height of parent container */
+    background-color: #000;
+    opacity: .85;
+    color: #fff;
+    padding-left:15px;
 }
 
 
 /*
  *  List page styles
  */
+
+    clear:left;
+    margin: 0 0 15px 0;
+}
+
+.page img.wp-post-image {
+    width: auto;
+    max-width: 125px;
+    margin: 5px 15px;
+    display: inline;
+    float: left;
+}
+
+.page .list-col {
+    width: 96%;
+}
+.page .list-right-col {
+    width: 70%;
+    display: inline-block;
+    float:left;
+}
+.page .read-more {
+    float: right;
+}
+
 .widget-simpletags .st-tag-cloud {
     -webkit-border-bottom-left-radius: 6px;
     -webkit-border-bottom-right-radius: 6px;
