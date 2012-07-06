@@ -33,9 +33,7 @@
                     var drawer = $('#mapOverlay');
                     drawer.find("#overlay-title h2").html(post.post_title);
                     drawer.find("#overlay-data").html(post.post_excerpt);
-
-                    $("#overlayDrawer").hide();
-                    drawer.show('slide');
+                    drawer.show('medium');
                 }
             });
         }
@@ -52,12 +50,10 @@
     });
 
     $('#hide').live('click', function() {
-        $('#mapOverlay').hide();
-        $('#overlayDrawer').show();
+        $('#mapOverlay').hide("medium");
     });
     $('#showOverlay').live('click', function() {
-        $('#overlayDrawer').hide();
-        $('#mapOverlay').show();
+        $('#mapOverlay').show("medium");
     });
     $('#load').live('click', function() {
         $.ajax({
@@ -79,19 +75,21 @@
 <div id="mapContainer">
     <div id='map'></div>
     <div id='mapOverlayWrapper'>
-        <div id="mapOverlay">
-            <div id="overlay-title">
-                <h2>The Colosseum</h2>
-            </div>
-            <div id="overlay-data">
-            </div>
-            <div>
-                <a id="hide">Hide</a><br />
-                <a id="load">Load</a>
-            </div>
-        </div>
         <div id="overlayDrawer">
-            <a id="showOverlay">>></a>
+            <div id="mapOverlay">
+                <div id="overlay-title">
+                    <h2>The Colosseum</h2>
+                </div>
+                <div id="overlay-data">
+                </div>
+                <div>
+                    <a id="hide">Hide</a><br />
+                    <a id="load">Load</a>
+                </div>
+            </div>
+            <div id="drawerHandle">
+                <a id="showOverlay">>></a>
+            </div>
         </div>
     </div>
 </div>
