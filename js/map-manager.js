@@ -32,6 +32,10 @@ EUL.Utils.Colors = {
     ]
 }
 
+EUL.Utils.Colors.RED    = EUL.Utils.Colors.choices[0];
+EUL.Utils.Colors.GREEN   = EUL.Utils.Colors.choices[1];
+EUL.Utils.Colors.BLUE  = EUL.Utils.Colors.choices[2];
+
 
 EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
 EUL.Utils.Marker  = No5.Seajax.Shapes.Marker;
@@ -88,9 +92,17 @@ EUL.OverlayManager = function(options) {
     //Seadragon.Utils.addEvent(self.viewer.elmt, "mousemove", self.showMouse);
     // listener to add click points to img
     var tempMarker = null;
+    self.defaultClickHandler = self.viewer.tracker.clickHandler;
+
+    // TODO: look into only overriding this if we are in edit mode
     self.viewer.tracker.clickHandler = function(tracker, position) {
-        if (!self.options.edit_mode)
+        if (!self.options.edit_mode) {
             return;
+        }
+        if (!self.event.shiftKey) {
+            return;
+        }
+
         var pixel = Seadragon.Utils.getMousePosition(self.event).minus(Seadragon.Utils.getElementPosition(self.viewer.elmt));
         var point = self.viewer.viewport.pointFromPixel(pixel);
         
@@ -119,6 +131,16 @@ EUL.OverlayManager.prototype.showMouse = function(event) {
 EUL.OverlayManager.prototype.getViewer = function() {
     var self = this;
     return self.viewer;
+}
+
+EUL.OverlayManager.prototype.setData = function(data) {
+    var self = this;
+    self.data = data;
+
+    for (var i = 0; i < self.data.overlays.length; i++) {
+        self.addOverlayFromJSON(self.data.overlays[i]);
+
+    }
 }
 
 EUL.OverlayManager.prototype.getData = function() {
@@ -166,7 +188,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
 
     // TODO: look into default classes and adding htem to the dom?
     // set polygon's fill color
-    var fillColor = EUL.Utils.Colors.getColor();
+    var fillColor = (self.options.edit_mode) ? EUL.Utils.Colors.getColor() : EUL.Utils.Colors.BLUE;
     overlay.polygon.getElement().attr({
         "fill" : fillColor, 
         "fill-opacity" : 0.5
@@ -186,8 +208,11 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
             'fill': fillColor
         })
     }
-
-    polyElement.node.onclick = function() {}
+    if (!self.options.edit_mode) {
+        polyElement.node.onclick = function() {
+            self.options.overlay_click_callback(overlay);
+        }
+    }
 
     return overlay;
 }
@@ -236,10 +261,10 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     $("#overlay-staging").append(div);
 }
 
-EUL.OverlayManager.prototype._addOverlayToDZI = function() {
+EUL.OverlayManager.prototype._addOverlayToDZI = function(newOverlay) {
     var self = this;
-
-    var overlay = self.getNewOverlayFromPoints(self.points);
+    
+    var overlay = (newOverlay == undefined) ? self.getNewOverlayFromPoints(self.points) : newOverlay;
 
     // attach overlay to the map
     overlay.polygon.attachTo(self.viewer);
@@ -260,8 +285,28 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function() {
     });
 }
 
-EUL.OverlayManager.prototype.addOverlayFromJSON = function() {
+EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
+    var self = this;
+    var points = [];
+    for (var i = 0; i < json.coords.points.length; i++ ) {
+        var tempPoint = new No5.Seajax.toWorldCoordinates(
+            self.viewer, 
+            parseFloat(json.coords.points[i].x), 
+            parseFloat(json.coords.points[i].y)
+        );
+        var tempPoint = new No5.Seajax.toImageCoordinates(self.viewer, tempPoint.x, tempPoint.y);
 
+        points.push(tempPoint);
+    }
+
+    var overlay = self.getNewOverlayFromPoints(points);
+    overlay.id = json.id;
+
+    self._addOverlayToDZI(overlay);
+
+    //setTimeout(function() {
+        overlay.polygon.redraw(self.viewer);
+    //}, 500);
 }
 
 // TODO: consider moving to Overlay class

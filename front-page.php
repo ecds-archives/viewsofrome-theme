@@ -5,21 +5,52 @@
  *
  */
 
- wp_enqueue_script('seajax');
+    disableAdminBar();
+
+    wp_enqueue_script('seajax');
+    wp_enqueue_script('eul-overlay-manager');
 ?>
 
 <?php get_header(); ?>
 
 <script type="text/javascript">
   var viewer = null;
-  function init() {
-    viewer = new Seadragon.Viewer('map');
-    viewer.openDzi('/images/map/GeneratedImages/dzc_output.xml');
-  }
 
-  Seadragon.Utils.addEvent(window, 'load', init);
   var $ = jQuery.noConflict();
   $(document).ready(function() {
+    overlayManager = new EUL.OverlayManager({
+        map_container: "map",
+        overlay_click_callback: function(overlay) {
+            console.log(overlay.id);
+            $.ajax({
+                url: '/wp-admin/admin-ajax.php',
+                data: {
+                    action: 'get_post_data',
+                    id: overlay.id
+                },
+                success: function(post) {
+                    console.log(post);
+                    var drawer = $('#mapOverlay');
+                    drawer.find("#overlay-title h2").html(post.post_title);
+                    drawer.find("#overlay-data").html(post.post_excerpt);
+
+                    $("#overlayDrawer").hide();
+                    drawer.show('slide');
+                }
+            });
+        }
+    });
+
+    $.ajax({
+        url: '/wp-admin/admin-ajax.php',
+        data: {
+            action: 'get_overlay_data'
+        },
+        success: function(results) {
+            overlayManager.setData(results);
+        }
+    });
+
     $('#hide').live('click', function() {
         $('#mapOverlay').hide();
         $('#overlayDrawer').show();
@@ -40,29 +71,27 @@
     });
   });
 </script>
-
+<style>
+    #overlay-data {
+        overflow: hidden;
+    }
+</style>
 <div id="mapContainer">
     <div id='map'></div>
     <div id='mapOverlayWrapper'>
         <div id="mapOverlay">
             <div id="overlay-title">
                 <h2>The Colosseum</h2>
-                <?php
-                    $arr = array(
-                        'category'  => "Arena",
-                        'pageId'    => '/colosseum/'
-                    );
-    
-                    echo json_encode($arr);
-                ?>
+            </div>
+            <div id="overlay-data">
             </div>
             <div>
-                <a id="hide" href="#">Hide</a><br />
-                <a id="load" href="#">Load</a>
+                <a id="hide">Hide</a><br />
+                <a id="load">Load</a>
             </div>
         </div>
         <div id="overlayDrawer">
-            <a id="showOverlay" href="#">>></a>
+            <a id="showOverlay">>></a>
         </div>
     </div>
 </div>
