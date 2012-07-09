@@ -23,7 +23,7 @@
         overlay_click_callback: function(overlay) {
             console.log(overlay.id);
             $.ajax({
-                url: '/wp-admin/admin-ajax.php',
+                url: '/vor/wp-admin/admin-ajax.php',
                 data: {
                     action: 'get_post_data',
                     id: overlay.id
@@ -40,7 +40,7 @@
     });
 
     $.ajax({
-        url: '/wp-admin/admin-ajax.php',
+        url: '/vor/wp-admin/admin-ajax.php',
         data: {
             action: 'get_overlay_data'
         },
@@ -57,7 +57,7 @@
     });
     $('#load').live('click', function() {
         $.ajax({
-            url: '/wp-admin/admin-ajax.php',
+            url: '/vor/wp-admin/admin-ajax.php',
             type: 'GET',
             data: {action: 'get_overlay_data'},
             success: function(results) {

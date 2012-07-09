@@ -44,7 +44,7 @@
 
     function saveOverlays() {
         $.ajax({
-            url: '/wp-admin/admin-ajax.php',
+            url: '/vor/wp-admin/admin-ajax.php',
             type: 'POST',
             data: {
                 action: 'post_overlay_data',
@@ -62,7 +62,7 @@
     function getOverlays() {
 
         $.ajax({
-            url: '/wp-admin/admin-ajax.php',
+            url: '/vor/wp-admin/admin-ajax.php',
             data: {
                 action: 'get_overlay_data'
             },

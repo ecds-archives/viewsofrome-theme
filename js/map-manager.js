@@ -68,7 +68,7 @@ EUL.OverlayManager = function(options) {
     self.options = {
         precision : 5,
         map_container : "mapcontainer",
-        dzi_path: "/images/map/GeneratedImages/dzc_output.xml",
+        dzi_path: "/vor/images/map/GeneratedImages/dzc_output.xml",
         edit_mode: false
     }
     jQuery.extend(self.options, options);
@@ -113,7 +113,7 @@ EUL.OverlayManager = function(options) {
         self.points.push(newPoint);
 
         var img = document.createElement("img");
-        img.src = "/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
+        img.src = "/vor/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
         img.className = 'temp-point';
         
         // $(point.img).addClass('temp-point');
