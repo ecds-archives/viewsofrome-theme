@@ -82,6 +82,7 @@
         border: 1px solid black;
         color: white;
         float: left;
+        margin-top: 10px;
     }
 
     #map-manager-controls {
