@@ -50,11 +50,17 @@
                 action: 'post_overlay_data',
                 data: {
                     id: $('#post').val(),
-                    points: overlayManager.serializeOverlays()
+                    points: overlayManager.serializeOverlays(),
+                    overwrite: ($("#overwrite").attr("checked") == "checked") ? true : false
                 }
             },
-            success: function(results) {
-                console.log(results);
+            success: function(data, textStatus, jqXHR) {
+                console.log("jqXHR:");
+                console.log(jqXHR);
+                if (textStatus == "success") {
+                    // hide loader
+                    // alert success
+                }
             }
         });
     }
@@ -105,7 +111,7 @@
     #overlays-container {
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        margin-top: 10px;
+        margin: 10px 0px;
     }
 
     #overlays-container h2 {
@@ -128,6 +134,9 @@
 </style>
 
 <div id="mapManager">
+    <div class="information">
+        Explanation of usage goes here
+    </div>
     <div id="mapcontainer"></div>
     <div id="map-manager-controls">
         <div id="overlays-container">
@@ -145,6 +154,10 @@
                 <div class="clearfix"></div>
             </div>
             <?php endif; ?>
+            <div style="margin:0 10px 10px 10px;">
+                Clear existing overlays for this article? <input id="overwrite" type="checkbox">
+            </div>
+            <div class="clearfix"></div>
         </div>
         <input type="button" onclick="javascript:overlayManager._addOverlayToDZI();" value="Add Shape" />
         <input type="button" onclick="javascript:saveOverlays();" value="Save Overlays" />

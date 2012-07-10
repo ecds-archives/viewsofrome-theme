@@ -52,15 +52,25 @@ function get_overlay_data() {
     exit;
 }
 
-//echo "<pre>".print_r(, true). "</pre>";
-
+//TODO: 
 function post_overlay_data() {
     global $wpdb;
     //set up varables to be used for insert
+    //echo "<pre>" . print_r($_POST, true) . "</pre>";
+
     $tableName = 'wp_ligorio_data';
+    if ($_POST["data"]["overwrite"] == "true") {
+        // delete rows corresponding to id from wp_ligorio_data
+        $wpdb->query(
+            $wpdb->prepare(
+                "DELETE from $tableName
+                  WHERE id = %d",
+                $_POST["data"]["id"]
+            )
+        );
+    } 
     
     $inputFormat = array(
-        //'%s',
         '%d',
         '%s'
     );
@@ -73,7 +83,7 @@ function post_overlay_data() {
         //echo json_encode($inputData);
         $wpdb->insert($tableName, $inputData, $inputFormat);
     }
-
+    
     exit;
 }
 
