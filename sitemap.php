@@ -2,7 +2,7 @@
 /**
  * Sitemap Template
  *
-   Template Name: Sitemap
+ * Template Name: Sitemap
  *
  * @file           sitemap.php
  * @package        Responsive 

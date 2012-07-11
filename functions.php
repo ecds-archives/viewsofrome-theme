@@ -35,7 +35,12 @@ if (!function_exists('disableAdminBar')) {
 function get_overlay_data() {
     global $wpdb;
     
-    $query = "select id, coords from wp_ligorio_data;";
+    $query = "select id, coords from wp_ligorio_data";
+
+    if ($_GET["data"]["id"]) {
+        $query .= " where id = " . $_GET["data"]["id"];
+    }
+    //echo $query;
 
     $results = $wpdb->get_results($query, ARRAY_A);
     
@@ -52,11 +57,9 @@ function get_overlay_data() {
     exit;
 }
 
-//TODO: 
+
 function post_overlay_data() {
     global $wpdb;
-    //set up varables to be used for insert
-    //echo "<pre>" . print_r($_POST, true) . "</pre>";
 
     $tableName = 'wp_ligorio_data';
     if ($_POST["data"]["overwrite"] == "true") {
@@ -71,8 +74,8 @@ function post_overlay_data() {
     } 
     
     $inputFormat = array(
-        '%d',
-        '%s'
+        '%d',       // ID of article
+        '%s'        // json encoded points array
     );
     foreach($_POST['data']['points'] as $overlay) {
         $inputData = array(

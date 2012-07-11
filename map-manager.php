@@ -29,19 +29,43 @@
 ?>
 <script type="text/javascript">
     var overlayManager;
-    //function init() {
-        $(document).ready(function() {
-            overlayManager = new EUL.OverlayManager({
-                edit_mode: true
-            });
-            //console.log(overlayManager.getViewer());
-            Seadragon.Utils.addEvent(overlayManager.getViewer().elmt, "mousemove", showMouse);
+
+    $(document).ready(function() {
+        overlayManager = new EUL.OverlayManager({
+            edit_mode: true
         });
-   // }
+        
+        Seadragon.Utils.addEvent(overlayManager.getViewer().elmt, "mousemove", showMouse);
+
+
+        // on change listener to load overlays for selected article
+        $("#post").change(function() {
+            var self = this;
+            if ($(self).val() != "none") {
+                $.ajax({
+                    url: '/vor/wp-admin/admin-ajax.php',
+                    data: {
+                        action: 'get_overlay_data',
+                        data: {
+                            id: $(self).val()
+                        }
+                    },
+                    success: function(results) {
+                        // set the data on overlay manager which draws the current 
+                        //polygons for the selected article
+                        overlayManager.setData(results);
+                    }
+                });
+            }
+        });
+    });
+
+    // fixes event propagation bug in ff/ie
     function showMouse(event ) {
         overlayManager.event = event;
     }
 
+    // TODO: add loading icon for saving
     function saveOverlays() {
         $.ajax({
             url: '/vor/wp-admin/admin-ajax.php',
@@ -65,8 +89,9 @@
         });
     }
     var data;
-    function getOverlays() {
 
+    // TODO: can we remove this? was this only for testing w/out reload?
+    function getOverlays() {
         $.ajax({
             url: '/vor/wp-admin/admin-ajax.php',
             data: {
@@ -77,8 +102,8 @@
             }
         });
     }
-
 </script>
+
 <style>
     
     #mapcontainer {
@@ -147,6 +172,7 @@
             <?php if (have_posts()) : the_post(); ?>
             <div id="post-select">
                 <select id="post">
+                    <option value="none">Select an article</option>
                     <?php while (have_posts()) : the_post(); ?>
                     <option value="<?php the_ID(); ?>"><?php the_title(); ?></option>
                     <?php endwhile; ?>
