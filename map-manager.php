@@ -156,6 +156,10 @@
         width: 90%;
         margin: 15px 5%;
     }
+
+    .information { 
+        margin-top: 10px;
+    }
 </style>
 
 <div id="mapManager">
