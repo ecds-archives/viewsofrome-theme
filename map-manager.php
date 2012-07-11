@@ -40,6 +40,10 @@
 
         // on change listener to load overlays for selected article
         $("#post").change(function() {
+            // remove overlays
+            // TODO: look at way to keep in memory to prevent unnecessary ajax calls
+            // TODO: should we change teh EUL.Utils.Colors index back to zero
+            overlayManager.destroyOverlays(true);
             var self = this;
             if ($(self).val() != "none") {
                 $.ajax({
@@ -79,9 +83,8 @@
                 }
             },
             success: function(data, textStatus, jqXHR) {
-                console.log("jqXHR:");
-                console.log(jqXHR);
                 if (textStatus == "success") {
+                    //console.log(data);
                     // hide loader
                     // alert success
                 }
@@ -98,7 +101,7 @@
                 action: 'get_overlay_data'
             },
             success: function(results) {
-                console.log(results);
+                //console.log(results);
             }
         });
     }

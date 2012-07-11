@@ -157,6 +157,8 @@ EUL.OverlayManager.prototype.serializeOverlays = function() {
         tempData.push(self.newOverlays[i].getPointsJSON());
     }
 
+    //console.log(tempData);
+
     return tempData;
 }
 
@@ -307,6 +309,20 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
     //setTimeout(function() {
         overlay.polygon.redraw(self.viewer);
     //}, 500);
+}
+
+EUL.OverlayManager.prototype.destroyOverlays = function(remove_manager_divs) {
+    var self = this;
+
+    for (var i = 0; i < self.newOverlays.length; i++) {
+        self.destroyOverlay(self.newOverlays[i]);
+    }
+
+    if (remove_manager_divs) {
+        $(".remove-link").remove();
+    }
+
+    self.newOverlays = [];
 }
 
 // TODO: consider moving to Overlay class

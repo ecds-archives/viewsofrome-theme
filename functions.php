@@ -62,16 +62,14 @@ function post_overlay_data() {
     global $wpdb;
 
     $tableName = 'wp_ligorio_data';
-    if ($_POST["data"]["overwrite"] == "true") {
-        // delete rows corresponding to id from wp_ligorio_data
-        $wpdb->query(
-            $wpdb->prepare(
-                "DELETE from $tableName
-                  WHERE id = %d",
-                $_POST["data"]["id"]
-            )
-        );
-    } 
+    $wpdb->query(
+        $wpdb->prepare(
+            "DELETE from $tableName
+              WHERE id = %d",
+            $_POST["data"]["id"]
+        )
+    );
+    
     
     $inputFormat = array(
         '%d',       // ID of article
@@ -86,6 +84,8 @@ function post_overlay_data() {
         //echo json_encode($inputData);
         $wpdb->insert($tableName, $inputData, $inputFormat);
     }
+
+    // echo a success message
     
     exit;
 }
