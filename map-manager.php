@@ -16,17 +16,18 @@
 ?>
 <?php get_header(); ?>
 <?php
-    $limit = get_option('posts_per_page');
-    $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
+    //$limit = get_option('posts_per_page');
+    //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     query_posts(array(
-        'order'     => 'ASC',               // sort order, through admin?
         'orderby'  => 'title',              // sort field, through admin?
-        'showposts' => $limit,
-        'paged'     => $paged,
+        'order'     => 'DESC',               // sort order, through admin?
+        'posts_per_page' => -1,
+        'nopaging' => true,
         'post_type' => 'page',              // limit to page types
         'post__not_in'   => get_excluded_pages()    // look to do this through admin?
     ));
 ?>
+<!-- EXCLUDED IDS: <?php echo get_excluded_pages(true); ?> -->
 <script type="text/javascript">
     var overlayManager;
 
@@ -69,26 +70,34 @@
         overlayManager.event = event;
     }
 
+    var isSaving = false;
     // TODO: add loading icon for saving
     function saveOverlays() {
-        $.ajax({
-            url: '/vor/wp-admin/admin-ajax.php',
-            type: 'POST',
-            data: {
-                action: 'post_overlay_data',
+        if (!isSaving) {
+            isSaving = true;
+            $("#loader").show();
+            $.ajax({
+                url: '/vor/wp-admin/admin-ajax.php',
+                type: 'POST',
                 data: {
-                    id: $('#post').val(),
-                    points: overlayManager.serializeOverlays(),
+                    action: 'post_overlay_data',
+                    data: {
+                        id: $('#post').val(),
+                        points: overlayManager.serializeOverlays() //,
+                        //overwrite: ($("#overwrite").attr("checked") == "checked") ? true : false
+                    }
+                },
+                success: function(data, textStatus, jqXHR) {
+                    if (textStatus == "success") {
+                        console.log(data);
+                        $("#loader").hide();
+                        // hide loader
+                        // alert success
+                        isSaving = false;
+                    }
                 }
-            },
-            success: function(data, textStatus, jqXHR) {
-                if (textStatus == "success") {
-                    // console.log(data);
-                    // hide loader
-                    // alert success
-                }
-            }
-        });
+            });
+        }
     }
     var data;
 
@@ -104,6 +113,7 @@
             }
         });
     }
+
 </script>
 
 <style>
@@ -175,6 +185,7 @@
             <!-- staging area for non saved overlays-->
             <div id="overlay-staging">
             </div>
+
             <?php if (have_posts()) : the_post(); ?>
             <div id="post-select">
                 <select id="post">
@@ -186,10 +197,17 @@
                 <div class="clearfix"></div>
             </div>
             <?php endif; ?>
+            <!--<div style="margin:0 10px 10px 10px;">
+                Clear existing overlays for this article? <input id="overwrite" type="checkbox">
+            </div>-->
             <div class="clearfix"></div>
         </div>
         <input type="button" onclick="javascript:overlayManager._addOverlayToDZI();" value="Add Shape" />
         <input type="button" onclick="javascript:saveOverlays();" value="Save Overlays" />
+        <div id="loader" style="display:none;float:right">
+            <div style="float: left; padding: 7px 0 0 0; ">Loading...</div><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/loading.gif" style="height: 30px;"/>
+            <div class="clearfix"></div>
+        </div>
         <div class="clearfix"></div>
     </div>
 </div>
