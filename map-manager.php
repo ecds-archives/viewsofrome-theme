@@ -79,7 +79,6 @@
                 data: {
                     id: $('#post').val(),
                     points: overlayManager.serializeOverlays(),
-                    overwrite: ($("#overwrite").attr("checked") == "checked") ? true : false
                 }
             },
             success: function(data, textStatus, jqXHR) {
@@ -187,9 +186,6 @@
                 <div class="clearfix"></div>
             </div>
             <?php endif; ?>
-            <div style="margin:0 10px 10px 10px;">
-                Clear existing overlays for this article? <input id="overwrite" type="checkbox">
-            </div>
             <div class="clearfix"></div>
         </div>
         <input type="button" onclick="javascript:overlayManager._addOverlayToDZI();" value="Add Shape" />
