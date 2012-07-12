@@ -84,7 +84,7 @@
             },
             success: function(data, textStatus, jqXHR) {
                 if (textStatus == "success") {
-                    //console.log(data);
+                    // console.log(data);
                     // hide loader
                     // alert success
                 }

@@ -246,6 +246,7 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     removeLink.html("Remove this Overlay");
     removeLink.click(function() {
         self.destroyOverlay(overlay);
+        self.newOverlays = self.newOverlays.splice(1, self.newOverlays.indexOf(overlay));
         $(div).remove();
     });
 
@@ -321,7 +322,6 @@ EUL.OverlayManager.prototype.destroyOverlays = function(remove_manager_divs) {
     if (remove_manager_divs) {
         $(".remove-link").remove();
     }
-
     self.newOverlays = [];
 }
 

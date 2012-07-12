@@ -57,32 +57,39 @@ function get_overlay_data() {
     exit;
 }
 
+function delete_post_data() {
+    global $wpdb;
+    $wpdb->query(
+        "DELETE from wp_ligorio_data where id = 76"
+    );
+
+    exit;
+}
 
 function post_overlay_data() {
     global $wpdb;
 
     $tableName = 'wp_ligorio_data';
-    $wpdb->query(
-        $wpdb->prepare(
-            "DELETE from $tableName
-              WHERE id = %d",
-            $_POST["data"]["id"]
-        )
-    );
-    
+    //if ($_POST["data"]["overwrite"] == "true") {
+    // delete rows corresponding to id from wp_ligorio_data
+    $query = $wpdb->prepare("delete from " . $tableName . " where id = " . $_POST['data']['id']);
+    $wpdb->query($query);
+    //}
     
     $inputFormat = array(
         '%d',       // ID of article
         '%s'        // json encoded points array
     );
-    foreach($_POST['data']['points'] as $overlay) {
-        $inputData = array(
-            //'title' => 'Collisseum',
-            'id' => $_POST['data']['id'],
-            'coords' => json_encode(array("points" => $overlay))
-        );
-        //echo json_encode($inputData);
-        $wpdb->insert($tableName, $inputData, $inputFormat);
+    if (count($_POST['data']['points']) > 0) {
+        foreach($_POST['data']['points'] as $overlay) {
+            $inputData = array(
+                //'title' => 'Collisseum',
+                'id' => $_POST['data']['id'],
+                'coords' => json_encode(array("points" => $overlay))
+            );
+            //echo json_encode($inputData);
+            $wpdb->insert($tableName, $inputData, $inputFormat);
+        }
     }
 
     // echo a success message
@@ -114,5 +121,8 @@ add_action('wp_ajax_nopriv_get_overlay_data', 'get_overlay_data');
 
 add_action('wp_ajax_get_post_data', 'get_post_data');
 add_action('wp_ajax_nopriv_get_post_data', 'get_post_data');
+
+add_action('wp_ajax_delete_post_data', 'delete_post_data');
+add_action('wp_ajax_nopriv_delete_post_data', 'delete_post_data');
 
 ?>
