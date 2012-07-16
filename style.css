@@ -65,10 +65,6 @@ Template: responsive
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
-    /*width: 98%;
-    height:98%;
-    background-color: #c3bda7;
-    */
     position:relative;
     margin-top: 20px;
 }
@@ -77,18 +73,12 @@ Template: responsive
     width: 600px;
     height: 500px;
     margin: 0px auto;
+    float: right;
 }
 
-
-#overlayDrawer {
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #000;
-    opacity: .85;
-    color: #fff;
-    padding-left: 15px;
-    height: 100%;
+#mapOverlayWrapper {
+    width: 318px;
+    float: left;
 }
 
 #mapOverlay {
@@ -96,7 +86,14 @@ Template: responsive
 }
 
 #overlayDrawer {
-    /*width: 50px;*/
+    background-color: #000;
+    opacity: .85;
+    color: #fff;
+    padding-left: 15px;
+    height: 100%;
+}
+
+#overlayDrawer {
     height: 500px;
     border: 1px solid #ccc;
 }
@@ -114,7 +111,7 @@ Template: responsive
     opacity: .85;
     color: #fff;
     padding-left:15px;
-    display:none;
+    /*display:none;*/
 }
 
 #mapOverlay,

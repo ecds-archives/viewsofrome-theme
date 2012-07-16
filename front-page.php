@@ -73,25 +73,24 @@
     }
 </style>
 <div id="mapContainer">
-    <div id='map'></div>
     <div id='mapOverlayWrapper'>
         <div id="overlayDrawer">
             <div id="mapOverlay">
                 <div id="overlay-title">
-                    <h2>The Colosseum</h2>
+                    <h2>Vews of Rome</h2>
                 </div>
                 <div id="overlay-data">
-                </div>
-                <div>
-                    <a id="hide">Hide</a><br />
-                    <a id="load">Load</a>
+                    A look into the detailed Ligoro Map of Rome.
                 </div>
             </div>
-            <div id="drawerHandle">
+            <!-- <div id="drawerHandle">
                 <a id="showOverlay">>></a>
-            </div>
+            </div> -->
         </div>
+        <div class="clearfix"></div>
     </div>
+    <div id='map'></div>
+    <div class="clearfix"></div>
 </div>
 
 <?php get_footer(); ?>
