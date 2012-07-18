@@ -19,12 +19,12 @@
     //$limit = get_option('posts_per_page');
     //$paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     query_posts(array(
-        'orderby'  => 'title',              // sort field, through admin?
-        'order'     => 'DESC',               // sort order, through admin?
-        'posts_per_page' => -1,
-        'nopaging' => true,
-        'post_type' => 'page',              // limit to page types
-        'post__not_in'   => get_excluded_pages()    // look to do this through admin?
+        'orderby'           => 'title',              // sort field, through admin?
+        'order'             => 'DESC',               // sort order, through admin?
+        'posts_per_page'    => -1,
+        'nopaging'          => true,
+        'post_type'         => 'page',              // limit to page types
+        'post__not_in'      => get_excluded_pages()    // look to do this through admin?
     ));
 ?>
 <!-- EXCLUDED IDS: <?php echo get_excluded_pages(true); ?> -->
