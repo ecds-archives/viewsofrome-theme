@@ -74,6 +74,7 @@ Template: responsive
     height: 500px;
     margin: 0px auto;
     float: right;
+    background-color: #ccc;
 }
 
 #mapOverlayWrapper {
