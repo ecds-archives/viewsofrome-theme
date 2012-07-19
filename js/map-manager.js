@@ -4,6 +4,7 @@
 //  refactor _addOverlayToDZI
 
 // TODO: check if dependencies are loaded
+// TODO: add more color options
 Array.prototype.peek = function() {
     if (this.length <= 0)
         return undefined;
@@ -217,7 +218,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
         });
         
     }
-    
+
     // TODO: this shoudl be refactored in case we want to be able to use options.overlay_click_callback in manager mode
     if (!self.options.edit_mode) {
         polyElement.node.onclick = function() {
