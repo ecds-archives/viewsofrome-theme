@@ -69,12 +69,15 @@ EUL.OverlayManager = function(options) {
         precision : 5,
         map_container : "mapcontainer",
         dzi_path: "/vor/images/map/GeneratedImages/dzc_output.xml",
-        edit_mode: false
+        edit_mode: false,
+        center_poly_on_click: true,
+        padding: 0.05
     }
     jQuery.extend(self.options, options);
 
     // member vars
     self.viewer = null;
+    self.activeOverlay = null;
     self.overlays = [];
     self.newOverlays = [];
     self.newOverlayPoints = [];
@@ -82,6 +85,7 @@ EUL.OverlayManager = function(options) {
     self.isDirty = false;
 
     self.viewer = new Seadragon.Viewer(self.options.map_container);
+    viewer = self.viewer;
     self.viewer.openDzi(self.options.dzi_path);
 
     self.points = [];
@@ -157,8 +161,6 @@ EUL.OverlayManager.prototype.serializeOverlays = function() {
         tempData.push(self.newOverlays[i].getPointsJSON());
     }
 
-    //console.log(tempData);
-
     return tempData;
 }
 
@@ -206,13 +208,49 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     }
 
     polyElement.node.onmouseout = function() {
+        // early exit so we don't reset the activated overlay
+        if (self.activeOverlay == overlay) 
+            return;
+
         polyElement.attr({
             'fill': fillColor
-        })
+        });
+        
     }
+    
+    // TODO: this shoudl be refactored in case we want to be able to use options.overlay_click_callback in manager mode
     if (!self.options.edit_mode) {
         polyElement.node.onclick = function() {
             self.options.overlay_click_callback(overlay);
+
+            // reset activeOverlay fill color
+            if (self.activeOverlay != null) {
+                self.activeOverlay.polygon.getElement().attr({
+                    'fill': fillColor
+                });
+            }
+            self.activeOverlay = overlay;
+            overlay.polygon.getElement().attr({
+                'fill': '#fff'
+            });
+
+            // TODO: do we want this functionality in manager mode as well?
+            if (self.options.center_poly_on_click) {
+                var poly = overlay.polygon;
+                var overlayOrigin = No5.Seajax.toWorldCoordinates(self.viewer, poly.origin.x, poly.origin.y);
+                var overlayDims = No5.Seajax.toWorldCoordinates(self.viewer, poly.width, poly.height);
+
+                // compute bounding rectangle for overlay so that we can zoom 
+                // and pan to ensure it's in the viewport
+                var boundingRect = new Seadragon.Rect(
+                    overlayOrigin.x - self.options.padding,      // origin x
+                    overlayOrigin.y - self.options.padding,      // origin y
+                    overlayDims.x + (2 * self.options.padding),  // padding area width
+                    overlayDims.y + (2 * self.options.padding)   // padding area height
+                );
+
+                self.viewer.viewport.fitBounds(boundingRect);
+            }
         }
     }
 
