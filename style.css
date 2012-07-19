@@ -28,7 +28,7 @@ Template: responsive
     background-color: #fff;
     border: 1px solid #d6d6d6;
     margin: 20px auto;
-    padding: 0 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
 }
 
 /*
@@ -65,8 +65,11 @@ Template: responsive
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
-    position:relative;
-    margin-top: 20px;
+    padding: 10px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #000;
+    opacity: .85;
 }
 
 #map {
@@ -78,25 +81,24 @@ Template: responsive
 }
 
 #mapOverlayWrapper {
-    width: 318px;
+    width: 295px;
     float: left;
 }
 
-#mapOverlay {
+/*#mapOverlay {
     padding-right: 15px;
-}
+}*/
 
 #overlayDrawer {
     background-color: #000;
     opacity: .85;
     color: #fff;
-    padding-left: 15px;
     height: 100%;
+    border: none;
 }
 
-#overlayDrawer {
-    height: 500px;
-    border: 1px solid #ccc;
+#overlayDrawer h2 {
+    margin: 5px 0px 10px 0px;
 }
 
 #drawerHandle {
@@ -106,12 +108,10 @@ Template: responsive
 #mapOverlay {
     top: 0;
     left: 0;
-    width: 200px;
     height: 100%; /* size to full height of parent container */
     background-color: #000;
     opacity: .85;
     color: #fff;
-    padding-left:15px;
     /*display:none;*/
 }
 
@@ -167,3 +167,5 @@ Template: responsive
 .widget-simpletags .st-tag-cloud a {
     color: #06C !important;
 }
+
+

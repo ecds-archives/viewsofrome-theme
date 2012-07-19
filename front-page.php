@@ -72,6 +72,7 @@
         overflow: hidden;
     }
 </style>
+
 <div id="mapContainer">
     <div id='mapOverlayWrapper'>
         <div id="overlayDrawer">
@@ -83,13 +84,11 @@
                     A look into the detailed Ligoro Map of Rome.
                 </div>
             </div>
-            <!-- <div id="drawerHandle">
-                <a id="showOverlay">>></a>
-            </div> -->
+            <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
     </div>
-    <div id='map'></div>
+    <div id="map"></div>
     <div class="clearfix"></div>
 </div>
 
