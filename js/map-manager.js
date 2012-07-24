@@ -5,6 +5,8 @@
 
 // TODO: check if dependencies are loaded
 // TODO: add more color options
+
+// prototype of peek method to enhance code readability
 Array.prototype.peek = function() {
     if (this.length <= 0)
         return undefined;
@@ -28,14 +30,18 @@ EUL.Utils.Colors = {
     },
     index : 0,
     choices : [
-        "#FF0000", "#00FF00", "#0000FF",
-        "#990000", "#009900", "#000099"
+        "#FF0000", 
+        "#00FF00", 
+        "#0000FF",
+        "#990000", 
+        "#009900", 
+        "#000099"
     ]
 }
 
-EUL.Utils.Colors.RED    = EUL.Utils.Colors.choices[0];
-EUL.Utils.Colors.GREEN   = EUL.Utils.Colors.choices[1];
-EUL.Utils.Colors.BLUE  = EUL.Utils.Colors.choices[2];
+EUL.Utils.Colors.RED        = EUL.Utils.Colors.choices[0];
+EUL.Utils.Colors.GREEN      = EUL.Utils.Colors.choices[1];
+EUL.Utils.Colors.BLUE       = EUL.Utils.Colors.choices[2];
 
 
 EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
@@ -54,6 +60,8 @@ EUL.Utils.clone = function(obj) {
     }
     return copy;
 }
+
+
 /**
  *  EUL.OverlayManager constructor
  *
@@ -72,7 +80,8 @@ EUL.OverlayManager = function(options) {
         dzi_path: "/vor/images/map/GeneratedImages/dzc_output.xml",
         edit_mode: false,
         center_poly_on_click: true,
-        padding: 0.05
+        padding: 0.05,
+        open_event_callback: function(){}
     }
     jQuery.extend(self.options, options);
 
@@ -80,13 +89,15 @@ EUL.OverlayManager = function(options) {
     self.viewer = null;
     self.activeOverlay = null;
     self.overlays = [];
-    self.newOverlays = [];
     self.newOverlayPoints = [];
     self.data = null;
     self.isDirty = false;
 
+    // open event callback was done to prevent race condition when back button was pressed
     self.viewer = new Seadragon.Viewer(self.options.map_container);
-    viewer = self.viewer;
+    self.viewer.addEventListener("open", self.options.open_event_callback);
+    
+    window.viewer = self.viewer;
     self.viewer.openDzi(self.options.dzi_path);
 
     self.points = [];
@@ -94,6 +105,7 @@ EUL.OverlayManager = function(options) {
     // listeners to print data to screen
     self.viewer.addEventListener("open", self._showViewport);
     self.viewer.addEventListener("animation", self._showViewport);
+
     //Seadragon.Utils.addEvent(self.viewer.elmt, "mousemove", self.showMouse);
     // listener to add click points to img
     var tempMarker = null;
@@ -158,8 +170,8 @@ EUL.OverlayManager.prototype.serializeOverlays = function() {
     var self = this;
 
     var tempData = [];
-    for (var i = 0; i < self.newOverlays.length; i++) {
-        tempData.push(self.newOverlays[i].getPointsJSON());
+    for (var i = 0; i < self.overlays.length; i++) {
+        tempData.push(self.overlays[i].getPointsJSON());
     }
 
     return tempData;
@@ -285,7 +297,7 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     removeLink.html("Remove this Overlay");
     removeLink.click(function() {
         self.destroyOverlay(overlay);
-        self.newOverlays = self.newOverlays.splice(1, self.newOverlays.indexOf(overlay));
+        self.overlays = self.overlays.splice(1, self.overlays.indexOf(overlay));
         $(div).remove();
     });
 
@@ -312,7 +324,7 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function(newOverlay) {
     overlay.polygon.attachTo(self.viewer);
 
     // push to overlays for serialization
-    self.newOverlays.push(overlay);
+    self.overlays.push(overlay);
 
     self.addOMDiv(overlay);
 
@@ -354,14 +366,14 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
 EUL.OverlayManager.prototype.destroyOverlays = function(remove_manager_divs) {
     var self = this;
 
-    for (var i = 0; i < self.newOverlays.length; i++) {
-        self.destroyOverlay(self.newOverlays[i]);
+    for (var i = 0; i < self.overlays.length; i++) {
+        self.destroyOverlay(self.overlays[i]);
     }
 
     if (remove_manager_divs) {
         $(".remove-link").remove();
     }
-    self.newOverlays = [];
+    self.overlays = [];
 }
 
 // TODO: consider moving to Overlay class
