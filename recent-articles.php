@@ -13,14 +13,12 @@
 <?php get_header(); ?>
 <?php
     $limit = 10;
-    $paged = 0;
+    $paged = 1;
     $args = array(
         'order'         => 'DESC',
         'orderby'       => 'post_modified',
-        'showposts'     => $limit,
-        'paged'         => $paged,
-        'post_type'     => 'page',
-        'post__not_in'  => get_excluded_pages()
+        'numberposts'   => $limit
+        //'paged'         => $paged
     );
 ?>
 

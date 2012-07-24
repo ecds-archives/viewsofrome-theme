@@ -5,6 +5,8 @@
 
 // TODO: check if dependencies are loaded
 // TODO: add more color options
+
+// prototype of peek method to enhance code readability
 Array.prototype.peek = function() {
     if (this.length <= 0)
         return undefined;
@@ -28,14 +30,18 @@ EUL.Utils.Colors = {
     },
     index : 0,
     choices : [
-        "#FF0000", "#00FF00", "#0000FF",
-        "#990000", "#009900", "#000099"
+        "#FF0000", 
+        "#00FF00", 
+        "#0000FF",
+        "#990000", 
+        "#009900", 
+        "#000099"
     ]
 }
 
-EUL.Utils.Colors.RED    = EUL.Utils.Colors.choices[0];
-EUL.Utils.Colors.GREEN   = EUL.Utils.Colors.choices[1];
-EUL.Utils.Colors.BLUE  = EUL.Utils.Colors.choices[2];
+EUL.Utils.Colors.RED        = EUL.Utils.Colors.choices[0];
+EUL.Utils.Colors.GREEN      = EUL.Utils.Colors.choices[1];
+EUL.Utils.Colors.BLUE       = EUL.Utils.Colors.choices[2];
 
 
 EUL.Utils.Polygon = No5.Seajax.Shapes.Polygon;
@@ -94,7 +100,7 @@ EUL.OverlayManager = function(options) {
     // listeners to print data to screen
     self.viewer.addEventListener("open", self._showViewport);
     self.viewer.addEventListener("animation", self._showViewport);
-    
+
     //Seadragon.Utils.addEvent(self.viewer.elmt, "mousemove", self.showMouse);
     // listener to add click points to img
     var tempMarker = null;

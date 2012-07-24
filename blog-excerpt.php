@@ -15,13 +15,11 @@
     $limit = get_option('posts_per_page');
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
     $args = array(
-        'order'     => 'ASC',               		// sort order, through admin?
-        'orderby'  => 'title',              		// sort field, through admin?
-        'showposts' => $limit,
-        'paged'     => $paged,
-        'post_type' => 'page',              		// limit to page types
-        'post__not_in'   => get_excluded_pages()    // look to do this through admin?
-        );
+        'orderby'       => 'title',
+        'order'         => 'ASC',
+        'numberposts'   => $limit,
+        'paged'         => $paged
+    );
 ?>
 
 <?php $page_title = "Articles"; ?>

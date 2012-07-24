@@ -23,8 +23,8 @@
         'order'             => 'DESC',               // sort order, through admin?
         'posts_per_page'    => -1,
         'nopaging'          => true,
-        'post_type'         => 'page',              // limit to page types
-        'post__not_in'      => get_excluded_pages()    // look to do this through admin?
+        'post_type'         => 'post',              // limit to page types
+        //'post__not_in'      => get_excluded_pages()    // look to do this through admin?
     ));
 ?>
 <!-- EXCLUDED IDS: <?php echo get_excluded_pages(true); ?> -->

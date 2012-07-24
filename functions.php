@@ -11,7 +11,7 @@ function get_excluded_pages($as_string = false) {
         25,         // About Us
         123,        // Recent Articles
         127,        // Sitemap
-        132,        // Map Manager
+        83,        // Map Manager
     );
     
     if ($as_string)
