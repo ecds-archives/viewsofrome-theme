@@ -14,58 +14,43 @@
 <?php get_header(); ?>
 
 <script type="text/javascript">
-  var viewer = null;
-
+  window.viewer = null;
+  var overlayManager;
   var $ = jQuery.noConflict();
-  $(document).ready(function() {
-    overlayManager = new EUL.OverlayManager({
-        map_container: "map",
-        overlay_click_callback: function(overlay) {
-            console.log(overlay.id);
-            $.ajax({
-                url: '/vor/wp-admin/admin-ajax.php',
-                data: {
-                    action: 'get_post_data',
-                    id: overlay.id
-                },
-                success: function(post) {
-                    console.log(post);
-                    var drawer = $('#mapOverlay');
-                    drawer.find("#overlay-title h2").html(post.post_title);
-                    drawer.find("#overlay-data").html(post.post_excerpt);
-                    drawer.show('medium');
-                }
-            });
-        }
-    });
+  $(window).unload(function() {viewer.close()});
 
-    $.ajax({
-        url: '/vor/wp-admin/admin-ajax.php',
-        data: {
-            action: 'get_overlay_data'
-        },
-        success: function(results) {
-            overlayManager.setData(results);
-        }
-    });
-
-    $('#hide').live('click', function() {
-        $('#mapOverlay').hide("medium");
-    });
-    $('#showOverlay').live('click', function() {
-        $('#mapOverlay').show("medium");
-    });
-    $('#load').live('click', function() {
-        $.ajax({
-            url: '/vor/wp-admin/admin-ajax.php',
-            type: 'GET',
-            data: {action: 'get_overlay_data'},
-            success: function(results) {
-                alert(results);
+    Seadragon.Utils.addEvent(window, "load", function() {
+        overlayManager = new EUL.OverlayManager({
+            map_container: "map",
+            overlay_click_callback: function(overlay) {
+                $.ajax({
+                    url: '/vor/wp-admin/admin-ajax.php',
+                    data: {
+                        action: 'get_post_data',
+                        id: overlay.id
+                    },
+                    success: function(post) {
+                        console.log(post);
+                        var drawer = $('#mapOverlay');
+                        drawer.find("#overlay-title h2").html(post.post_title);
+                        drawer.find("#overlay-data").html(post.post_excerpt);
+                        drawer.show('medium');
+                    }
+                });
+            },
+            open_event_callback: function() {
+                $.ajax({
+                    url: '/vor/wp-admin/admin-ajax.php',
+                    data: {
+                        action: 'get_overlay_data'
+                    },
+                    success: function(results) {
+                        overlayManager.setData(results);
+                    }
+                });
             }
         });
     });
-  });
 </script>
 <style>
     #overlay-data {

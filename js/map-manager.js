@@ -60,6 +60,8 @@ EUL.Utils.clone = function(obj) {
     }
     return copy;
 }
+
+
 /**
  *  EUL.OverlayManager constructor
  *
@@ -78,7 +80,8 @@ EUL.OverlayManager = function(options) {
         dzi_path: "/vor/images/map/GeneratedImages/dzc_output.xml",
         edit_mode: false,
         center_poly_on_click: true,
-        padding: 0.05
+        padding: 0.05,
+        open_event_callback: function(){}
     }
     jQuery.extend(self.options, options);
 
@@ -86,13 +89,15 @@ EUL.OverlayManager = function(options) {
     self.viewer = null;
     self.activeOverlay = null;
     self.overlays = [];
-    //self.newOverlays = [];
     self.newOverlayPoints = [];
     self.data = null;
     self.isDirty = false;
 
+    // open event callback was done to prevent race condition when back button was pressed
     self.viewer = new Seadragon.Viewer(self.options.map_container);
-    viewer = self.viewer;
+    self.viewer.addEventListener("open", self.options.open_event_callback);
+    
+    window.viewer = self.viewer;
     self.viewer.openDzi(self.options.dzi_path);
 
     self.points = [];
