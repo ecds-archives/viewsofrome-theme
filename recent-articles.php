@@ -12,13 +12,13 @@
 
 <?php get_header(); ?>
 <?php
-    $limit = 10;
-    $paged = 1;
+    apply_filters('post_limits', 10);
+    $no_pagination = false; //True means no pagination, False means pagination
     $args = array(
-        'order'         => 'DESC',
-        'orderby'       => 'post_modified',
-        'numberposts'   => $limit
-        //'paged'         => $paged
+        'order'             => 'DESC',
+        'orderby'           => 'post_modified',
+        'posts_per_page'    => 10,
+        'nopaging'          => false
     );
 ?>
 
