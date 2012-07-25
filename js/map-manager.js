@@ -7,6 +7,15 @@
 // TODO: add more color options
 
 // prototype of peek method to enhance code readability
+<<<<<<< HEAD
+=======
+
+/**
+ * Returns the last element in an array without removing it
+ *
+ * @return {Object}
+ */
+>>>>>>> develop
 Array.prototype.peek = function() {
     if (this.length <= 0)
         return undefined;
@@ -18,6 +27,10 @@ var $ = jQuery.noConflict();
 var EUL = {};
 EUL.Utils = {};
 
+/**
+ * EUL.Utils.Colors
+ *
+ */
 EUL.Utils.Colors = {
     getColor: function() {
         var self = this;
@@ -63,9 +76,11 @@ EUL.Utils.clone = function(obj) {
 
 
 /**
- *  EUL.OverlayManager constructor
+ *  EUL.OverlayManager
  *
- *
+ *  @constructor
+ *  @this {EUL.OverlayManager}
+ *  @params {hash} options The desired options to overrride
  */
 EUL.OverlayManager = function(options) {
     var self = this;
@@ -145,27 +160,49 @@ EUL.OverlayManager.prototype.showMouse = function(event) {
     self.event = event;
 }
 
+/**
+ * Returns the OverlayManager DeepZoom Viewer
+ *
+ * @return {Seadragon.Viewer} the managers viewer
+ */
 EUL.OverlayManager.prototype.getViewer = function() {
     var self = this;
     return self.viewer;
 }
 
+/**
+ * Sets the overlay data for the overlay Manager
+ *
+ * @this {EUL.OverlayManager}
+ * @param {hash} data The json data for the overlays
+ */
 EUL.OverlayManager.prototype.setData = function(data) {
     var self = this;
     self.data = data;
 
     for (var i = 0; i < self.data.overlays.length; i++) {
         self.addOverlayFromJSON(self.data.overlays[i]);
-
     }
 }
 
+/**
+ * Returns the JSON data for the overlays
+ * 
+ * @this {EUL.OverlayManager}
+ * @return {hash}
+ */
 EUL.OverlayManager.prototype.getData = function() {
     var self = this;
 
     return self.data;
 }
 
+/**
+ * Serialization method that returns hash of new overlays to save
+ *
+ * @this {EUL.OverlayManager}
+ * @return {hash}
+ */
 EUL.OverlayManager.prototype.serializeOverlays = function() {
     var self = this;
 
@@ -177,6 +214,12 @@ EUL.OverlayManager.prototype.serializeOverlays = function() {
     return tempData;
 }
 
+/**
+ * Function to reload overalys from data
+ *
+ * @deprecated
+ * @this {EUL.OverlayManager}
+ */
 EUL.OverlayManager.prototype.reloadData = function() {
     var self = this;
     // TODO: peform ajax to reload data and init new overlays
@@ -191,6 +234,13 @@ EUL.OverlayManager.prototype.reloadData = function() {
     */
 }
 
+/**
+ * Returns a new EUL.OverlayManager.Overlay from the provided points
+ * 
+ * @this {EUL.OverlayManager}
+ * @params {Array} points Array of Seadragon Points
+ * @return {EUL.OverlayManager.Overlay}
+ */
 EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     var self = this;
 
@@ -270,6 +320,11 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
     return overlay;
 }
 
+/** 
+ * Adds a new Overlay Manager div to the Overlay Manager legend
+ *
+ * @this {EUL.OverlayManager}
+ */
 EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     var self = this;
     // container corresponding to current overlay
@@ -315,6 +370,11 @@ EUL.OverlayManager.prototype.addOMDiv = function(overlay) {
     $("#overlay-staging").append(div);
 }
 
+/**
+ * Adds a new overlay to the deep zoom image
+ *
+ * @this {EUL.OverlayManager}
+ */
 EUL.OverlayManager.prototype._addOverlayToDZI = function(newOverlay) {
     var self = this;
     
@@ -339,6 +399,12 @@ EUL.OverlayManager.prototype._addOverlayToDZI = function(newOverlay) {
     });
 }
 
+/**
+ * Adds a new overlay from json, used on the front page
+ *
+ * @this {EUL.OverlayManager}
+ * @param {hash} json A JSON object denoting a serialized overlay
+ */
 EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
     var self = this;
     var points = [];
@@ -363,6 +429,12 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
     //}, 500);
 }
 
+/**
+ * Removes all overlays from the DZI as well as destroys their corresponding Javascript objects
+ *
+ * @this {EUL.OverlayManager}
+ * @param {boolean} remove_manager_divs A boolean flag to be used in the even that we are in edit mode
+ */
 EUL.OverlayManager.prototype.destroyOverlays = function(remove_manager_divs) {
     var self = this;
 
@@ -376,6 +448,12 @@ EUL.OverlayManager.prototype.destroyOverlays = function(remove_manager_divs) {
     self.overlays = [];
 }
 
+/**
+ * Destroys a single overlay and its objects
+ *
+ * @this {EUL.OverlayManager}
+ * @param {EUL.OverlayManager.Overlay} overlay
+ */
 // TODO: consider moving to Overlay class
 EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     var self = this;
@@ -383,6 +461,16 @@ EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     self.viewer.drawer.removeOverlay(overlay.polygon.div);
 }
 
+/**
+ * EUL.OverlayManager.Overlay
+ *
+ * @constructor
+ * @this {EUL.OverlayManager.Overlay}
+ * @param {number} id The numerical ID of the article for this overlay in the database
+ * @param {hash} category
+ * @param {Array} points An array of points for this overlay
+ * @param {polygon} polygon the No5.Shapes.Polygon object for this overlay
+ */
 EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     var self = this;
 
@@ -392,6 +480,12 @@ EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     self.polygon = (polygon != 'undefined') ? polygon : null;
 }
 
+/**
+ * Returns a JSON hash for this overlay
+ * 
+ * @this {EUL.OverlayManager.Overlay}
+ * @return {hash}
+ */
 EUL.OverlayManager.Overlay.prototype.getPointsJSON = function() {
     var self = this;
 
@@ -406,6 +500,12 @@ EUL.OverlayManager.Overlay.prototype.getPointsJSON = function() {
     return pointsArray;
 }
 
+/**
+ * Returns the No5.Shapes.Polygon object for this overlay
+ *
+ * @this {EUL.OverlayManager.Overlay}
+ * @return {No5.Shapes.Polygon}
+ */
 EUL.OverlayManager.Overlay.prototype.getPolygon = function() {
     var self = this;
     return self.polygon;
