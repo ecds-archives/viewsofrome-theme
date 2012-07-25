@@ -14,10 +14,9 @@
 <?php get_header(); ?>
 
 <script type="text/javascript">
-  window.viewer = null;
-  var overlayManager;
-  var $ = jQuery.noConflict();
-  $(window).unload(function() {viewer.close()});
+    window.viewer = null;
+    var overlayManager;
+    var $ = jQuery.noConflict();
 
     Seadragon.Utils.addEvent(window, "load", function() {
         overlayManager = new EUL.OverlayManager({
