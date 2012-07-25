@@ -101,12 +101,16 @@ function get_post_data() {
     global $wpdb;
 
     $page = get_page($_GET['id']);
+
+    // setup the post data so we can get access to the excerpt
+    setup_postdata($page);
+
     $page_data = array(
         "ID"            => $page->ID,
         "guid"          => $page->guid,
         "post_title"    => $page->post_title,
         "post_content"  => $page->post_content,
-        "post_excerpt"  => apply_filters('the_excerpt', $page->post_content),
+        "post_excerpt"  => get_the_excerpt(),
     );
     header("Content-type: application/json");
     echo json_encode($page_data);
