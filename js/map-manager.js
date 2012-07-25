@@ -6,16 +6,11 @@
 // TODO: check if dependencies are loaded
 // TODO: add more color options
 
-// prototype of peek method to enhance code readability
-<<<<<<< HEAD
-=======
-
 /**
  * Returns the last element in an array without removing it
  *
  * @return {Object}
  */
->>>>>>> develop
 Array.prototype.peek = function() {
     if (this.length <= 0)
         return undefined;
