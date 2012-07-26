@@ -148,6 +148,17 @@ EUL.OverlayManager = function(options) {
         var placement = Seadragon.OverlayPlacement.CENTER;
         self.viewer.drawer.addOverlay(img, anchor, placement);
     }
+    self.fullPage = false;
+    self.viewer.addEventListener("animationfinish", function() {
+        //console.log("animationfinish");
+        if (self.viewer.isFullPage()) {
+            self.reloadData();
+            self.fullPage = true;
+        } else if (self.fullPage && !self.viewer.isFullPage()) {
+            self.reloadData();
+            self.fullPage = false;
+        }
+    });
 }
 
 EUL.OverlayManager.prototype.showMouse = function(event) {
@@ -179,6 +190,7 @@ EUL.OverlayManager.prototype.setData = function(data) {
         self.addOverlayFromJSON(self.data.overlays[i]);
     }
 }
+
 
 /**
  * Returns the JSON data for the overlays
@@ -220,13 +232,18 @@ EUL.OverlayManager.prototype.reloadData = function() {
     // TODO: peform ajax to reload data and init new overlays
     // after destroying old overlays
 
-    self.overlays = []
-    /*
-    for (i in data) {
+    // TODO: look into just reinitializing polygons
+    self.destroyOverlays();
+    self.setData(self.data);
+
+    
+    //for (i in self.overlays) {
         //create overlay from points
         // self.overlays.push(overlay);
-    }
-    */
+        //console.log("attempting to scale")
+        //self.overlays[i].polygon.redraw(self.viewer);
+    //}
+    
 }
 
 /**
