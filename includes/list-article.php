@@ -12,11 +12,13 @@
     <?php endif; ?>
     <h1><?php echo $page_title; ?></h1>
     <?php 
-	if (!isset($execute_query) || $execute_query) // needed to prevent execution of query in tag.php
-		query_posts($args); 
-	?>
+    $posts;
+    //echo "<pre>" . print_r($args, true) . "</pre>";
+    if (!isset($execute_query) || $execute_query) // needed to prevent execution of query in tag.php
+        $posts = query_posts($args);
+    ?>
 <?php if (have_posts()) : ?>
-    <?php while(have_posts()) : the_post(); ?>
+    <?php foreach ( $posts as $post ) : setup_postdata($post); ?>
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
             <h4><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php printf(__('Permanent Link to %s', 'responsive'), the_title_attribute('echo=0')); ?>"><?php the_title(); ?></a></h4>
             <div class="post-entry">
@@ -32,7 +34,7 @@
             </div><!-- end of .post-entry -->
             <div class="clearfix"></div>
         </div>
-    <?php endwhile; ?>
+    <?php endforeach; ?>
     <?php if (  $wp_query->max_num_pages > 1 ) : ?>
         <div class="navigation">
             <div class="previous"><?php next_posts_link( __( '&#8249; Older posts', 'responsive' ) ); ?></div>

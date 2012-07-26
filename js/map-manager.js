@@ -6,8 +6,6 @@
 // TODO: check if dependencies are loaded
 // TODO: add more color options
 
-// prototype of peek method to enhance code readability
-
 /**
  * Returns the last element in an array without removing it
  *
