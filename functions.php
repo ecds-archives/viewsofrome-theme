@@ -1,5 +1,12 @@
 <?php
 
+function vor_theme_setup() {
+    remove_filter('get_the_excerpt', 'responsive_custom_excerpt_more');
+    remove_filter('excerpt_more', 'responsive_auto_excerpt_more');
+    add_filter('excerpt_more', 'vor_excerpt_more');
+}
+add_action('after_setup_theme', 'vor_theme_setup');
+
 wp_register_script('eul-overlay-manager', get_stylesheet_directory_uri() . '/js/map-manager.js', array('jquery'));
 wp_register_script('seadragon', get_stylesheet_directory_uri() . '/js/seadragon-min.js', array());
 wp_register_script('raphael', get_stylesheet_directory_uri() . '/js/raphael-min.js', array());
@@ -28,6 +35,11 @@ if (!function_exists('disableAdminBar')) {
     }
 }
 
+function vor_excerpt_more($more) {
+    global $id;
+    return ' <a href="' . get_permalink($id) . '">' . __('<div class="read-more">Read more &#8250;</div><!-- end of .read-more -->', 'responsive') . '</a>';
+}
+//add_filter('wp_trim_excerpt', 'new_excerpt_more');
 
 /**
  * Begin ajax functions for map manager
@@ -68,7 +80,7 @@ function delete_post_data() {
 
 function post_overlay_data() {
     global $wpdb;
-
+    global $page;
     $tableName = 'wp_ligorio_data';
     //if ($_POST["data"]["overwrite"] == "true") {
     // delete rows corresponding to id from wp_ligorio_data
@@ -99,18 +111,19 @@ function post_overlay_data() {
 
 function get_post_data() {
     global $wpdb;
-
-    $page = get_page($_GET['id']);
+    //global $post;
+    $post_res = get_post($_GET['id']);
 
     // setup the post data so we can get access to the excerpt
-    setup_postdata($page);
+    setup_postdata($post_res);
 
     $page_data = array(
-        "ID"            => $page->ID,
-        "guid"          => $page->guid,
-        "post_title"    => $page->post_title,
-        "post_content"  => $page->post_content,
+        "ID"            => $post_res->ID,
+        "guid"          => $post_res->guid,
+        "post_title"    => $post_res->post_title,
+        "post_content"  => get_the_content("Read on.."),
         "post_excerpt"  => get_the_excerpt(),
+        "permalink"     => get_permalink($post_res->ID)
     );
     header("Content-type: application/json");
     echo json_encode($page_data);
@@ -118,6 +131,8 @@ function get_post_data() {
     exit;
 }
 
+
+// register custom ajax actions
 add_action('wp_ajax_post_overlay_data', 'post_overlay_data');
 
 add_action('wp_ajax_get_overlay_data', 'get_overlay_data');

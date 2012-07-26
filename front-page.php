@@ -30,6 +30,7 @@
                     },
                     success: function(post) {
                         console.log(post);
+                        console.log(post.post_excerpt);
                         var drawer = $('#mapOverlay');
                         drawer.find("#overlay-title h2").html(post.post_title);
                         drawer.find("#overlay-data").html(post.post_excerpt);
