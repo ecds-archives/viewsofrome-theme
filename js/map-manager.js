@@ -5,6 +5,7 @@
 
 // TODO: check if dependencies are loaded
 // TODO: add more color options
+// TODO: investigate bounding box issue
 
 /**
  * Returns the last element in an array without removing it
@@ -148,17 +149,17 @@ EUL.OverlayManager = function(options) {
         var placement = Seadragon.OverlayPlacement.CENTER;
         self.viewer.drawer.addOverlay(img, anchor, placement);
     }
-    self.fullPage = false;
-    self.viewer.addEventListener("animationfinish", function() {
-        //console.log("animationfinish");
-        if (self.viewer.isFullPage()) {
-            self.reloadData();
-            self.fullPage = true;
-        } else if (self.fullPage && !self.viewer.isFullPage()) {
-            self.reloadData();
-            self.fullPage = false;
-        }
-    });
+    // self.fullPage = false;
+    // self.viewer.addEventListener("animationfinish", function() {
+    //     //console.log("animationfinish");
+    //     if (self.viewer.isFullPage()) {
+    //         self.reloadData();
+    //         self.fullPage = true;
+    //     } else if (self.fullPage && !self.viewer.isFullPage()) {
+    //         self.reloadData();
+    //         self.fullPage = false;
+    //     }
+    // });
 }
 
 EUL.OverlayManager.prototype.showMouse = function(event) {

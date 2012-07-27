@@ -29,8 +29,6 @@
                         id: overlay.id
                     },
                     success: function(post) {
-                        console.log(post);
-                        console.log(post.post_excerpt);
                         var drawer = $('#mapOverlay');
                         drawer.find("#overlay-title h2").html(post.post_title);
                         drawer.find("#overlay-data").html(post.post_excerpt);
@@ -63,7 +61,7 @@
         <div id="overlayDrawer">
             <div id="mapOverlay">
                 <div id="overlay-title">
-                    <h2>Vews of Rome</h2>
+                    <h2>Views of Rome</h2>
                 </div>
                 <div id="overlay-data">
                     A look into the detailed Ligoro Map of Rome.

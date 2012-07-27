@@ -63,6 +63,14 @@ No5.Seajax.Shapes.Polygon = function(points, viewer) {
    this.normWidth = 2 * this.width / maxZoom;
    this.normHeight = 2 * this.height / maxZoom
 
+   this.getNormWidth = function() {
+      console.log(getMaxZoom());
+      return 2 * this.width / viewer.viewport.getMaxZoom();
+   }
+
+   this.getNormHeight = function() {
+      return 2 * this.height / viewer.viewport.getMaxZoom();
+   }
    // Create Polygon
    this.div = document.createElement("div");
    this.paper = Raphael(this.div);
@@ -82,6 +90,7 @@ No5.Seajax.Shapes.Polygon = function(points, viewer) {
 }
 
 No5.Seajax.Shapes.Polygon.prototype.attachTo = function(viewer) {
+   var self = this;
    var anchor = No5.Seajax.toWorldCoordinates(viewer, this.origin.x, this.origin.y);
    viewer.drawer.addOverlay(this.div, new Seadragon.Rect(anchor.x, anchor.y, 0, 0)); 
 
@@ -90,6 +99,7 @@ No5.Seajax.Shapes.Polygon.prototype.attachTo = function(viewer) {
    var w = this.normWidth;
    var h = this.normHeight;
    viewer.addEventListener("animation", function() { 
+      //console.log("Width" + self.getNormWidth());
       var zoom = viewer.viewport.getZoom(true);
       canvas.setSize(w * zoom, h * zoom);
       p.scale(zoom, zoom, 0, 0);
