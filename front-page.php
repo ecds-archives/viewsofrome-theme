@@ -29,6 +29,7 @@
                         id: overlay.id
                     },
                     success: function(post) {
+                        console.log(post);
                         var drawer = $('#mapOverlay');
                         drawer.find("#overlay-title h2").html(post.post_title);
                         drawer.find("#overlay-data").html(post.post_excerpt);

@@ -4,6 +4,9 @@ function vor_theme_setup() {
     remove_filter('get_the_excerpt', 'responsive_custom_excerpt_more');
     remove_filter('excerpt_more', 'responsive_auto_excerpt_more');
     add_filter('excerpt_more', 'vor_excerpt_more');
+
+    remove_shortcode('gallery', 'gallery_shortcode');
+    add_shortcode('gallery', 'vor_gallery_shortcode');
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
@@ -26,6 +29,12 @@ function get_excluded_pages($as_string = false) {
     return $excluded_ids;
 }
 
+// custom gallery code
+function vor_gallery_shortcode($attr) {
+    return "";
+}
+
+
 if (!function_exists('disableAdminBar')) {
     function disableAdminBar() {
         remove_action('wp_head', '_admin_bar_bump_cb');
@@ -39,7 +48,42 @@ function vor_excerpt_more($more) {
     global $id;
     return ' <a href="' . get_permalink($id) . '">' . __('<div class="read-more">Read more &#8250;</div><!-- end of .read-more -->', 'responsive') . '</a>';
 }
-//add_filter('wp_trim_excerpt', 'new_excerpt_more');
+
+function vor_get_images($size = 'thumbnail') {
+    global $post;
+    
+    $photos = get_children( array(
+        'post_parent'       => $post->ID, 
+        'post_status'       => 'inherit', 
+        'post_type'         => 'attachment', 
+        'post_mime_type'    => 'image', 
+        'order'             => 'ASC', 
+        'orderby'           => 'menu_order ID') );
+    
+    $results = array();
+
+    if ($photos) {
+        foreach ($photos as $photo) {
+            // get the correct image html for the selected size
+            $results[] = wp_get_attachment_image($photo->ID, $size);
+        }
+    }
+
+    return $results;
+}
+
+function vor_get_post_image($size = 'thumbnail') {
+    global $post;
+
+    $photos = get_children( array('post_parent' => $post->ID, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image', 'order' => 'ASC', 'orderby' => 'menu_order ID') );
+    
+    if ($photos) {
+        $photo = array_shift($photos);
+        return wp_get_attachment_image($photo->ID, $size);
+    }
+    
+    return false;
+}
 
 /**
  * Begin ajax functions for map manager
