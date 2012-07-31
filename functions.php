@@ -239,8 +239,11 @@ add_action('wp_ajax_nopriv_delete_post_data', 'delete_post_data');
  *
  */
 function logit($level, $text) {
-    $current_user = wp_get_current_user();
-    wls_log('testing', $text, $current_user->ID, null, null, $level);
+    
+    if(function_exists('wls_log')) {
+        $current_user = wp_get_current_user();
+        wls_log('testing', $text, $current_user->ID, null, null, $level);
+    }
 }
 
 ?>
