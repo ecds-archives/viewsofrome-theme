@@ -6,7 +6,7 @@ Template: responsive
 */
 
 @import url("../responsive/style.css");
-
+@import url("./css/slides.css");
 /*
  * Resets, made important to override in page style declarations
  * as well as !important declarations in external files

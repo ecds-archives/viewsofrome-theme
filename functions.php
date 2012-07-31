@@ -7,6 +7,8 @@ function vor_theme_setup() {
 
     remove_shortcode('gallery', 'gallery_shortcode');
     add_shortcode('gallery', 'vor_gallery_shortcode');
+
+    add_image_size('gallery-big', 600, 320, true );
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
@@ -14,6 +16,7 @@ wp_register_script('eul-overlay-manager', get_stylesheet_directory_uri() . '/js/
 wp_register_script('seadragon', get_stylesheet_directory_uri() . '/js/seadragon-min.js', array());
 wp_register_script('raphael', get_stylesheet_directory_uri() . '/js/raphael-min.js', array());
 wp_register_script('seajax', get_stylesheet_directory_uri() . '/js/seajax-utils.js', array('seadragon', 'raphael'));
+wp_register_script('slides', get_stylesheet_directory_uri() . '/js/slides.js', array('jquery'));
 
 function get_excluded_pages($as_string = false) {
     $excluded_ids = Array(
@@ -30,8 +33,51 @@ function get_excluded_pages($as_string = false) {
 }
 
 // custom gallery code
+/*function vor_gallery_shortcode($attr) {
+    global $post;
+
+    $args = array( 
+        'post_type' => 'attachment', 
+        'numberposts' => -1, 
+        'post_status' => null, 
+        'post_parent' => $post->ID ); 
+    $attachments = get_posts($args);
+    
+
+    $output = "<div id='gallery' style='width: 600px;'>";
+
+    if ($attachments) {
+        foreach ( $attachments as $attachment ) {
+            $output .= wp_get_attachment_image($attachment->ID);
+        }
+    }
+
+    $output .= "</div>";
+    $output .= "<div class='clearfix'></div>";
+
+    return $output;
+}*/
 function vor_gallery_shortcode($attr) {
-    return "";
+    global $post;
+    logit(WLS_DEBUG, "this is going bad");
+    $images = get_children( array(
+        'post_parent' => $post->ID, 
+        'post_status' => 'inherit', 
+        'post_type' => 'attachment', 
+        'post_mime_type' => 'image', 
+        'order' => 'ASC', 
+        'orderby' => 'menu_order ID') 
+    );
+
+    $output .= "<div id='slides'>";
+    foreach ($images as $imageId => $image) {
+        $image_attrs = wp_get_attachment_image_src($imageId,'medium', false);
+        $output .= "<img src='$image_attrs[0]' />";
+    }
+    $output .= "</div><!-- /#slides -->";
+    $output .= "<div class='clearfix'></div>";
+
+    return $output;
 }
 
 
@@ -187,5 +233,14 @@ add_action('wp_ajax_nopriv_get_post_data', 'get_post_data');
 
 add_action('wp_ajax_delete_post_data', 'delete_post_data');
 add_action('wp_ajax_nopriv_delete_post_data', 'delete_post_data');
+
+/*
+ * Wrapper for wls_log
+ *
+ */
+function logit($level, $text) {
+    $current_user = wp_get_current_user();
+    wls_log('testing', $text, $current_user->ID, null, null, $level);
+}
 
 ?>
