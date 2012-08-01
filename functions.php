@@ -8,7 +8,7 @@ function vor_theme_setup() {
     remove_shortcode('gallery', 'gallery_shortcode');
     add_shortcode('gallery', 'vor_gallery_shortcode');
 
-    add_image_size('gallery-big', 600, 320, true );
+    add_image_size('gallery-big', 600, 320, false);
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
@@ -48,8 +48,14 @@ function vor_gallery_shortcode($attr) {
     $output = "<div id='slides_wrapper'>";
     $output .= "<div id='slides'>";
     foreach ($images as $imageId => $image) {
-        $image_attrs = wp_get_attachment_image_src($imageId,'medium', false);
-        $output .= "<img src='$image_attrs[0]' />";
+        $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
+        $width = $image_attrs[1];
+        $height = $image_attrs[2];
+        $output .= "<a href='javascript:void(0);'>";
+        $output .= "<img src='$image_attrs[0]' ";
+        $output .= "height='300px'";
+        $output .= " />";
+        $output .= "</a>";
     }
     $output .= "<div class='clearfix'></div>";
     $output .= "</div><!-- /#slides -->";
