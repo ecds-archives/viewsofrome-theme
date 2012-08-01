@@ -10,6 +10,7 @@
  *
  */
     wp_enqueue_script('slides');
+    wp_enqueue_script('lightbox');
  ?>
 <?php get_header(); ?>
 <script>
