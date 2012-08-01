@@ -8,7 +8,7 @@ function vor_theme_setup() {
     remove_shortcode('gallery', 'gallery_shortcode');
     add_shortcode('gallery', 'vor_gallery_shortcode');
 
-    add_image_size('gallery-big', 600, 320, true );
+    add_image_size('gallery-big', 600, 320, false);
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
@@ -33,34 +33,10 @@ function get_excluded_pages($as_string = false) {
     return $excluded_ids;
 }
 
-// custom gallery code
-/*function vor_gallery_shortcode($attr) {
-    global $post;
-
-    $args = array( 
-        'post_type' => 'attachment', 
-        'numberposts' => -1, 
-        'post_status' => null, 
-        'post_parent' => $post->ID ); 
-    $attachments = get_posts($args);
-    
-
-    $output = "<div id='gallery' style='width: 600px;'>";
-
-    if ($attachments) {
-        foreach ( $attachments as $attachment ) {
-            $output .= wp_get_attachment_image($attachment->ID);
-        }
-    }
-
-    $output .= "</div>";
-    $output .= "<div class='clearfix'></div>";
-
-    return $output;
-}*/
+// custom gallery shortcode
 function vor_gallery_shortcode($attr) {
     global $post;
-    logit(WLS_DEBUG, "this is going bad");
+    
     $images = get_children( array(
         'post_parent' => $post->ID, 
         'post_status' => 'inherit', 
@@ -70,13 +46,25 @@ function vor_gallery_shortcode($attr) {
         'orderby' => 'menu_order ID') 
     );
 
+    $output = "<div id='slides_wrapper'>";
     $output .= "<div id='slides'>";
     foreach ($images as $imageId => $image) {
-        $image_attrs = wp_get_attachment_image_src($imageId,'medium', false);
-        $output .= "<img src='$image_attrs[0]' />";
+        $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
+
+        $width = $image_attrs[1];
+        $height = $image_attrs[2];
+        $output .= "<a href='javascript:void(0);'>";
+        $output .= "<img src='$image_attrs[0]' ";
+        $output .= "height='300px'";
+        $output .= " />";
+        $output .= "</a>";
     }
-    $output .= "</div><!-- /#slides -->";
     $output .= "<div class='clearfix'></div>";
+    $output .= "</div><!-- /#slides -->";
+
+    $output .= "</div><!-- /#slides_wrapper -->";
+    $output .= "<div class='slides-clear'></div>";
+    //
 
     return $output;
 }
@@ -240,8 +228,11 @@ add_action('wp_ajax_nopriv_delete_post_data', 'delete_post_data');
  *
  */
 function logit($level, $text) {
-    $current_user = wp_get_current_user();
-    wls_log('testing', $text, $current_user->ID, null, null, $level);
+    
+    if(function_exists('wls_log')) {
+        $current_user = wp_get_current_user();
+        wls_log('testing', $text, $current_user->ID, null, null, $level);
+    }
 }
 
 ?>

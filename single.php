@@ -22,11 +22,18 @@
             play: 5000,
             pause: 2500
         });
-        $('#slides').slides("play");
+        //$('#slides').slides("play");
     });
 </script>
-<div id="content" class="grid col-620">
-        
+<style type="text/css">
+    #widgets {
+        float:right;
+    }
+    div[class*='post-'] {
+        clear:none;
+    }
+</style>
+<div id="content" class="grid ">
 <?php if (have_posts()) : ?>
 
     <?php while (have_posts()) : the_post(); ?>
@@ -37,6 +44,7 @@
     <?php endif; ?> 
       
         <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+            <?php get_sidebar(); ?>
             <h1><?php the_title(); ?></h1>
 
             <div class="post-meta">
@@ -108,5 +116,5 @@
       
 </div><!-- end of #content -->
 
-<?php get_sidebar(); ?>
+
 <?php get_footer(); ?>

@@ -1,7 +1,11 @@
+#slides_wrapper {
+    width: 570px
+}
+
 #slides {
     position:relative;
     margin: 0 0 0 30px;
-    width: 570;
+    width: 570px;
 }
 
 #slides .slidesContainer {
@@ -9,6 +13,14 @@
     border:8px solid #fff;
     margin-left:-8px;
     box-shadow: 0 2.5px 5px rgba(0,0,0,.1);
+}
+
+#slides .slidesControl a {
+    width: 100%;
+    text-align: center;
+    background: #EFEFEF url(../../responsive/images/bg.png) repeat;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 /*
@@ -40,8 +52,8 @@
 */
 
 .slidesPagination {
-    margin:10px 0 0;
-    float:right;
+    margin:10px auto;
+    float:left;
 }
 
 .slidesPagination li {
@@ -77,4 +89,10 @@
     color:#333;
     font:bold 10px/1.33 sans-serif;
     margin-right:10px;
+}
+
+/* fix for paragraphs */
+.slides-clear {
+    height: 15px; /* hack for the clear */
+    clear: left;
 }
