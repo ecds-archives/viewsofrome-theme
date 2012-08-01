@@ -35,7 +35,7 @@ function get_excluded_pages($as_string = false) {
 // custom gallery shortcode
 function vor_gallery_shortcode($attr) {
     global $post;
-    logit(WLS_DEBUG, "this is going bad");
+    
     $images = get_children( array(
         'post_parent' => $post->ID, 
         'post_status' => 'inherit', 
@@ -49,6 +49,7 @@ function vor_gallery_shortcode($attr) {
     $output .= "<div id='slides'>";
     foreach ($images as $imageId => $image) {
         $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
+
         $width = $image_attrs[1];
         $height = $image_attrs[2];
         $output .= "<a href='javascript:void(0);'>";

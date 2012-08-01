@@ -18,6 +18,9 @@
 #slides .slidesControl a {
     width: 100%;
     text-align: center;
+    background: #EFEFEF url(../../responsive/images/bg.png) repeat;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 /*
