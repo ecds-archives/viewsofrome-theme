@@ -9,6 +9,7 @@ function vor_theme_setup() {
     add_shortcode('gallery', 'vor_gallery_shortcode');
 
     add_image_size('gallery-big', 600, 320, false);
+    add_image_size('gallery-lightbox', null, 500, false);
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
@@ -50,10 +51,10 @@ function vor_gallery_shortcode($attr) {
     $output .= "<div id='slides'>";
     foreach ($images as $imageId => $image) {
         $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
-
+        $image_full_attrs = wp_get_attachment_image_src($imageId, 'gallery-lightbox', false);
         $width = $image_attrs[1];
         $height = $image_attrs[2];
-        $output .= "<a href='javascript:void(0);'>";
+        $output .= "<a href='$image_full_attrs[0]' rel='lightbox[slides]'>";
         $output .= "<img src='$image_attrs[0]' ";
         $output .= "height='300px'";
         $output .= " />";
