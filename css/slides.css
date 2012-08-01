@@ -1,7 +1,11 @@
+#slides_wrapper {
+    width: 570px
+}
+
 #slides {
     position:relative;
     margin: 0 0 0 30px;
-    width: 570;
+    width: 570px;
 }
 
 #slides .slidesContainer {
@@ -40,8 +44,8 @@
 */
 
 .slidesPagination {
-    margin:10px 0 0;
-    float:right;
+    margin:10px auto;
+    float:left;
 }
 
 .slidesPagination li {
@@ -77,4 +81,10 @@
     color:#333;
     font:bold 10px/1.33 sans-serif;
     margin-right:10px;
+}
+
+/* fix for paragraphs */
+.slides-clear {
+    height: 15px; /* hack for the clear */
+    clear: left;
 }
