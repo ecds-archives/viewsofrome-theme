@@ -17,6 +17,7 @@ wp_register_script('seadragon', get_stylesheet_directory_uri() . '/js/seadragon-
 wp_register_script('raphael', get_stylesheet_directory_uri() . '/js/raphael-min.js', array());
 wp_register_script('seajax', get_stylesheet_directory_uri() . '/js/seajax-utils.js', array('seadragon', 'raphael'));
 wp_register_script('slides', get_stylesheet_directory_uri() . '/js/slides.js', array('jquery'));
+wp_register_script('lightbox', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'));
 
 function get_excluded_pages($as_string = false) {
     $excluded_ids = Array(
