@@ -21,6 +21,19 @@
     /*padding: 0 0 10px 12px;*/
 }
 
+
+/* =Blockquote
+-------------------------------------------------------------- */
+blockquote {
+    background:none;
+    border:none;
+}
+
 blockquote p {
-    font-size: 14px;
+    font-family:Georgia, "Times New Roman", Times, serif;
+    font-style:italic;
+    font-size:14px;
+    line-height:26px;
+    margin:20px;
+    padding:0 0 10px 12px;
 }
