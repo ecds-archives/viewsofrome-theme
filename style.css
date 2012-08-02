@@ -8,6 +8,7 @@ Template: responsive
 @import url("../responsive/style.css");
 @import url("./css/slides.css");
 @import url("./css/lightbox.css");
+@import url("./editor-style.css");
 /*
  * Resets, made important to override in page style declarations
  * as well as !important declarations in external files
@@ -169,4 +170,7 @@ Template: responsive
     color: #06C !important;
 }
 
+.full-width {
+    width: 100%;
+}
 

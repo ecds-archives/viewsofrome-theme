@@ -33,7 +33,7 @@
         clear:none;
     }
 </style>
-<div id="content" class="grid ">
+<div id="content" class="grid full-width">
 <?php if (have_posts()) : ?>
 
     <?php while (have_posts()) : the_post(); ?>
