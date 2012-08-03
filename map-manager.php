@@ -11,8 +11,7 @@
     // to remove the admin bar which effects the positioning of the overlays
     disableAdminBar();
 
-    wp_enqueue_script('seajax');
-    wp_enqueue_script('eul-overlay-manager');
+    wp_enqueue_script('map-manager');
 ?>
 <?php get_header(); ?>
 <?php

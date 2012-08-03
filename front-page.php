@@ -8,7 +8,7 @@
     disableAdminBar();
 
     wp_enqueue_script('seajax');
-    wp_enqueue_script('eul-overlay-manager');
+    wp_enqueue_script('map-manager');
 ?>
 
 <?php get_header(); ?>
@@ -22,6 +22,7 @@
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
             overlay_click_callback: function(overlay) {
+                console.log(overlay);
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
@@ -44,11 +45,18 @@
                         action: 'get_overlay_data'
                     },
                     success: function(results) {
+                        console.log(results);
                         overlayManager.setData(results);
                     }
                 });
             }
         });
+        $('.filterbox').change(function() {
+            var el = $(this);
+            $("#legend :checked").each(function(index, el) {
+                overlayManager.showCategory($(el).val());
+            });
+        })
     });
 </script>
 <style>
@@ -58,6 +66,7 @@
 </style>
 
 <div id="mapContainer">
+    <?php include "includes/legend.php" ?>
     <div id='mapOverlayWrapper'>
         <div id="overlayDrawer">
             <div id="mapOverlay">

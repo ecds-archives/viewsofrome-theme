@@ -434,6 +434,7 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
 
     var overlay = self.getNewOverlayFromPoints(points);
     overlay.id = json.id;
+    overlay.categories = json.categories;
 
     self._addOverlayToDZI(overlay);
 
@@ -474,6 +475,20 @@ EUL.OverlayManager.prototype.destroyOverlay = function(overlay) {
     self.viewer.drawer.removeOverlay(overlay.polygon.div);
 }
 
+EUL.OverlayManager.prototype.showCategory = function(id) {
+    var self = this;
+
+    for (var i = 0; i < self.overlays.length; i++) {
+        var overlay = self.overlays[i];
+        console.log(overlay);
+        if (overlay.categories.indexOf(id) == -1) {
+            overlay.hide();
+        } else {
+            overlay.show();
+        }
+    }
+}
+
 /**
  * EUL.OverlayManager.Overlay
  *
@@ -488,7 +503,7 @@ EUL.OverlayManager.Overlay = function(id, category, points, polygon) {
     var self = this;
 
     self.id = (id != 'undefined') ? id : null;
-    self.category = (category != 'undefined') ? category : null;
+    self.categories = (category != 'undefined') ? category : new Array();
     self.points = (points != 'undefined') ? points : null;
     self.polygon = (polygon != 'undefined') ? polygon : null;
 }
@@ -522,6 +537,18 @@ EUL.OverlayManager.Overlay.prototype.getPointsJSON = function() {
 EUL.OverlayManager.Overlay.prototype.getPolygon = function() {
     var self = this;
     return self.polygon;
+}
+
+EUL.OverlayManager.Overlay.prototype.show = function() {
+    var self = this;
+
+    $(self.polygon.div).show();
+}
+
+EUL.OverlayManager.Overlay.prototype.hide = function() {
+    var self = this;
+
+    $(self.polygon.div).hide();
 }
 
 
