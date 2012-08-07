@@ -8,7 +8,7 @@
     disableAdminBar();
 
     wp_enqueue_script('seajax');
-    wp_enqueue_script('eul-overlay-manager');
+    wp_enqueue_script('map-manager');
 ?>
 
 <?php get_header(); ?>
@@ -22,6 +22,7 @@
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
             overlay_click_callback: function(overlay) {
+                console.log(overlay);
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
@@ -29,7 +30,6 @@
                         id: overlay.id
                     },
                     success: function(post) {
-                        console.log(post);
                         var drawer = $('#mapOverlay');
                         drawer.find("#overlay-title h2").html(post.post_title);
                         drawer.find("#overlay-data").html(post.post_excerpt);
@@ -49,11 +49,37 @@
                 });
             }
         });
+        $('.checkbox').change(function() {
+            var el = $(this);
+
+            if (el.val() == 'all') {
+                $('.checkbox').not(this).each(function(index, elmt) {
+                    if (el.attr('checked') == 'checked') {
+                        overlayManager.showAll();
+                        $('.checkbox').attr('checked', 'checked');
+                    } else {
+                        overlayManager.hideAll();
+                        $('.checkbox').removeAttr('checked');
+                    }
+                });
+                return;
+            }
+
+            if (el.attr('checked') == 'checked') {
+                overlayManager.showCategory(el.val());
+            } else {
+                overlayManager.hideCategory(el.val());
+            }
+            // $("#legend :checked").each(function(index, el) {
+            //     overlayManager.showCategory($(el).val());
+            // });
+        })
     });
 </script>
 <style>
     #overlay-data {
         overflow: hidden;
+        height: 170px;
     }
 </style>
 
@@ -67,6 +93,7 @@
                 <div id="overlay-data">
                     A look into the detailed Ligoro Map of Rome.
                 </div>
+                <?php get_template_part('includes/legend'); ?>
             </div>
             <div class="clearfix"></div>
         </div>
