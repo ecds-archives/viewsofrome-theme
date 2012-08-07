@@ -2,6 +2,7 @@
 
 require ('includes/map-manager-ajax.php');
 require ('includes/mce-hooks.php');
+require_once ( 'includes/theme-options.php');
 
 function vor_theme_setup() {
     // override excerpt functionality from parent theme
