@@ -59,7 +59,7 @@ function vor_gallery_shortcode($attr) {
 
     $output = "<div id='slides_wrapper'>";
     $output .= "<div id='slides'>";
-    
+
     foreach ($images as $imageId => $image) {
         $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
         $image_full_attrs = wp_get_attachment_image_src($imageId, 'gallery-lightbox', false);
@@ -141,7 +141,8 @@ if (!function_exists('disableAdminBar')) {
  *
  */
 function logit($level, $text) {
-    
+    // for development side only. 
+    // used to log messages instead of having to use print statements
     if(function_exists('wls_log')) {
         $current_user = wp_get_current_user();
         wls_log('testing', $text, $current_user->ID, null, null, $level);

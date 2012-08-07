@@ -149,17 +149,6 @@ EUL.OverlayManager = function(options) {
         var placement = Seadragon.OverlayPlacement.CENTER;
         self.viewer.drawer.addOverlay(img, anchor, placement);
     }
-    // self.fullPage = false;
-    // self.viewer.addEventListener("animationfinish", function() {
-    //     //console.log("animationfinish");
-    //     if (self.viewer.isFullPage()) {
-    //         self.reloadData();
-    //         self.fullPage = true;
-    //     } else if (self.fullPage && !self.viewer.isFullPage()) {
-    //         self.reloadData();
-    //         self.fullPage = false;
-    //     }
-    // });
 }
 
 EUL.OverlayManager.prototype.showMouse = function(event) {
@@ -235,16 +224,7 @@ EUL.OverlayManager.prototype.reloadData = function() {
 
     // TODO: look into just reinitializing polygons
     self.destroyOverlays();
-    self.setData(self.data);
-
-    
-    //for (i in self.overlays) {
-        //create overlay from points
-        // self.overlays.push(overlay);
-        //console.log("attempting to scale")
-        //self.overlays[i].polygon.redraw(self.viewer);
-    //}
-    
+    self.setData(self.data); 
 }
 
 /**
@@ -480,12 +460,42 @@ EUL.OverlayManager.prototype.showCategory = function(id) {
 
     for (var i = 0; i < self.overlays.length; i++) {
         var overlay = self.overlays[i];
-        console.log(overlay);
-        if (overlay.categories.indexOf(id) == -1) {
-            overlay.hide();
-        } else {
+
+        if (overlay.categories.indexOf(id) >= 0) {
             overlay.show();
         }
+    }
+}
+
+EUL.OverlayManager.prototype.hideCategory = function(id) {
+    var self = this;
+
+    for (var i = 0; i < self.overlays.length; i++) {
+        var overlay = self.overlays[i];
+
+        if (overlay.categories.indexOf(id) >= 0) {
+            overlay.hide();
+        }
+    }
+}
+
+EUL.OverlayManager.prototype.showAll = function() {
+    var self = this;
+
+    for (var i = 0; i < self.overlays.length; i++) {
+        var overlay = self.overlays[i];
+
+        overlay.show();
+    }
+}
+
+EUL.OverlayManager.prototype.hideAll = function() {
+    var self = this;
+
+    for (var i = 0; i < self.overlays.length; i++) {
+        var overlay = self.overlays[i];
+
+        overlay.hide();
     }
 }
 

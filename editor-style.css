@@ -27,6 +27,7 @@
 blockquote {
     background:none;
     border:none;
+    text-align: justify;
 }
 
 blockquote p {
