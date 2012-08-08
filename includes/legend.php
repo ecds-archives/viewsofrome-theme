@@ -6,34 +6,7 @@
  */
 ?>
 <script type="text/javascript">
-$(function() {
 
-    // $('input[type=checkbox]').each(function() {
-    //     var span = $('<span class="' + $(this).attr('type') + ' ' + $(this).attr('class') + '"></span>').click(doCheck).mousedown(doDown).mouseup(doUp);
-    //     if ($(this).is(':checked')) {
-    //         span.addClass('checked');
-    //     }
-    //     $(this).wrap(span).hide();
-    // });
-
-    function doCheck() {
-        if ($(this).hasClass('checked')) {
-            $(this).removeClass('checked');
-            $(this).children().prop("checked", false);
-        } else {
-            $(this).addClass('checked');
-            $(this).children().prop("checked", true);
-        }
-    }
-
-    function doDown() {
-        $(this).addClass('clicked');
-    }
-
-    function doUp() {
-        $(this).removeClass('clicked');
-    }
-});
 </script>
 <style type="text/css">
     #legend {
@@ -57,11 +30,12 @@ $(function() {
         margin: 0;
     }
     #legend #category-list li {
-        margin: 0;
+        margin: 0 0 5px 0;
         color: #ffffff !important;
+        font-size: 85%;
     }
 
-    .checkbox, .radio {
+ /*   .checkbox, .radio {
         width: 19px;
         height: 20px;
         padding: 0px;
@@ -94,6 +68,17 @@ $(function() {
 
     .purple {
         background-color: purple;
+     }*/
+     span.category-name {
+        margin-left: 5px;
+     }
+     span.color-block {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        float: right;
+        border: 1px solid #444;
+        border-radius: 5px;
      }
 </style>
 <div id="legend">
@@ -102,15 +87,25 @@ $(function() {
             'hide_empty'    => false
         );
         $categories = get_categories($args);
+
+        $category_colors = get_option('vor_category_colors');
     ?>
     <h2>Categories</h2>
     <ul id="category-list">
         <li>
-            <span style="background-color: #ff0000;"><input type="checkbox" class="checkbox" value="all" checked="checked"/></span>All
+            <input type="checkbox" class="checkbox" value="all" checked="checked"/>
+            <span class="color-block" style="background-color: none;border:none;"></span>
+            <span class="category-name">All</span>
         </li>
     <?php foreach ($categories as $category) : ?>
         <li>
-            <span style="background-color: #ff0000;"><input type="checkbox" class="checkbox" value="<?php echo $category->cat_ID; ?>" checked="checked"/></span><?php echo $category->name; ?>
+            <span class="color-block"  style="background-color:<?php echo $category_colors[$category->cat_ID]; ?>;"></span>
+            <span style="display:table-cell;">
+                <input type="checkbox" class="checkbox" value="<?php echo $category->cat_ID; ?>" checked="checked"/>
+                <span class="category-name">
+                    <?php echo $category->name; ?> (<?php echo $category->category_count; ?>)
+                </span>
+            </span>
         </li>
     <?php endforeach; ?>
     </ul>
