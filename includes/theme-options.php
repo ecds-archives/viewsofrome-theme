@@ -47,9 +47,8 @@ function vor_admin_options_page() {
     <form method="post" action="options.php">
         <?php settings_fields('vor_options'); ?>
         <?php $options = get_option('vor_category_colors'); ?>
-        <?php echo "<pre>" . print_r($options, true) . "</pre>"; ?>
         <div id="rwd" class="grid col-940">
-            <h3 class="rwd-toggle"><a href="#"><?php _e('Category Colors', 'vor'); ?></a></h3>
+            <h3 class="rwd-toggle active"><a href="#"><?php _e('Category Colors', 'vor'); ?></a></h3>
             <div class="rwd-container">
                 <div class="rwd-block"> 
                 <?php

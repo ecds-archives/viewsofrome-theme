@@ -234,7 +234,7 @@ EUL.OverlayManager.prototype.reloadData = function() {
  * @params {Array} points Array of Seadragon Points
  * @return {EUL.OverlayManager.Overlay}
  */
-EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
+EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points, color) {
     var self = this;
 
     var viewer = self.viewer; // hack because Seajax uses global viewer for this
@@ -248,7 +248,11 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points) {
 
     // TODO: look into default classes and adding htem to the dom?
     // set polygon's fill color
-    var fillColor = (self.options.edit_mode) ? EUL.Utils.Colors.getColor() : EUL.Utils.Colors.BLUE;
+    console.log(color != undefined);
+    var fillColor = EUL.Utils.Colors.BLUE;
+    if (color != undefined)
+        fillColor = color;
+
     overlay.polygon.getElement().attr({
         "fill" : fillColor, 
         "fill-opacity" : 0.5
@@ -412,7 +416,8 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
         points.push(tempPoint);
     }
 
-    var overlay = self.getNewOverlayFromPoints(points);
+    console.log(json.categories[0]);
+    var overlay = self.getNewOverlayFromPoints(points, colors[json.categories[0]]);
     overlay.id = json.id;
     overlay.categories = json.categories;
 

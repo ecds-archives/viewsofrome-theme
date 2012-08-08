@@ -9,15 +9,21 @@
 
     wp_enqueue_script('seajax');
     wp_enqueue_script('map-manager');
+    $category_colors = get_option('vor_category_colors');
+
+    //echo "<pre>".print_r($category_colors)."<pre>";
 ?>
 
 <?php get_header(); ?>
-
 <script type="text/javascript">
     window.viewer = null;
     var overlayManager;
     var $ = jQuery.noConflict();
-
+    
+    var colors = {};
+    jQuery(document).ready(function($) {
+        colors = <?php echo json_encode($category_colors); ?>;
+    });
     Seadragon.Utils.addEvent(window, "load", function() {
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
