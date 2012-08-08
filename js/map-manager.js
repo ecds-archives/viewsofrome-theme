@@ -248,10 +248,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points, color) {
 
     // TODO: look into default classes and adding htem to the dom?
     // set polygon's fill color
-    console.log(color != undefined);
-    var fillColor = EUL.Utils.Colors.BLUE;
-    if (color != undefined)
-        fillColor = color;
+    var fillColor = (color != undefined) ? color : EUL.Utils.Colors.BLUE;
 
     overlay.polygon.getElement().attr({
         "fill" : fillColor, 
@@ -416,8 +413,11 @@ EUL.OverlayManager.prototype.addOverlayFromJSON = function(json) {
         points.push(tempPoint);
     }
 
-    console.log(json.categories[0]);
-    var overlay = self.getNewOverlayFromPoints(points, colors[json.categories[0]]);
+    var fillColor = undefined;
+    if (window.colors !== undefined) 
+        fillColor = window.colors[json.categories[0]];
+
+    var overlay = self.getNewOverlayFromPoints(points, fillColor);
     overlay.id = json.id;
     overlay.categories = json.categories;
 

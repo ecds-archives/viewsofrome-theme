@@ -20,11 +20,9 @@
     var overlayManager;
     var $ = jQuery.noConflict();
     
-    var colors = {};
-    jQuery(document).ready(function($) {
-        colors = <?php echo json_encode($category_colors); ?>;
-    });
+
     Seadragon.Utils.addEvent(window, "load", function() {
+        window.colors = <?php echo json_encode($category_colors); ?>;
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
             overlay_click_callback: function(overlay) {
