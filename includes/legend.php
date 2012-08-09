@@ -35,40 +35,6 @@
         font-size: 85%;
     }
 
- /*   .checkbox, .radio {
-        width: 19px;
-        height: 20px;
-        padding: 0px;
-        background: url("http://i48.tinypic.com/raz13m.jpg");
-        display: block;
-        clear: left;
-        float: left;
-     }
-
-    .checked {
-         background-position: 0px -50px;   
-    }
-
-    .clicked {
-         background-position: 0px -25px;
-    }
-
-    .clicked.checked {
-         background-position: 0px -75px;
-    }
-
-
-    .green {
-        background-color: green;
-     }
-
-     .red {
-        background-color: red;
-     }
-
-    .purple {
-        background-color: purple;
-     }*/
      span.category-name {
         margin-left: 5px;
      }

@@ -47,6 +47,8 @@ function vor_admin_options_page() {
     <form method="post" action="options.php">
         <?php settings_fields('vor_options'); ?>
         <?php $options = get_option('vor_category_colors'); ?>
+        <?php $errors = get_settings_errors(); ?>
+        <?php echo "<pre>" . print_r($errors, true) . "</pre>"; ?>
         <div id="rwd" class="grid col-940">
             <h3 class="rwd-toggle active"><a href="#"><?php _e('Category Colors', 'vor'); ?></a></h3>
             <div class="rwd-container">
@@ -76,6 +78,12 @@ function vor_admin_options_page() {
 }
 
 function vor_theme_options_validate($input) {
+    foreach ($input as $id => $color_code) {
+        //echo "$id => $color_code<br />";
+        if (!preg_match("/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/", $color_code)) {
+            add_settings_error($id, $id, "Code provided is not a valid hex color code", 'error');
+        }
+    }
     return $input;
 }
 ?>
