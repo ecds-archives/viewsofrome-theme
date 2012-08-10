@@ -9,7 +9,7 @@ function vor_options_init() {
     wp_enqueue_style( 'vor-theme-options', get_template_directory_uri() . '/includes/theme-options.css');
     wp_enqueue_script( 'vor-theme-options', get_template_directory_uri() . '/includes/theme-options.js', array( 'jquery' ), '1.0' );
     register_setting('vor_options', 'vor_theme_options', 'vor_theme_options_validate');
-    register_setting('vor_category_colors', 'vor_category_colors', 'vor_theme_options_validate');
+    register_setting('vor_options', 'vor_category_colors', 'vor_theme_options_validate');
 }
 
 function vor_menu_options() {
