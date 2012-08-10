@@ -30,7 +30,9 @@ wp_register_script('slides', get_stylesheet_directory_uri() . '/js/slides.js', a
 wp_register_script('lightbox', get_stylesheet_directory_uri() . '/js/lightbox.js', array('jquery'));
 
 
-
+/**
+ * @deprecated
+ */
 function get_excluded_pages($as_string = false) {
     $excluded_ids = Array(
         9,          // Article List
