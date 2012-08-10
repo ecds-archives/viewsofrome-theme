@@ -45,17 +45,17 @@
     <div id="header">
     
         <?php if (has_nav_menu('top-menu', 'responsive')) { ?>
-	        <?php wp_nav_menu(array(
-				    'container'       => '',
-					'menu_class'      => 'top-menu',
-					'theme_location'  => 'top-menu')
-					); 
-				?>
+            <?php wp_nav_menu(array(
+                    'container'       => '',
+                    'menu_class'      => 'top-menu',
+                    'theme_location'  => 'top-menu')
+                    ); 
+                ?>
         <?php } ?>
         
     <?php responsive_in_header(); // header hook ?>
         <div id="logoWrapper"> 
-	    <?php if ( get_header_image() != '' ) : ?>
+        <?php if ( get_header_image() != '' ) : ?>
                 
             <div id="logo">
                 <a href="<?php echo home_url( '/' ); ?>"><img src="<?php header_image(); ?>" width="<?php echo HEADER_IMAGE_WIDTH; ?>" height="<?php echo HEADER_IMAGE_HEIGHT; ?>" alt="<?php bloginfo('description'); ?>" /></a>
@@ -73,23 +73,23 @@
             <div class="clearfix"></div>
         </div><!-- end of #logoWrapper -->
 
-				    <?php wp_nav_menu(array(
-				        'container'       => '',
-					    'theme_location'  => 'header-menu')
-					); 
-				?>
+                    <?php wp_nav_menu(array(
+                        'container'       => '',
+                        'theme_location'  => 'header-menu')
+                    ); 
+                ?>
                 
             <?php if (has_nav_menu('sub-header-menu', 'responsive')) { ?>
-	            <?php wp_nav_menu(array(
-				    'container'       => '',
-					'menu_class'      => 'sub-header-menu',
-					'theme_location'  => 'sub-header-menu')
-					); 
-				?>
+                <?php wp_nav_menu(array(
+                    'container'       => '',
+                    'menu_class'      => 'sub-header-menu',
+                    'theme_location'  => 'sub-header-menu')
+                    ); 
+                ?>
             <?php } ?>
     </div><!-- end of #header -->
     <?php responsive_header_end(); // after header hook ?>
     
-	<?php responsive_wrapper(); // before wrapper ?>
+    <?php responsive_wrapper(); // before wrapper ?>
     <div id="wrapper" class="clearfix">
     <?php responsive_in_wrapper(); // wrapper hook ?>
