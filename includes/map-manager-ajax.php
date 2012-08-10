@@ -2,7 +2,7 @@
 /**
  * Begin ajax functions for map manager
  */
-function get_overlay_data() {
+function vor_get_overlay_data() {
     global $wpdb;
     
     $query = "select id, coords from wp_ligorio_data";
@@ -34,17 +34,11 @@ function get_overlay_data() {
     echo json_encode(Array("overlays" => $results));
     exit;
 }
+add_action('wp_ajax_vor_get_overlay_data', 'vor_get_overlay_data');
+add_action('wp_ajax_nopriv_vor_get_overlay_data', 'vor_get_overlay_data');
 
-function delete_post_data() {
-    global $wpdb;
-    $wpdb->query(
-        "DELETE from wp_ligorio_data where id = 76"
-    );
 
-    exit;
-}
-
-function post_overlay_data() {
+function vor_post_overlay_data() {
     global $wpdb;
     global $page;
     $tableName = 'wp_ligorio_data';
@@ -74,8 +68,13 @@ function post_overlay_data() {
     
     exit;
 }
+add_action('wp_ajax_vor_post_overlay_data', 'vor_post_overlay_data');
 
-function get_post_data() {
+/**
+ *
+ *
+ */
+function vor_get_post_data() {
     global $wpdb;
     //global $post;
     $post_res = get_post($_GET['id']);
@@ -96,18 +95,6 @@ function get_post_data() {
 
     exit;
 }
-
-
-// register custom ajax actions
-add_action('wp_ajax_post_overlay_data', 'post_overlay_data');
-
-add_action('wp_ajax_get_overlay_data', 'get_overlay_data');
-add_action('wp_ajax_nopriv_get_overlay_data', 'get_overlay_data');
-
-add_action('wp_ajax_get_post_data', 'get_post_data');
-add_action('wp_ajax_nopriv_get_post_data', 'get_post_data');
-
-add_action('wp_ajax_delete_post_data', 'delete_post_data');
-add_action('wp_ajax_nopriv_delete_post_data', 'delete_post_data');
-
+add_action('wp_ajax_vor_get_post_data', 'vor_get_post_data');
+add_action('wp_ajax_vor_nopriv_get_post_data', 'vor_get_post_data');
 ?>

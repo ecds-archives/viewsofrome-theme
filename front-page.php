@@ -30,7 +30,7 @@
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
-                        action: 'get_post_data',
+                        action: 'vor_get_post_data',
                         id: overlay.id
                     },
                     success: function(post) {
@@ -45,9 +45,10 @@
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
-                        action: 'get_overlay_data'
+                        action: 'vor_get_overlay_data'
                     },
                     success: function(results) {
+                        console.log(results);
                         overlayManager.setData(results);
                     }
                 });

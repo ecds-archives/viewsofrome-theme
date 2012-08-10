@@ -49,7 +49,7 @@
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
-                        action: 'get_overlay_data',
+                        action: 'vor_get_overlay_data',
                         data: {
                             id: $(self).val()
                         }
@@ -79,7 +79,7 @@
                 url: '/vor/wp-admin/admin-ajax.php',
                 type: 'POST',
                 data: {
-                    action: 'post_overlay_data',
+                    action: 'vor_post_overlay_data',
                     data: {
                         id: $('#post').val(),
                         points: overlayManager.serializeOverlays() //,
@@ -105,7 +105,7 @@
         $.ajax({
             url: '/vor/wp-admin/admin-ajax.php',
             data: {
-                action: 'get_overlay_data'
+                action: 'vor_get_overlay_data'
             },
             success: function(results) {
                 //console.log(results);
