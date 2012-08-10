@@ -149,6 +149,16 @@ EUL.OverlayManager = function(options) {
         var placement = Seadragon.OverlayPlacement.CENTER;
         self.viewer.drawer.addOverlay(img, anchor, placement);
     }
+    
+    self.viewer.defaultFullPage = self.viewer.setFullPage;
+    self.viewer.setFullPage = function(fullPage) {
+        if (fullPage) {
+            self.hideAll();
+        } else {
+            self.showAll();
+        }
+        self.viewer.defaultFullPage(fullPage);
+    }
 }
 
 EUL.OverlayManager.prototype.showMouse = function(event) {
