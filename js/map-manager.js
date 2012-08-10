@@ -33,7 +33,7 @@ EUL.Utils.Colors = {
 
         if (self.index == self.choices.length)
             self.index = 0;
-        val = self.choices[self.index];    
+        val = self.choices[self.index];
         self.index++;
         return val;
     },
