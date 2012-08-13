@@ -69,12 +69,12 @@ function vor_gallery_shortcode($attr) {
 
         $width = $image_attrs[1];
         $height = $image_attrs[2];
-
+        $output .= "<div class='slide'>";
         $output .= "<a href='$image_full_attrs[0]' rel='lightbox[slides]'>";
-        $output .= "<img src='$image_attrs[0]' ";
-        $output .= "height='300px'";
-        $output .= " />";
+        $output .= "<img src='$image_attrs[0]' height='300px' />";
         $output .= "</a>";
+        $output .= "<div class='caption'>$image->post_title</div>";
+        $output .= "</div>";
     }
     $output .= "<div class='clearfix'></div>";
     $output .= "</div><!-- /#slides -->";

@@ -20,9 +20,14 @@
         $('#slides').slides({
             width: 570,
             play: 5000,
-            pause: 2500
+            pause: 2500,
+            navigateStart: function(current) {
+                $('.caption').animate({bottom:-35}, 100);
+            },
+            navigateEnd: function(current) {
+                $('.caption').animate({bottom:27}, 200);
+            }
         });
-        //$('#slides').slides("play");
     });
 </script>
 <style type="text/css">

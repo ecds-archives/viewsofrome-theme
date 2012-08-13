@@ -33,7 +33,7 @@
                         action: 'vor_get_post_data',
                         id: overlay.id
                     },
-                    success: function(post) {
+                    success: function(post, textStatus, jqXHR) {
                         var drawer = $('#mapOverlay');
                         drawer.find("#overlay-title h2").html(post.post_title);
                         drawer.find("#overlay-data").html(post.post_excerpt);
@@ -75,9 +75,6 @@
             } else {
                 overlayManager.hideCategory(el.val());
             }
-            // $("#legend :checked").each(function(index, el) {
-            //     overlayManager.showCategory($(el).val());
-            // });
         })
     });
 </script>
