@@ -69,8 +69,10 @@ function vor_gallery_shortcode($attr) {
 
         $width = $image_attrs[1];
         $height = $image_attrs[2];
+        $lb_caption = $image->post_title . "<br /><span class='lb-caption-text'>" . $image->post_excerpt . "</span>";
+
         $output .= "<div class='slide'>";
-        $output .= "<a href='$image_full_attrs[0]' rel='lightbox[slides]' title='$image->post_title'>";
+        $output .= "<a href='$image_full_attrs[0]' rel='lightbox[slides]' title=\"$lb_caption\">";
         $output .= "<img src='$image_attrs[0]' height='300px' />";
         $output .= "</a>";
         $output .= "<div class='caption'>$image->post_title</div>";
