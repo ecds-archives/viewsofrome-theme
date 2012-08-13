@@ -9,7 +9,7 @@
  * @filesource      wp-content/themes/viewsofrome-theme/blog-excerpt.php
  *
  */
-    disableAdminBar();
+    // disableAdminBar();
     wp_enqueue_script('slides');
     wp_enqueue_script('lightbox');
  ?>
