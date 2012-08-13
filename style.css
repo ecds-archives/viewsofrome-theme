@@ -6,11 +6,17 @@ Template: responsive
 */
 
 @import url("../responsive/style.css");
-
+@import url("./css/slides.css");
+@import url("./css/lightbox.css");
+@import url("./editor-style.css");
 /*
  * Resets, made important to override in page style declarations
  * as well as !important declarations in external files
  */
+.clearfix {
+    clear: both;
+}
+
 .clear-width {
     width: 100% !important;
 }
@@ -19,16 +25,152 @@ Template: responsive
     margin: 0px !important; 
 }
 
+.home #wrapper {
+    -webkit-border-radius: 6px;
+    background-color: #fff;
+    border: 1px solid #d6d6d6;
+    margin: 20px auto;
+    padding: 20px 20px 20px 20px;
+}
+
+/*
+ * Header styles
+ */
+#header {
+    margin-top: 5px;
+}
+
+#header #logoWrapper {
+    -webkit-border-top-left-radius: 6px;
+    -webkit-border-top-right-radius: 6px;
+    border: 1px solid #000;
+    clear:left;
+    background: url(images/header-image.png) #30498f;
+    height: 108px; /*make height = to height of header-image.png */
+
+}
+
+#header #logo .site-name {
+    margin: 10px 0 0 20px;
+}
+
+#header #logo .site-name a {
+    color: #fff;
+}
+
+#header #logo .site-description {
+    color: #d2b000;
+    margin: 10px 0 0 35px;
+}
+
 /*
  * Map specific styles for the front-page.php script
  */
 #mapContainer {
-    width: 98%;
-    height:98%;
-    background-color: #c3bda7;
+    padding: 10px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #000;
+    opacity: .85;
 }
 
 #map {
-    width: 940px;
-    height: 800px;
+    width: 600px;
+    height: 500px;
+    margin: 0px auto;
+    float: right;
+    background-color: #ccc;
 }
+
+#mapOverlayWrapper {
+    width: 295px;
+    float: left;
+}
+
+/*#mapOverlay {
+    padding-right: 15px;
+}*/
+
+#overlayDrawer {
+    background-color: #000;
+    opacity: .85;
+    color: #fff;
+    height: 100%;
+    border: none;
+}
+
+#overlayDrawer h2 {
+    margin: 5px 0px 10px 0px;
+}
+
+#drawerHandle {
+    width: 50px
+}
+
+#mapOverlay {
+    top: 0;
+    left: 0;
+    height: 100%; /* size to full height of parent container */
+    background-color: #000;
+    opacity: .85;
+    color: #fff;
+    /*display:none;*/
+}
+
+#mapOverlay,
+#drawerHandle {
+    float:left;
+}
+
+
+/*
+ *  List page styles
+ */
+.page {
+    clear:left;
+    margin: 0 0 15px 0;
+}
+
+.page img.wp-post-image {
+    width: auto;
+    max-width: 125px;
+    margin: 5px 15px;
+    display: inline;
+    float: left;
+}
+
+.page .list-col {
+    width: 96%;
+}
+.page .list-right-col {
+    width: 70%;
+    display: inline-block;
+    float:left;
+}
+.page .read-more {
+    float: right;
+}
+
+
+.widget-simpletags .st-tag-cloud {
+    -webkit-border-bottom-left-radius: 6px;
+    -webkit-border-bottom-right-radius: 6px;
+    -moz-border-radius-bottomright: 6px;
+    -moz-border-radius-bottomleft: 6px;
+    border: 1px solid #d6d6d6;
+    border-top: none;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background-color: #f9f9f9;
+    margin: 0 0 20px;
+    padding: 20px;
+}
+
+.widget-simpletags .st-tag-cloud a {
+    color: #06C !important;
+}
+
+.full-width {
+    width: 100%;
+}
+

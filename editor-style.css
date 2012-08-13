@@ -1,0 +1,40 @@
+.bibliography {
+    margin: 1.6em 0;
+    padding: 0 1em;
+    background: #f9f9f9;
+    border: 2px solid #d6d6d6;
+
+    display:block;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 40px;
+    -webkit-margin-end: 40px;
+
+    font-size: 12px;
+}
+
+.bibliography p {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-style: italic;
+    font-size: 12px;
+    margin: 20px;
+    /*padding: 0 0 10px 12px;*/
+}
+
+
+/* =Blockquote
+-------------------------------------------------------------- */
+blockquote {
+    background:none;
+    border:none;
+    text-align: justify;
+}
+
+blockquote p {
+    font-family:Georgia, "Times New Roman", Times, serif;
+    font-style:italic;
+    font-size:14px;
+    line-height:26px;
+    margin:20px;
+    padding:0 0 10px 12px;
+}
