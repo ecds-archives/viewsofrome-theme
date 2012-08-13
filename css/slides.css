@@ -109,12 +109,12 @@
     /*bottom: -35px;*/
     bottom: 0px;
     left:0;
-    height:30px;
+    height:25px;
     padding:5px 20px 0 20px;
     background:#000;
     background:rgba(0,0,0,.5);
     width:540px;
-    font-size:1.3em;
+    font-size: 14px;
     text-align: left;
     line-height:1.33;
     color:#fff;
