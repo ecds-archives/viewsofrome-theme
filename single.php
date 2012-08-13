@@ -9,6 +9,7 @@
  * @filesource      wp-content/themes/viewsofrome-theme/blog-excerpt.php
  *
  */
+    disableAdminBar();
     wp_enqueue_script('slides');
     wp_enqueue_script('lightbox');
  ?>
@@ -25,7 +26,7 @@
                 $('.caption').animate({bottom:-35}, 100);
             },
             navigateEnd: function(current) {
-                $('.caption').animate({bottom:27}, 200);
+                $('.caption').animate({bottom:0}, 200);
             }
         });
     });
