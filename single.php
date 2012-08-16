@@ -16,18 +16,46 @@
 <?php get_header(); ?>
 <script>
     // invoke slideshow
-    $ = jQuery.noConflict();
-    $(function(){
+    // $ = jQuery.noConflict();
+    window.thumbs_width = 0;
+    jQuery(document).ready(function($){
         $('#slides').slides({
             width: 570,
-            play: 5000,
-            pause: 2500,
-            navigateStart: function(current) {
-                $('.caption').animate({bottom:-35}, 100);
-            },
-            navigateEnd: function(current) {
-                $('.caption').animate({bottom:0}, 200);
-            }
+            generatePagination: false
+            // animationStart: function(current) {
+            //     $('.caption').animate({bottom:-35}, 100);
+            // },
+            // animationEnd: function(current) {
+            //     $('.caption').animate({bottom:0}, 200);
+            // }
+        });
+        var el = $('.pagination li');
+
+        // get remainder for back button (this is for wrapparound back button)
+        window.thumbs_width = 
+            ((el.length % 6 > 0) ? 6 - (el.length % 6) + el.length : el.length ) * 
+            (el.width() + parseInt(el.css('margin-left')) + parseInt(el.css('margin-right')));
+
+
+        $(".thumb-prev").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            var offset = parseInt($('.pagination').css('left'));
+            var newOffset = ((offset + 456) > 0) ? -(window.thumbs_width - 456) : offset + 456;
+
+            $(".pagination").css({
+                'left': newOffset
+            });
+        });
+        
+        $(".thumb-next").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            var offset = parseInt($('.pagination').css('left'));
+            // the false branch could be changed to offset to prevent wrap around scrolling
+            var newOffset = ((-offset + 456) < window.thumbs_width) ? offset - 456 : 0;
+
+            $(".pagination").css({
+                'left': newOffset
+            });
         });
     });
 </script>
