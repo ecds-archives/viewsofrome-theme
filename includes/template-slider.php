@@ -29,7 +29,7 @@
         <a href="#" class="prev"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/slides/arrow-prev.png" /></a>
         <a href="#" class="next"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/slides/arrow-next.png" /></a>
         <div id="thumb_wrapper">
-            <div class="thumb-prev"><a href="#">&#x25C0;&#x25C0;</a></div>
+            <div class="thumb-prev"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/slides/arrow-prev.png" /></a></div>
             <div class="thumb-window">
                 <ul class="pagination">
                     <?php $index = 0; ?>
@@ -40,7 +40,7 @@
                     <?php endforeach ?>
                 </ul>
             </div>
-            <div class="thumb-next"><a href="#">&#x25B6;&#x25B6;</a></div>
+            <div class="thumb-next"><a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/slides/arrow-next.png" /></a></div>
         </div>
     </div>
 </div>
