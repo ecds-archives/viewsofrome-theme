@@ -52,8 +52,6 @@
             var offset = parseInt($('.pagination').css('left'));
             // the false branch could be changed to offset to prevent wrap around scrolling
             var newOffset = ((-offset + 456) < window.thumbs_width) ? offset - 456 : 0;
-            console.log(offset);
-            console.log(newOffset);
 
             $(".pagination").css({
                 'left': newOffset

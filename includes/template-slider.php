@@ -19,11 +19,16 @@
         <div class='slides_container'>
 
         <?php foreach ($images as $imageID => $image) : ?>
-            <?php
-            $image_attrs = wp_get_attachment_image_src($imageID,'gallery-big', false);
-            $image_full_attrs = wp_get_attachment_image_src($imageID, 'gallery-lightbox', false);
-            ?>
-            <a href="<?php echo $image_full_attrs[0]; ?>" rel="lightbox[slides]"><img src="<?php echo $image_attrs[0]; ?>" /></a>
+            <div class="slide">
+                <?php
+                $image_attrs = wp_get_attachment_image_src($imageID,'gallery-big', false);
+                $image_full_attrs = wp_get_attachment_image_src($imageID, 'gallery-lightbox', false);
+                ?>
+                <a href="<?php echo $image_full_attrs[0]; ?>" rel="lightbox[slides]"><img src="<?php echo $image_attrs[0]; ?>" /></a>
+                <div class="caption">
+                    <?php _e($image->post_title); ?>
+                </div>
+            </div>
         <?php endforeach; ?>
         </div>
         <a href="#" class="prev"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/slides/arrow-prev.png" /></a>
