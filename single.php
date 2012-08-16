@@ -16,18 +16,43 @@
 <?php get_header(); ?>
 <script>
     // invoke slideshow
-    $ = jQuery.noConflict();
-    $(function(){
+    // $ = jQuery.noConflict();
+    window.thumbs_width = 0;
+    jQuery(document).ready(function($){
         $('#slides').slides({
             width: 570,
-            play: 5000,
-            pause: 2500,
-            navigateStart: function(current) {
-                $('.caption').animate({bottom:-35}, 100);
-            },
-            navigateEnd: function(current) {
-                $('.caption').animate({bottom:0}, 200);
-            }
+            generatePagination: false
+            // animationStart: function(current) {
+            //     $('.caption').animate({bottom:-35}, 100);
+            // },
+            // animationEnd: function(current) {
+            //     $('.caption').animate({bottom:0}, 200);
+            // }
+        });
+        var el = $('.pagination li');
+        window.thumbs_width = 
+            el.length * 
+            (el.width() + parseInt(el.css('margin-left')) + parseInt(el.css('margin-right')));
+
+
+        $(".thumb-prev").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            var offset = parseInt($('.pagination').css('left'));
+            console.log(offset);
+            var newOffset = (offset != 0) ? offset + 456 : -(window.thumbs_width - 456);
+            console.log(newOffset);
+            $(".pagination").css({
+                'left': newOffset
+            });
+        });
+        
+        $(".thumb-next").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            var offset = parseInt($('.pagination').css('left'));
+            var newOffset = (-offset != (window.thumbs_width - 456)) ? offset - 456 : 0;
+            $(".pagination").css({
+                'left': newOffset
+            });
         });
     });
 </script>
