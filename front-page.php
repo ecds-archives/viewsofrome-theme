@@ -93,7 +93,7 @@
                     <h2>Views of Rome</h2>
                 </div>
                 <div id="overlay-data">
-                    A look into the detailed Ligoro Map of Rome.
+                    A look into the detailed Ligorio Map of Rome.
                 </div>
                 <?php get_template_part('includes/legend'); ?>
             </div>
