@@ -21,7 +21,8 @@
     jQuery(document).ready(function($){
         $('#slides').slides({
             width: 570,
-            generatePagination: false
+            generatePagination: false,
+            effect: 'slide'
             // animationStart: function(current) {
             //     $('.caption').animate({bottom:-35}, 100);
             // },

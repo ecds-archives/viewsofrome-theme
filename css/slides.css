@@ -31,6 +31,12 @@
     background: url('../../responsive/images/bg.png');
 }
 
+.slides_container div.slide {
+    width:570px;
+    height:270px;
+    display:block;
+}
+
 /*
     Each slide
     Important:

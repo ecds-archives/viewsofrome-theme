@@ -23,8 +23,9 @@
                 <?php
                 $image_attrs = wp_get_attachment_image_src($imageID,'gallery-big', false);
                 $image_full_attrs = wp_get_attachment_image_src($imageID, 'gallery-lightbox', false);
+                $lb_caption = $image->post_title . "<br /><span class='lb-caption-text'>" . $image->post_excerpt . "</span>";
                 ?>
-                <a href="<?php echo $image_full_attrs[0]; ?>" rel="lightbox[slides]"><img src="<?php echo $image_attrs[0]; ?>" /></a>
+                <a href="<?php echo $image_full_attrs[0]; ?>" rel="lightbox[slides]" title="<?php echo $lb_caption; ?>"><img src="<?php echo $image_attrs[0]; ?>" /></a>
                 <div class="caption">
                     <?php _e($image->post_title); ?>
                 </div>
