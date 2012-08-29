@@ -90,11 +90,12 @@
 
 #thumb_wrapper .thumb-window .pagination li {
     float: left;
-    margin: 0 6px;
+    /*margin: 0 6px;*/
 }
 
 #thumb_wrapper .thumb-window .pagination a {
     display: inline-block;
+    padding: 0 6px;
 }
 
 #thumb_wrapper {
@@ -106,7 +107,7 @@
 
 .thumb-window {
     position: relative;
-    width: 80%;
+    width: 458px;
     /*border: 1px solid green;*/
     height: 100%;
     float: left;
@@ -116,13 +117,13 @@
 
 .thumb-next,
 .thumb-prev {
-    width: 10%;
+    width: 8%;
     /*border: 1px solid red;*/
     height: 100%;
 }
 
 .thumb-next {
-    float: right;
+    float: left;
 }
 
 .thumb-prev {

@@ -33,15 +33,16 @@
         var el = $('.pagination li');
 
         // get remainder for back button (this is for wrapparound back button)
-        window.thumbs_width = 
-            ((el.length % 6 > 0) ? 6 - (el.length % 6) + el.length : el.length ) * 
-            (el.width() + parseInt(el.css('margin-left')) + parseInt(el.css('margin-right')));
-
+        // window.thumbs_width = 
+        //     ((el.length % 6 > 0) ? 6 - (el.length % 6) + el.length : el.length ) * 
+        //     el.width();
+        window.thumbs_width = el.length * el.width();
 
         $(".thumb-prev").live('click', function(eventObject) {
             eventObject.preventDefault();
+            
             var offset = parseInt($('.pagination').css('left'));
-            var newOffset = ((offset + 456) > 0) ? -(window.thumbs_width - 456) : offset + 456;
+            var newOffset = ((offset + 458) > 0) ? -(Math.floor($('.pagination li').length / 6) * 458) : offset + 458;
 
             $(".pagination").css({
                 'left': newOffset
@@ -50,9 +51,9 @@
         
         $(".thumb-next").live('click', function(eventObject) {
             eventObject.preventDefault();
+            
             var offset = parseInt($('.pagination').css('left'));
-            // the false branch could be changed to offset to prevent wrap around scrolling
-            var newOffset = ((-offset + 456) < window.thumbs_width) ? offset - 456 : 0;
+            var newOffset = ((offset - 458) < -(window.thumbs_width)) ? 0 : offset - 458 ;
 
             $(".pagination").css({
                 'left': newOffset
