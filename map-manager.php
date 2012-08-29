@@ -88,7 +88,6 @@
                 },
                 success: function(data, textStatus, jqXHR) {
                     if (textStatus == "success") {
-                        console.log(data);
                         $("#loader").hide();
                         // hide loader
                         // alert success

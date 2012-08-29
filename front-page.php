@@ -26,7 +26,6 @@
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
             overlay_click_callback: function(overlay) {
-                console.log(overlay);
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
