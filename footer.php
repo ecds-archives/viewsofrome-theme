@@ -15,48 +15,6 @@
 </div><!-- end of #container -->
 <?php responsive_container_end(); // after container hook ?>
 
-<style>
-    .emory-logo,
-    .footer-nav {
-        padding:10px;
-        color: white;
-    }
-
-    .emory-logo {
-        float: left;
-        width: 250px;
-        margin-top: 15px;
-    }
-
-    .footer-nav {
-        float:right;
-        width: 250px;
-    }
-
-    .footer-nav h2 {
-        margin: 0;
-    }
-
-    .footer-nav a {
-        color: white;
-    }
-
-    #footer-wrapper {
-        background: #333;
-        border: 1px solid #444;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-    }
-
-    .remove-bottom-margin {
-        margin-bottom: 0;
-    }
-
-    .copyright {
-        text-align: center;
-        color: white;
-    }
-</style>
 <div id="footer" class="clearfix">
 
     <div id="footer-wrapper">
@@ -68,7 +26,7 @@
             </div>
             
             <div class="footer-nav">
-                <h2>Links</h2>
+                <h2>External Links:</h2>
                 <ul>
                     <li><a href="https://marbl.library.emory.edu">MARBL</a></li>
                     <li><a href="https://arthistory.library.emory.edu">Art History</a></li>
@@ -78,9 +36,9 @@
             </div>
 
             <div class="clearfix"></div>
-            <div class="copyright">
+            <!-- <div class="copyright">
                 Copyright 2012 Emory University
-            </div>
+            </div> -->
         </div><!-- end of col-940 -->
 
         <div class="clearfix"></div>
