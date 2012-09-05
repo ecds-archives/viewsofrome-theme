@@ -51,6 +51,17 @@
                         overlayManager.setData(results);
                     }
                 });
+            },
+            set_full_page_callback: function(fullPage) {
+                if (fullPage) {
+                    overlayManager.hideAll();
+                } else {
+                    $('.checkbox').each(function(index, elmt) {
+                        if ($(elmt).val() != 'all'&& $(elmt).attr('checked') == 'checked') {
+                            overlayManager.showCategory($(elmt).val());
+                        }
+                    });
+                }
             }
         });
         $('.checkbox').change(function() {
