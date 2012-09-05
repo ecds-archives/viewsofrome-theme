@@ -28,10 +28,10 @@
             <div class="footer-nav">
                 <h2>Project Partners</h2>
                 <ul>
-                    <li><a href="https://marbl.library.emory.edu">Manuscripts, Archives, and Rare Book Library (MARBL)</a></li>
-                    <li><a href="https://arthistory.library.emory.edu">Emory Art History Department</a></li>
                     <li><a href="https://web.library.emory.edu/disc"> Digital Scholarship Commons (DiSC)</a></li>
-                    <li><a href="https://carlos.emory.edu">Michael C. CarlosCarlos Museum</a></li>
+                    <li><a href="https://arthistory.library.emory.edu">Emory Art History Department</a></li>
+                    <li><a href="https://marbl.library.emory.edu">Manuscripts, Archives, and Rare Book Library (MARBL)</a></li>
+                    <li><a href="https://carlos.emory.edu">Michael C. Carlos Museum</a></li>
                 </ul>
             </div>
 
