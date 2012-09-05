@@ -10,7 +10,7 @@
     wp_enqueue_script('seajax');
     wp_enqueue_script('map-manager');
     $category_colors = get_option('vor_category_colors');
-
+    $options = get_option('responsive_theme_options');
     //echo "<pre>".print_r($category_colors)."<pre>";
 ?>
 
@@ -89,10 +89,10 @@
         <div id="overlayDrawer">
             <div id="mapOverlay">
                 <div id="overlay-title">
-                    <h2>Views of Rome</h2>
+                    <h2><?php echo $options['home_headline']; ?></h2>
                 </div>
                 <div id="overlay-data">
-                    A look into the detailed Ligorio Map of Rome.
+                    <?php echo $options['home_content_area']; ?>
                 </div>
                 <?php get_template_part('includes/legend'); ?>
             </div>
