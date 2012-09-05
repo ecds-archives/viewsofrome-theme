@@ -168,13 +168,33 @@
     }
 
     .information { 
-        margin-top: 10px;
+        width: 50%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    .information h3 {
+        margin: 5px 0px;
     }
 </style>
 
 <div id="mapManager">
     <div class="information">
-        Explanation of usage goes here
+        <h3>To Add an Overlay</h3>
+        <ol>
+            <li>Select article from drop down to associate overlay to</li>
+            <li>Shift and click on each exterior point you would like the polygon to cover</li>
+            <li>Click 'Add Shape'</li>
+            <li>If the overlay is correct, click 'Save Overlays'</li>
+        </ol> 
+
+        <h3>To Remove an Overlay</h3>
+
+        <ol>
+            <li>Select article that is associated with the erroneous overlay</li>
+            <li>Click 'Remove This Overlay'</li>
+            <li>Click 'Save Overlays'</li>
+        </ol>
     </div>
     <div id="mapcontainer"></div>
     <div id="map-manager-controls">
