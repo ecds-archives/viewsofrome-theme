@@ -27,7 +27,7 @@
                 ?>
                 <a href="<?php echo $image_full_attrs[0]; ?>" rel="lightbox[slides]" title="<?php echo $lb_caption; ?>"><img src="<?php echo $image_attrs[0]; ?>" /></a>
                 <div class="caption">
-                    <?php _e($image->post_title); ?>
+                    <a href="<?php echo get_attachment_link($imageID); ?>"><?php _e($image->post_title); ?></a>
                 </div>
             </div>
         <?php endforeach; ?>

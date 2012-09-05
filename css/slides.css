@@ -173,3 +173,8 @@
 .current img {
     border: 1px solid blue;
 }
+
+.caption a {
+    text-decoration: none;
+    color: white;
+}
