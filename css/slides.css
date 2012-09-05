@@ -178,3 +178,7 @@
     text-decoration: none;
     color: white;
 }
+
+.caption a:hover {
+    text-decoration: underline;
+}
