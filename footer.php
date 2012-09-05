@@ -26,12 +26,12 @@
             </div>
             
             <div class="footer-nav">
-                <h2>External Links:</h2>
+                <h2>Project Partners</h2>
                 <ul>
-                    <li><a href="https://marbl.library.emory.edu">MARBL</a></li>
-                    <li><a href="https://arthistory.library.emory.edu">Art History</a></li>
-                    <li><a href="https://web.library.emory.edu/disc">DiSC</a></li>
-                    <li><a href="https://carlos.emory.edu">Carlos Museum</a></li>
+                    <li><a href="https://marbl.library.emory.edu">Manuscripts, Archives, and Rare Book Library (MARBL)</a></li>
+                    <li><a href="https://arthistory.library.emory.edu">Emory Art History Department</a></li>
+                    <li><a href="https://web.library.emory.edu/disc"> Digital Scholarship Commons (DiSC)</a></li>
+                    <li><a href="https://carlos.emory.edu">Michael C. CarlosCarlos Museum</a></li>
                 </ul>
             </div>
 
