@@ -36,9 +36,9 @@
             </div>
 
             <div class="clearfix"></div>
-            <!-- <div class="copyright">
-                Copyright 2012 Emory University
-            </div> -->
+            <div class="copyright">
+                Copyright © 2012 Emory University - All Rights Reserved | 540 Asbury Circle, Atlanta, GA 30322-2870 | (404) 727-6861
+            </div>
         </div><!-- end of col-940 -->
 
         <div class="clearfix"></div>
