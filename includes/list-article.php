@@ -37,8 +37,8 @@
     <?php endforeach; ?>
     <?php if (  $wp_query->max_num_pages > 1 ) : ?>
         <div class="navigation">
-            <div class="previous"><?php next_posts_link( __( '&#8249; Older posts', 'responsive' ) ); ?></div>
-            <div class="next"><?php previous_posts_link( __( 'Newer posts &#8250;', 'responsive' ) ); ?></div>
+            <div class="previous"><?php previous_posts_link( __( '&#8249; Previous Page', 'responsive' ) ); ?></div>
+            <div class="next"><?php next_posts_link( __( 'Next Page &#8250;', 'responsive' ) ); ?></div>
         </div><!-- end of .navigation -->
     <?php endif; ?>
 <?php endif; ?>

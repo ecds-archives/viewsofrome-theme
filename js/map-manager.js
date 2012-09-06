@@ -92,7 +92,8 @@ EUL.OverlayManager = function(options) {
         edit_mode: false,
         center_poly_on_click: true,
         padding: 0.05,
-        open_event_callback: function(){}
+        open_event_callback: function(){},
+        set_full_page_callback: null
     }
     jQuery.extend(self.options, options);
 
@@ -152,11 +153,16 @@ EUL.OverlayManager = function(options) {
     
     self.viewer.defaultFullPage = self.viewer.setFullPage;
     self.viewer.setFullPage = function(fullPage) {
-        if (fullPage) {
-            self.hideAll();
+        if (self.options.set_full_page_callback != null) {
+            self.options.set_full_page_callback(fullPage);
         } else {
-            self.showAll();
+            if (fullPage) {
+                self.hideAll();
+            } else {
+                self.showAll();
+            }
         }
+        
         self.viewer.defaultFullPage(fullPage);
     }
 }

@@ -64,7 +64,6 @@ No5.Seajax.Shapes.Polygon = function(points, viewer) {
    this.normHeight = 2 * this.height / maxZoom
 
    this.getNormWidth = function() {
-      console.log(getMaxZoom());
       return 2 * this.width / viewer.viewport.getMaxZoom();
    }
 

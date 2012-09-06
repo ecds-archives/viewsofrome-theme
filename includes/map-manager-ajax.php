@@ -96,5 +96,5 @@ function vor_get_post_data() {
     exit;
 }
 add_action('wp_ajax_vor_get_post_data', 'vor_get_post_data');
-add_action('wp_ajax_vor_nopriv_get_post_data', 'vor_get_post_data');
+add_action('wp_ajax_nopriv_vor_get_post_data', 'vor_get_post_data');
 ?>

@@ -4,6 +4,12 @@ require ('includes/map-manager-ajax.php');
 require ('includes/mce-hooks.php');
 require_once ( 'includes/theme-options.php');
 
+function vor_get_require($filename) {
+    ob_start();
+    require($filename);
+    return ob_get_clean();
+}
+
 function vor_theme_setup() {
     // override excerpt functionality from parent theme
     remove_filter('get_the_excerpt', 'responsive_custom_excerpt_more');
@@ -51,40 +57,8 @@ function get_excluded_pages($as_string = false) {
 function vor_gallery_shortcode($attr) {
     global $post;
     
-    $images = get_children( array(
-        'post_parent' => $post->ID, 
-        'post_status' => 'inherit', 
-        'post_type' => 'attachment', 
-        'post_mime_type' => 'image', 
-        'order' => 'ASC', 
-        'orderby' => 'menu_order ID') 
-    );
-
-    $output = "<div id='slides_wrapper'>";
-    $output .= "<div id='slides'>";
-
-    foreach ($images as $imageId => $image) {
-        $image_attrs = wp_get_attachment_image_src($imageId,'gallery-big', false);
-        $image_full_attrs = wp_get_attachment_image_src($imageId, 'gallery-lightbox', false);
-
-        $width = $image_attrs[1];
-        $height = $image_attrs[2];
-        $lb_caption = $image->post_title . "<br /><span class='lb-caption-text'>" . $image->post_excerpt . "</span>";
-
-        $output .= "<div class='slide'>";
-        $output .= "<a href='$image_full_attrs[0]' rel='lightbox[slides]' title=\"$lb_caption\">";
-        $output .= "<img src='$image_attrs[0]' height='300px' />";
-        $output .= "</a>";
-        $output .= "<div class='caption'>$image->post_title</div>";
-        $output .= "</div>";
-    }
-    $output .= "<div class='clearfix'></div>";
-    $output .= "</div><!-- /#slides -->";
-
-    $output .= "</div><!-- /#slides_wrapper -->";
-    $output .= "<div class='slides-clear'></div>";
-    //
-
+    $output = vor_get_require('includes/template-slider.php');
+    
     return $output;
 }
 

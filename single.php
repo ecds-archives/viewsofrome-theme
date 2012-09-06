@@ -16,18 +16,48 @@
 <?php get_header(); ?>
 <script>
     // invoke slideshow
-    $ = jQuery.noConflict();
-    $(function(){
+    // $ = jQuery.noConflict();
+    window.thumbs_width = 0;
+    jQuery(document).ready(function($){
         $('#slides').slides({
             width: 570,
-            play: 5000,
-            pause: 2500,
-            navigateStart: function(current) {
-                $('.caption').animate({bottom:-35}, 100);
-            },
-            navigateEnd: function(current) {
-                $('.caption').animate({bottom:0}, 200);
-            }
+            generatePagination: false,
+            effect: 'slide'
+            // animationStart: function(current) {
+            //     $('.caption').animate({bottom:-35}, 100);
+            // },
+            // animationEnd: function(current) {
+            //     $('.caption').animate({bottom:0}, 200);
+            // }
+        });
+        var el = $('.pagination li');
+
+        // get remainder for back button (this is for wrapparound back button)
+        // window.thumbs_width = 
+        //     ((el.length % 6 > 0) ? 6 - (el.length % 6) + el.length : el.length ) * 
+        //     el.width();
+        window.thumbs_width = el.length * el.width();
+
+        $(".thumb-prev").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            
+            var offset = parseInt($('.pagination').css('left'));
+            var newOffset = ((offset + 458) > 0) ? -(Math.floor($('.pagination li').length / 6) * 458) : offset + 458;
+
+            $(".pagination").css({
+                'left': newOffset
+            });
+        });
+        
+        $(".thumb-next").live('click', function(eventObject) {
+            eventObject.preventDefault();
+            
+            var offset = parseInt($('.pagination').css('left'));
+            var newOffset = ((offset - 458) < -(window.thumbs_width)) ? 0 : offset - 458 ;
+
+            $(".pagination").css({
+                'left': newOffset
+            });
         });
     });
 </script>
@@ -53,6 +83,11 @@
             <?php get_sidebar(); ?>
             <h1><?php the_title(); ?></h1>
 
+            <div class="post-data">
+                <?php the_tags(__('Tagged with:', 'responsive') . ' ', ', ', '<br />'); ?> 
+                <?php printf(__('Posted in %s', 'responsive'), get_the_category_list(', ')); ?> 
+            </div><!-- end of .post-data -->
+
             <div class="post-meta">
             <?php 
                 printf( __( '<span class="%1$s">Posted on</span> %2$s by %3$s', 'responsive' ),'meta-prep meta-prep-author',
@@ -74,9 +109,7 @@
                 <?php comments_popup_link(__('No Comments &darr;', 'responsive'), __('1 Comment &darr;', 'responsive'), __('% Comments &darr;', 'responsive')); ?>
                     </span>
                 <?php endif; ?> 
-            </div><!-- end of .post-meta -->
-                            
-            <div class="post-entry">
+            </div><!-- end of .post-meta --><div class="post-entry">
                 <?php the_content(__('Read more &#8250;', 'responsive')); ?>
                 
                 <?php if ( get_the_author_meta('description') != '' ) : ?>
@@ -91,11 +124,6 @@
                 
                 <?php wp_link_pages(array('before' => '<div class="pagination">' . __('Pages:', 'responsive'), 'after' => '</div>')); ?>
             </div><!-- end of .post-entry -->
-            
-            <div class="post-data">
-                <?php the_tags(__('Tagged with:', 'responsive') . ' ', ', ', '<br />'); ?> 
-                <?php printf(__('Posted in %s', 'responsive'), get_the_category_list(', ')); ?> 
-            </div><!-- end of .post-data -->             
 
         <div class="post-edit"><?php edit_post_link(__('Edit', 'responsive')); ?></div>             
         </div><!-- end of #post-<?php the_ID(); ?> -->

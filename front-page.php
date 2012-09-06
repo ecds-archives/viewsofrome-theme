@@ -10,7 +10,7 @@
     wp_enqueue_script('seajax');
     wp_enqueue_script('map-manager');
     $category_colors = get_option('vor_category_colors');
-
+    $options = get_option('responsive_theme_options');
     //echo "<pre>".print_r($category_colors)."<pre>";
 ?>
 
@@ -26,7 +26,6 @@
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
             overlay_click_callback: function(overlay) {
-                console.log(overlay);
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
                     data: {
@@ -52,6 +51,17 @@
                         overlayManager.setData(results);
                     }
                 });
+            },
+            set_full_page_callback: function(fullPage) {
+                if (fullPage) {
+                    overlayManager.hideAll();
+                } else {
+                    $('.checkbox').each(function(index, elmt) {
+                        if ($(elmt).val() != 'all'&& $(elmt).attr('checked') == 'checked') {
+                            overlayManager.showCategory($(elmt).val());
+                        }
+                    });
+                }
             }
         });
         $('.checkbox').change(function() {
@@ -90,10 +100,10 @@
         <div id="overlayDrawer">
             <div id="mapOverlay">
                 <div id="overlay-title">
-                    <h2>Views of Rome</h2>
+                    <h2><?php echo $options['home_headline']; ?></h2>
                 </div>
                 <div id="overlay-data">
-                    A look into the detailed Ligoro Map of Rome.
+                    <?php echo $options['home_content_area']; ?>
                 </div>
                 <?php get_template_part('includes/legend'); ?>
             </div>

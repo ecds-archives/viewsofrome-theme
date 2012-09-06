@@ -1,107 +1,150 @@
 #slides_wrapper {
-    width: 570px
+    width: 570px;
+    margin-left: 25px;
+    padding: 10px;
+
+    margin-bottom: 15px;
+    box-shadow: 0 2.5px 5px rgba(0, 0, 0, .1);
 }
 
 #slides {
-    position:relative;
-    margin: 0 0 0 30px;
+    position: relative;
     width: 570px;
 }
 
-#slides .slidesContainer {
-    background:#fff;
-    border:8px solid #fff;
-    margin-left:-8px;
-    box-shadow: 0 2.5px 5px rgba(0,0,0,.1);
+/*
+    Slides container
+    Important:
+    Set the width of your slides container
+    Set to display none, prevents content flash
+*/
+
+.slides_container {
+    width:570px;
+    height:270px;
+    overflow:hidden;
+    position:relative;
+    display:none;
+
+    border: 1px solid gray;
+    border-radius: 5px;
+    background: url('../../responsive/images/bg.png');
 }
 
-#slides .slidesControl a,
-#slides .slide {
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    background: #EFEFEF url(../../responsive/images/bg.png) repeat;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.slides_container div.slide {
+    width:570px;
+    height:270px;
+    display:block;
+}
+
+/*
+    Each slide
+    Important:
+    Set the width of your slides
+    If height not specified height will be set by the slide content
+    Set to display block
+*/
+
+.slides_container a {
+    width:570px;
+    height:270px;
+    display:block;
+    text-align:center;
 }
 
 /*
     Next/prev buttons
 */
 
-#slides .slidesNext,#slides .slidesPrevious {
+#slides .next,#slides .prev {
     position:absolute;
-    top:134px;
-    left:-33px;
+    top:107px;
+    left:-34px;
     width:24px;
-    height:0;
-    padding-top:43px;
+    height:43px;
     display:block;
     z-index:101;
-    overflow:hidden;
-    background: url(../images/slides/arrow-prev.png) no-repeat 0 0;
-    /*background:url(../images/slides/navigation-previous.png) no-repeat 0 0;*/
+
+    /*background: url(../images/slides/arrow-prev.png) no-repeat 0 0;*/
 }
 
-#slides .slidesNext {
-    left:578px;
-    background: url(../images/slides/arrow-next.png) no-repeat 0 0;
-    /*background:url(../images/slides/navigation-next.png) no-repeat 0 0;*/
+#slides .next {
+    left:580px;
+
+    /*background: url(../images/slides/arrow-next.png) no-repeat 0 0;*/
 }
 
 /*
     Pagination
 */
 
-.slidesPagination {
-    margin:10px auto;
-    float:left;
-}
-
-.slidesPagination li {
-    float:left;
-    margin:0 1px;
+#thumb_wrapper .thumb-window .pagination {
+    position: absolute;
+    overflow: hidden;
+    width: 10000px;
+    padding: 0;
+    margin: 0;
+    left: 0;
     list-style:none;
 }
 
-.slidesPagination li a {
-    display:block;
-    width:14px;
-    height:0;
-    padding-top:14px;
-    background-image:url(../images/slides/pagination.png);
-    background-position:0 0;
-    overflow:hidden;
+#thumb_wrapper .thumb-window .pagination li {
+    float: left;
+    /*margin: 0 6px;*/
 }
 
-.slidesPagination li.slidesCurrent a {
-    background-position:0 -14px;
+#thumb_wrapper .thumb-window .pagination a {
+    display: inline-block;
+    padding: 0 6px;
 }
 
-.current_slide {
-    font:bold 10px/1.33 sans-serif;
+#thumb_wrapper {
+    width: 100%;
+    height: 74px;
+    /*border: 1px solid black;*/
+    margin-top: 10px;
+}
+
+.thumb-window {
+    position: relative;
+    width: 458px;
+    /*border: 1px solid green;*/
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    padding-top: 5px;
+}
+
+.thumb-next,
+.thumb-prev {
+    width: 8%;
+    /*border: 1px solid red;*/
+    height: 100%;
+}
+
+.thumb-next {
+    float: left;
+}
+
+.thumb-prev {
+    float: left;
+    text-align: right;
+}
+
+.thumb-next img,
+.thumb-prev img {
+    width: 24px;
+    height: 43px;
+    margin-top: 14px;
+}
+
+.thumb-prev img {
+    float:right;
+}
+
+.thumb-next img {
     float:left;
-    margin-top:12px;
 }
-
-.controls {
-    display:block;
-    margin-top:12px;
-    float:left;
-    color:#333;
-    font:bold 10px/1.33 sans-serif;
-    margin-right:10px;
-}
-
-/* fix for paragraphs */
-.slides-clear {
-    height: 15px; /* hack for the clear */
-    clear: left;
-}
-
-/*
-    Caption
-*/
 
 .caption {
     z-index:500;
@@ -125,4 +168,17 @@
 .lb-caption-text {
     font-weight: normal;
 
+}
+
+.current img {
+    border: 1px solid blue;
+}
+
+.caption a {
+    text-decoration: none;
+    color: white;
+}
+
+.caption a:hover {
+    text-decoration: underline;
 }
