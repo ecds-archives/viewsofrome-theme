@@ -1,7 +1,7 @@
 #Views of Rome
 
 ##About
-A child theme based on the []Responsive](http://wordpress.org/extend/themes/responsive) developed for the Digital Scholarship Commons of Emory University for the Views of Rome project.
+A child theme based on the [Responsive](http://wordpress.org/extend/themes/responsive) developed for the Digital Scholarship Commons of Emory University for the Views of Rome project.
 
 This theme provides an indepth, interactive view into the Ligorio Map of Rome. Technologies utilized to make this possible are Wordpress, Seadragon Ajax and Seajax
 
