@@ -27,6 +27,15 @@ function vor_theme_setup() {
 }
 add_action('after_setup_theme', 'vor_theme_setup');
 
+function vor_trash_post_hook($pid) {
+    global $wpdb;
+    if ($wpdb->get_var($wpdb->prepare('SELECT id FROM wp_ligorio_data WHERE id = %d', $pid))) {
+        return $wpdb->query($wpdb->prepare('DELETE FROM wp_ligorio_data WHERE id = %d', $pid));
+    }
+    return true;
+}
+add_action('trash_post', 'vor_trash_post_hook');
+
 
 wp_register_script('seadragon', get_stylesheet_directory_uri() . '/js/seadragon-min.js', array());
 wp_register_script('raphael', get_stylesheet_directory_uri() . '/js/raphael-min.js', array());
