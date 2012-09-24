@@ -28,7 +28,7 @@
             dzi_path: "/viewsofrome/images/map/GeneratedImages/dzc_output.xml",
             overlay_click_callback: function(overlay) {
                 $.ajax({
-                    url: '/vor/wp-admin/admin-ajax.php',
+                    url: '/viewsofrome/wp-admin/admin-ajax.php',
                     data: {
                         action: 'vor_get_post_data',
                         id: overlay.id
@@ -43,7 +43,7 @@
             },
             open_event_callback: function() {
                 $.ajax({
-                    url: '/vor/wp-admin/admin-ajax.php',
+                    url: '/viewsofrome/wp-admin/admin-ajax.php',
                     data: {
                         action: 'vor_get_overlay_data'
                     },
