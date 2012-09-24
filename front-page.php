@@ -25,6 +25,7 @@
         window.colors = <?php echo json_encode($category_colors); ?>;
         overlayManager = new EUL.OverlayManager({
             map_container: "map",
+            dzi_path: "/viewsofrome/images/map/GeneratedImages/dzc_output.xml",
             overlay_click_callback: function(overlay) {
                 $.ajax({
                     url: '/vor/wp-admin/admin-ajax.php',
