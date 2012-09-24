@@ -32,6 +32,7 @@
 
     $(document).ready(function() {
         overlayManager = new EUL.OverlayManager({
+            dzi_path: "/viewsofrome/images/map/GeneratedImages/dzc_output.xml",
             edit_mode: true
         });
         
