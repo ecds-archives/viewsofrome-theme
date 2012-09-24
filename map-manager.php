@@ -48,7 +48,7 @@
             var self = this;
             if ($(self).val() != "none") {
                 $.ajax({
-                    url: '/vor/wp-admin/admin-ajax.php',
+                    url: '/viewsofrome/wp-admin/admin-ajax.php',
                     data: {
                         action: 'vor_get_overlay_data',
                         data: {
@@ -77,7 +77,7 @@
             isSaving = true;
             $("#loader").show();
             $.ajax({
-                url: '/vor/wp-admin/admin-ajax.php',
+                url: '/viewsofrome/wp-admin/admin-ajax.php',
                 type: 'POST',
                 data: {
                     action: 'vor_post_overlay_data',
@@ -103,7 +103,7 @@
     // TODO: can we remove this? was this only for testing w/out reload?
     function getOverlays() {
         $.ajax({
-            url: '/vor/wp-admin/admin-ajax.php',
+            url: '/viewsofrome/wp-admin/admin-ajax.php',
             data: {
                 action: 'vor_get_overlay_data'
             },
