@@ -265,7 +265,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points, color) {
     // TODO: look into default classes and adding htem to the dom?
     // set polygon's fill color
     var fillColor = (color != undefined) ? color : EUL.Utils.Colors.BLUE;
-
+    overlay.orig_fill = fillColor;
     overlay.polygon.getElement().attr({
         "fill" : fillColor, 
         "fill-opacity" : 0.5
@@ -299,7 +299,7 @@ EUL.OverlayManager.prototype.getNewOverlayFromPoints = function(points, color) {
             // reset activeOverlay fill color
             if (self.activeOverlay != null) {
                 self.activeOverlay.polygon.getElement().attr({
-                    'fill': fillColor
+                    'fill': self.activeOverlay.orig_fill
                 });
             }
             self.activeOverlay = overlay;

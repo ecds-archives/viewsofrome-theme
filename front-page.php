@@ -48,7 +48,7 @@
                         action: 'vor_get_overlay_data'
                     },
                     success: function(results) {
-                        console.log(results);
+                        //console.log(results);
                         overlayManager.setData(results);
                     }
                 });
