@@ -222,3 +222,7 @@ Template: responsive
     color: white;
 }
 
+.active-overlay {
+    fill: #000;
+}
+
