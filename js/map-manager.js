@@ -142,7 +142,7 @@ EUL.OverlayManager = function(options) {
         self.points.push(newPoint);
 
         var img = document.createElement("img");
-        img.src = "/vor/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
+        img.src = "/viewsofrome/wp-content/themes/viewsofrome-theme/images/point_marker.gif";
         img.className = 'temp-point';
         
         // $(point.img).addClass('temp-point');
