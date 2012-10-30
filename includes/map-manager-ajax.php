@@ -79,8 +79,7 @@ function vor_get_post_data() {
 
     // setup args for the loop
     $args = array(
-        "p" => $_GET['id'], // returns a single post with the given id
-        'status' => 'publish'
+        "p" => $_GET['id'] // returns a single post with the given id
     );
 
     query_posts($args);
