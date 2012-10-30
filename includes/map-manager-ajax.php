@@ -76,20 +76,30 @@ add_action('wp_ajax_vor_post_overlay_data', 'vor_post_overlay_data');
  */
 function vor_get_post_data() {
     global $wpdb;
-    //global $post;
-    $post_res = get_post($_GET['id']);
 
-    // setup the post data so we can get access to the excerpt
-    setup_postdata($post_res);
-
-    $page_data = array(
-        "ID"            => $post_res->ID,
-        "guid"          => $post_res->guid,
-        "post_title"    => $post_res->post_title,
-        "post_content"  => get_the_content("Read on.."),
-        "post_excerpt"  => get_the_excerpt(),
-        "permalink"     => get_permalink($post_res->ID)
+    // setup args for the loop
+    $args = array(
+        "p" => $_GET['id'], // returns a single post with the given id
+        'status' => 'publish'
     );
+
+    query_posts($args);
+
+    $page_data = array();
+
+    // this is because we have to have the loop to populate the excerpt, 
+    // not ideal but works and is the wordpress way
+    while (have_posts()) : the_post();
+        $page_data = array(
+            "ID"            => get_the_ID(),
+            "guid"          => get_the_guid(),
+            "post_title"    => get_the_title(),
+            "post_content"  => get_the_content("Read on.."),
+            "post_excerpt"  => get_the_excerpt(),
+            "permalink"     => get_permalink(get_the_ID())
+        );
+    endwhile;
+
     header("Content-type: application/json");
     echo json_encode($page_data);
 
